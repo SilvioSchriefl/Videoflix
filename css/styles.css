@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+input {
+  width: 400px;
+  outline: none;
+  color: #fff;
+  background: #333;
+  border-radius: 3px;
+  box-sizing: border-box;
+  height: 48px;
+  padding-left: 21px;
+}
+input::-webkit-input-placeholder {
+  color: #707C7F;
+  font-size: 20px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 0s 600000s, color 0s 600000s;
+}
+
+.invalid_button {
+  cursor: not-allowed !important;
+  background-color: #686868 !important;
+  pointer-events: none;
+}/*# sourceMappingURL=styles.css.map */

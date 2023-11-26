@@ -1,0 +1,18 @@
+<div class="main">
+    <div class="form" >
+        <span class="headline">LogIn</span>
+        <div class="input_div">
+            <input [class.invalid]="!email_valid" type="email" placeholder="Email" [(ngModel)]="user_email" (ngModelChange)="dataChanged()">
+            <span *ngIf="!email_valid" class="error">Please enter a valid email</span>
+        </div>
+        <input type="password" placeholder="Password">
+        <div class="button" [class.invalid_button]="!email_valid">
+            <span>Sign in</span>
+        </div>
+        <div class="new_to">
+            <span>New to Videoflix?</span>
+            <span (click)="goToSignUp()" >Sign up now.</span> 
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,46 @@
+.main_div {
+  background-image: url(/assets/img/background.jpg/);
+  height: 100vh;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.shadow {
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+}
+
+.logo {
+  display: flex;
+  color: #E50914;
+  align-items: center;
+  font-size: 50px;
+  font-weight: 700;
+  font-family: "Righteous";
+  gap: 20px;
+}
+
+.router {
+  position: absolute;
+  left: calc(50% - 225px);
+  top: calc(50% - 225px);
+  z-index: 1;
+}
+
+header {
+  padding: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+header img {
+  width: 50px;
+  height: 50px;
+}/*# sourceMappingURL=start.component.css.map */
