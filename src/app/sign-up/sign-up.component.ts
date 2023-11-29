@@ -24,12 +24,13 @@ export class SignUpComponent {
   user_name_error: boolean = false
 
   dataChanged() {
-    this.email_valid = this.regexEmail.test(this.user_email)
+    
 
   }
 
 
   async signUp() {
+    this.email_valid = this.regexEmail.test(this.user_email)
     if (this.password_1 === this.password_2 && this.password_1.length > 0) this.pw_not_match = false
     else this.pw_not_match = true
     if (this.user_name.length === 0) this.user_name_error = true
@@ -48,6 +49,7 @@ export class SignUpComponent {
   inputFocus(inputfield: string) {
     if(inputfield == 'name') this.user_name_error = false
     if ( inputfield == 'password') this.pw_not_match = false
+    if ( inputfield == 'email') this.email_valid = true
   }
 
 }

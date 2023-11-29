@@ -6,7 +6,7 @@
             <span *ngIf="user_name_error"class="error">Please enter a name</span>
         </div>
         <div class="input_div">
-            <input [class.invalid]="!email_valid" type="email" placeholder="Email" [(ngModel)]="user_email" (ngModelChange)="dataChanged()">
+            <input [class.invalid]="!email_valid" type="email" placeholder="Email" [(ngModel)]="user_email" (ngModelChange)="dataChanged()" (focus)="inputFocus('email')">
             <span *ngIf="!email_valid" class="error">Please enter a valid email</span>
         </div>
         <div class="input_div">
@@ -16,7 +16,7 @@
             <input [class.invalid]="pw_not_match" type="password" placeholder="Confirm Password" [(ngModel)]="password_2" (ngModelChange)="dataChanged()" (focus)="inputFocus('password')">
             <span *ngIf="pw_not_match" class="error">The password does not match</span>
         </div>
-        <div (click)="signUp()" class="button" [class.invalid_button]="!email_valid">
+        <div (click)="signUp()" class="button">
             <span>Sign up</span>
         </div>
     </div>
