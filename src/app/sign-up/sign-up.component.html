@@ -1,1 +1,30 @@
-<p>sign-up works!</p>
+<div *ngIf="!auth.signup_successfull" class="main">
+    <div class="form">
+        <span class="headline">Sign Up</span>
+        <div class="input_div">
+            <input [class.invalid]="user_name_error" type="text" placeholder="Username" maxlength="30" [(ngModel)]="user_name" (ngModelChange)="dataChanged()" (focus)="inputFocus('name')">
+            <span *ngIf="user_name_error"class="error">Please enter a name</span>
+        </div>
+        <div class="input_div">
+            <input [class.invalid]="!email_valid" type="email" placeholder="Email" [(ngModel)]="user_email" (ngModelChange)="dataChanged()">
+            <span *ngIf="!email_valid" class="error">Please enter a valid email</span>
+        </div>
+        <div class="input_div">
+            <input type="password" placeholder="Password" [(ngModel)]="password_1" (ngModelChange)="dataChanged()" (focus)="inputFocus('password')">
+        </div>
+        <div class="input_div">
+            <input [class.invalid]="pw_not_match" type="password" placeholder="Confirm Password" [(ngModel)]="password_2" (ngModelChange)="dataChanged()" (focus)="inputFocus('password')">
+            <span *ngIf="pw_not_match" class="error">The password does not match</span>
+        </div>
+        <div (click)="signUp()" class="button" [class.invalid_button]="!email_valid">
+            <span>Sign up</span>
+        </div>
+    </div>
+</div>
+<div *ngIf="auth.signup_successfull" class="main message">
+    <span class="headline">E-mail confirmation</span>
+    <span class="description" >
+        We have sent you an email to activate your account. Please click on the confirmation link in the message.
+        Thank you.
+    </span>
+</div>

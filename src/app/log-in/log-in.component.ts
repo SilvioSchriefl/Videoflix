@@ -17,8 +17,6 @@ export class LogInComponent {
   user_email!: string
 
   dataChanged() {
-    console.log('test');
-    
     this.email_valid = this.regexEmail.test(this.user_email)
   }
 

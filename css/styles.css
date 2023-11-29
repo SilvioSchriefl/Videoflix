@@ -26,5 +26,4 @@ input:-webkit-autofill:focus {
 .invalid_button {
   cursor: not-allowed !important;
   background-color: #686868 !important;
-  pointer-events: none;
 }/*# sourceMappingURL=styles.css.map */

@@ -22,4 +22,37 @@ input:-webkit-autofill:focus
 .invalid_button
     cursor: not-allowed !important
     background-color: #686868 !important
-    pointer-events: none
+
+.button
+    font-size: 16px
+    font-weight: 400
+    height: 48px
+    border-radius: 5px
+    background: rgb(229, 9, 20)
+    color: #fff
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    &:hover
+        transition: 150ms
+        background: rgb(193, 17, 25)
+
+.main
+    background: rgb(0 0 0 / 80%)
+    border-radius: 20px
+    padding: 25px
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.46)
+
+.headline
+    color: #fff
+    font-size: 48px
+    font-weight: 700
+
+.shadow
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.9) 100%)
+    position: absolute
+    top: 0
+    left: 0
+    height: 100vh
+    width: 100%
