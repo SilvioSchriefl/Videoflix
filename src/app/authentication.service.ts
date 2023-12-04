@@ -1,0 +1,79 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from './enviroments/enviroments';
+import { lastValueFrom } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthenticationService {
+
+  token: string = ''
+  error_text: string = ''
+  request_fail: boolean = false
+  request_successfull: boolean = false
+  loading: boolean = false
+
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+
+  async signUp(body: { password: string; user_name: string; email: string; }) {
+    const url = environment.baseUrl + 'register/';
+    try {
+      let response = await lastValueFrom(this.http.post(url, body));
+      console.log(response);
+      this.request_successfull = true
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
+
+
+  async signIn(body: { password: string; email: string }) {
+    const url = environment.baseUrl + 'log_in/';
+    try {
+      let response: any = await lastValueFrom(this.http.post(url, body));
+      console.log(response);
+      localStorage.setItem('token', response.token);
+      this.token = response.token;
+      this.request_successfull = true
+    } catch (error: any) {
+      console.log(error);
+      if (error.error.detail) this.error_text = error.error.detail
+      else this.error_text = 'Error in the request'
+      this.request_fail = true
+
+    }
+  }
+
+
+  async requestResetPassword(body: any) {
+    const url = environment.baseUrl + 'request_reset_password/';
+    try {
+      let response: any = await lastValueFrom(this.http.post(url, body));
+      console.log(response);
+      this.request_successfull = true
+    } catch (error: any) {
+      this.request_fail = true
+      if (error.error.detail) this.error_text = 'No user found with this email address'
+      else this.error_text = 'Error in the request'
+    }
+  }
+
+
+  async setNewPassword(body: any) {
+    const url = environment.baseUrl + 'set_password/';
+    try {
+      let response: any = await lastValueFrom(this.http.post(url, body));
+      console.log(response);
+      this.request_successfull = true
+    } catch (error: any) {
+      this.request_fail = true
+      this.error_text = 'Error in the request'
+    }
+  }
+}
+
+

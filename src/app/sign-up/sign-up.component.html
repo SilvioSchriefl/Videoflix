@@ -1,0 +1,40 @@
+<div *ngIf="!auth.request_successfull" class="main">
+    <div class="form">
+        <span class="sub_headline">Sign Up</span>
+        <div class="input_div">
+            <input [class.invalid]="user_name_error" type="text" placeholder="Username" maxlength="30" [(ngModel)]="user_name"  (focus)="inputFocus('name')">
+            <span *ngIf="user_name_error"class="error">Please enter a name</span>
+        </div>
+        <div class="input_div">
+            <input [class.invalid]="!email_valid" type="email" placeholder="Email" [(ngModel)]="user_email"  (focus)="inputFocus('email')">
+            <span *ngIf="!email_valid" class="error">Please enter a valid email</span>
+        </div>
+        <div class="input_div">
+            <input type="password" placeholder="Password" [(ngModel)]="password_1"  (focus)="inputFocus('password')">
+            <span *ngIf="password_1.length < 8" class="error"> 8 characters </span>
+        </div>
+        <div class="input_div">
+            <input [class.invalid]="pw_not_match" type="password" placeholder="Confirm Password" [(ngModel)]="password_2" (focus)="inputFocus('password')">
+            <span *ngIf="pw_not_match" class="error">The password does not match</span>
+        </div>
+        <div (click)="signUp()" class="button">
+            <span *ngIf="!auth.loading" >Sign up</span>
+            <div *ngIf="auth.loading" class="loader"></div>
+        </div>
+        <div class="go_to">
+            <span>Back to </span>
+            <span (click)="goToLogin()" >Log in</span> 
+        </div>
+    </div>
+</div>
+<div *ngIf="auth.request_successfull" class="main message">
+    <span class="headline">E-mail confirmation</span>
+    <span class="description" >
+        We have sent you an email to activate your account. Please click on the confirmation link in the message.
+        Thank you.
+    </span>
+    <div class="go_to">
+        <span>Back to</span>
+        <span (click)="goToLogin()" >Sign in.</span> 
+    </div>
+</div>

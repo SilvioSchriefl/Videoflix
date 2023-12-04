@@ -1,0 +1,24 @@
+
+<div class="main">
+    <div class="form" >
+        <span class="sub_headline">Sign In</span>
+        <div class="input_div">
+            <input [class.invalid]="!email_valid" type="email" placeholder="Email" [(ngModel)]="user_email" (ngModelChange)="dataChanged()" (focus)="inputFocus()">
+            <span *ngIf="!email_valid" class="error">Please enter a valid email</span>
+        </div>
+        <input type="password" placeholder="Password" [(ngModel)]="user_password" (focus)="inputFocus()">
+        <div (click)="signIn()" class="button">
+            <span *ngIf="!auth.loading">Sign in</span>
+            <div *ngIf="auth.loading" class="loader"></div>
+        </div>
+        <div class="go_to">
+            <span>New to Videoflix?</span>
+            <span (click)="goToSignUp()" >Sign up now.</span> 
+        </div>
+        <div class="go_to">
+            <span>Forgott</span>
+            <span (click)="goToResetPassword()">Password?</span> 
+        </div>
+        <span class="error_text" *ngIf="auth.request_fail">{{auth.error_text}}</span>
+    </div>
+</div>

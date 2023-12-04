@@ -1,0 +1,120 @@
+body
+    margin: 0
+    font-family: 'Nunito Sans', sans-serif
+
+input
+    width: 400px
+    outline: none
+    color: #fff
+    background: #333
+    border-radius: 3px
+    box-sizing: border-box
+    height: 48px
+    padding-left: 21px
+    &::-webkit-input-placeholder
+        color: #707C7F
+        font-size: 20px
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus
+    transition: background-color 0s 600000s, color 0s 600000s
+
+
+*
+    scrollbar-width: auto
+    scrollbar-color: #8f54a0 #ffffff
+
+  
+*::-webkit-scrollbar
+    width: 0px
+
+*::-webkit-scrollbar-track
+    background: #ffffff
+
+*::-webkit-scrollbar-thumb
+    background-color: #8f54a0
+    border-radius: 10px
+    border: 3px solid #ffffff
+
+.invalid_button
+    cursor: not-allowed !important
+    background-color: #686868 !important
+
+.button
+    font-size: 16px
+    font-weight: 400
+    height: 48px
+    border-radius: 5px
+    background: rgb(229, 9, 20)
+    color: #fff
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    &:hover
+        transition: 150ms
+        background: rgb(193, 17, 25)
+
+.main
+    background: rgb(0 0 0 / 80%)
+    border-radius: 20px
+    padding: 25px
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.46)
+    width: fit-content
+
+.sub_headline
+    color: #fff
+    font-size: 48px
+    font-weight: 700
+
+.shadow
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.9) 100%)
+    position: absolute
+    top: 0
+    left: 0
+    height: 100vh
+    width: 100%
+    background-color: rgba(0, 0, 0, 0.5)
+
+.go_to
+    color: #71736E
+    display: flex
+    gap: 10px
+    :nth-child(2)
+        color: #fff
+        cursor: pointer
+        &:hover
+            transition: 150ms
+            text-decoration: underline
+
+.error_text
+    color: red
+
+.successfully_text
+    color: #48d805
+
+.invalid
+    border-bottom: 2px solid #D87405
+
+.error
+    position: absolute
+    top: 50px
+    left: 0
+    color: #D87405
+
+.input_div
+    position: relative
+
+.loader
+    border: 5px solid #f3f3f3
+    border-top: 5px solid #71736E
+    border-radius: 50%
+    width: 20px
+    height: 20px
+    animation: spin 2s linear infinite
+
+@keyframes spin
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(360deg)
