@@ -17,8 +17,8 @@
                     <img  src="/assets/img/back-right.png" alt="">
                 </div>
                 <div class="scroll" #scrollDiv (mouseover)="hover = true" (mouseout)="hover = false">
-                    <div *ngFor="let item of [].constructor(11); let i = index" class="video_thumbnail">
-                        <img src="/assets/video/Trending/thumbnail{{i + 1}}.jpg" alt="" >
+                    <div *ngFor="let thumbnail of  content.thumbnails; let i = index" class="video_thumbnail">
+                        <img [src]="url + thumbnail.thumbnail" alt="" >
                         <video #video class="video_player" src="/assets/video/Trending/{{i + 1}}.mp4" onmouseover="this.play()" loop (click)="toggleFullScreen()"></video>
                     </div>
                 </div>

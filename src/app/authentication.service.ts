@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from './enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
+import { ContentService } from './content.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
+    public content: ContentService
   ) { }
 
 
@@ -37,8 +39,10 @@ export class AuthenticationService {
       let response: any = await lastValueFrom(this.http.post(url, body));
       console.log(response);
       localStorage.setItem('token', response.token);
+      localStorage.setItem('user_name', response.user_name);
       this.token = response.token;
       this.request_successfull = true
+      await this.content.getThumbnails();
     } catch (error: any) {
       console.log(error);
       if (error.error.detail) this.error_text = error.error.detail

@@ -1,16 +1,31 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { environment } from '../enviroments/enviroments';
+import { lastValueFrom } from 'rxjs';
+import { ContentService } from '../content.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   @ViewChild('scrollDiv') scrollDiv!: ElementRef;
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
-  thumnnails = []
   hover: boolean = false
+  url: string = environment.baseUrl
+
+
+  constructor(
+    public content: ContentService
+  ) { }
+
+
+  async ngOnInit(): Promise<void> {
+  await this.content.getThumbnails()
+}
+
 
 
 
@@ -51,7 +66,7 @@ export class HomeComponent {
   };
 
 
-  
+
   toggleFullScreen(): void {
     const videoElement = this.video.nativeElement;
     if (videoElement) {
