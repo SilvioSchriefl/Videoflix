@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
+import { ContentService } from '../content.service';
 
 @Component({
   selector: 'app-log-in',
@@ -9,13 +10,22 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class LogInComponent implements OnInit {
 
+  token: string = ''
+
   constructor(
     private router: Router,
-    public auth: AuthenticationService
+    public auth: AuthenticationService,
+    public content: ContentService
   ) { }
 
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+   let token = localStorage.getItem('token');
+   if (token) {
+    this.auth.token = token;
+    this.router.navigateByUrl('home')
+   }
+    
     this.auth.request_fail = false
     this.auth.request_successfull = false
   }

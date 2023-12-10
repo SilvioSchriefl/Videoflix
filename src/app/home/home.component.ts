@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { ContentService } from '../content.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-home',
@@ -12,21 +13,25 @@ import { ContentService } from '../content.service';
 export class HomeComponent implements OnInit {
 
   @ViewChild('scrollDiv') scrollDiv!: ElementRef;
-  @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
+  @ViewChild('full_video') fullVideo!: ElementRef<HTMLVideoElement>
   hover: boolean = false
   url: string = environment.baseUrl
+  loading_index: number = 0
+  open_video: boolean = false
+
 
 
   constructor(
-    public content: ContentService
+    public auth: AuthenticationService,
+    public content: ContentService,
   ) { }
 
 
   async ngOnInit(): Promise<void> {
-  await this.content.getThumbnails()
-}
-
-
+    let token = localStorage.getItem('token')
+    if (token) await this.content.getThumbnails()
+    if (this.auth.token) await this.content.getThumbnails()
+  }
 
 
   easeInOut(t: number, b: number, c: number, d: number): number {
@@ -66,9 +71,8 @@ export class HomeComponent implements OnInit {
   };
 
 
-
-  toggleFullScreen(): void {
-    const videoElement = this.video.nativeElement;
+  playVideo() {
+    const videoElement = this.fullVideo.nativeElement;
     if (videoElement) {
       if (videoElement.requestFullscreen) {
         videoElement.requestFullscreen();
@@ -78,4 +82,22 @@ export class HomeComponent implements OnInit {
     }
   }
 
+
+  async loadFullsizeVideo(video_id: number) {
+    this.content.loading = true;
+    await this.content.getVideo(video_id)
+    this.content.loading = false;
+    this.playVideo()
+  }
+
+
+  async getPreviewVideoUrl(video_id: number, index: number, video: HTMLVideoElement) {
+    this.loading_index = index
+    this.content.loading = true;
+    await this.content.getVideo480p(video_id)
+    this.content.loading = false;
+    video.addEventListener('loadedmetadata', () => {
+      video.play();
+    });
+  }
 }

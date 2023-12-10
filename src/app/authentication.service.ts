@@ -22,7 +22,7 @@ export class AuthenticationService {
 
 
   async signUp(body: { password: string; user_name: string; email: string; }) {
-    const url = environment.baseUrl + 'register/';
+    const url = environment.baseUrl + '/register/';
     try {
       let response = await lastValueFrom(this.http.post(url, body));
       console.log(response);
@@ -34,7 +34,7 @@ export class AuthenticationService {
 
 
   async signIn(body: { password: string; email: string }) {
-    const url = environment.baseUrl + 'log_in/';
+    const url = environment.baseUrl + '/log_in/';
     try {
       let response: any = await lastValueFrom(this.http.post(url, body));
       console.log(response);
@@ -54,7 +54,7 @@ export class AuthenticationService {
 
 
   async requestResetPassword(body: any) {
-    const url = environment.baseUrl + 'request_reset_password/';
+    const url = environment.baseUrl + '/request_reset_password/';
     try {
       let response: any = await lastValueFrom(this.http.post(url, body));
       console.log(response);
@@ -68,7 +68,7 @@ export class AuthenticationService {
 
 
   async setNewPassword(body: any) {
-    const url = environment.baseUrl + 'set_password/';
+    const url = environment.baseUrl + '/set_password/';
     try {
       let response: any = await lastValueFrom(this.http.post(url, body));
       console.log(response);

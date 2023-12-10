@@ -17,16 +17,18 @@
                     <img  src="/assets/img/back-right.png" alt="">
                 </div>
                 <div class="scroll" #scrollDiv (mouseover)="hover = true" (mouseout)="hover = false">
-                    <div *ngFor="let thumbnail of  content.thumbnails; let i = index" class="video_thumbnail">
-                        <img [src]="url + thumbnail.thumbnail" alt="" >
-                        <video #video class="video_player" src="/assets/video/Trending/{{i + 1}}.mp4" onmouseover="this.play()" loop (click)="toggleFullScreen()"></video>
+                    <div *ngFor="let thumbnail of  content.thumbnails; let i = index" class="video_thumbnail" >
+                        <img [src]="thumbnail.file_url"  >
+                        <video  #video class="video_player" [src]="content.preview_video_url" (mouseenter)="getPreviewVideoUrl(thumbnail.video, i, video)" loop (click)="loadFullsizeVideo(thumbnail.video)"></video>
+                        <div *ngIf="content.loading && loading_index == i" class="video_loader"></div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 </div>
-<video autoplay muted loop>
+<video  #full_video  [src]="content.fullsize_video_url"></video>
+<video class="background_video" autoplay muted loop>
     <source src="/assets/video/background.mp4" type="video/mp4">
 </video>
 <div class="overlay"></div>
