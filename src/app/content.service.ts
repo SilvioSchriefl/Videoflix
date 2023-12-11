@@ -35,9 +35,7 @@ export class ContentService {
     let url = environment.baseUrl + '/video_preview/' + id + '/'
     try {
       let response:any = await lastValueFrom(this.http.get(url))
-      this.preview_video_url = response.video_url
-      console.log(response);
-      
+      this.preview_video_url = response.video_url  
     }
     catch(error) {
       console.log(error);     

@@ -17,9 +17,9 @@
                     <img  src="/assets/img/back-right.png" alt="">
                 </div>
                 <div class="scroll" #scrollDiv (mouseover)="hover = true" (mouseout)="hover = false">
-                    <div *ngFor="let thumbnail of  content.thumbnails; let i = index" class="video_thumbnail" >
-                        <img [src]="thumbnail.file_url"  >
-                        <video  #video class="video_player" [src]="content.preview_video_url" (mouseenter)="getPreviewVideoUrl(thumbnail.video, i, video)" loop (click)="loadFullsizeVideo(thumbnail.video)"></video>
+                    <div *ngFor="let thumbnail of  content.thumbnails; let i = index" class="video_thumbnail">
+                        <img [src]="thumbnail.file_url" (mouseenter)="getPreviewVideoUrl(thumbnail.video, i)" class="thumbnail">
+                        <video #video class="video_player" [class.show_video]="content.video_loaded && loading_index == i" [src]="content.preview_video_url + '?' + randomQueryString"  loop (click)="loadFullsizeVideo(thumbnail.video)" (mouseout)="closePreviewVideo()" (loadeddata)="onVideoLoaded(video)"></video>
                         <div *ngIf="content.loading && loading_index == i" class="video_loader"></div>
                     </div>
                 </div>

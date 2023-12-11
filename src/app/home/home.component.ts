@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit {
   url: string = environment.baseUrl
   loading_index: number = 0
   open_video: boolean = false
+  randomQueryString: string = ''
+
 
 
 
@@ -91,13 +93,26 @@ export class HomeComponent implements OnInit {
   }
 
 
-  async getPreviewVideoUrl(video_id: number, index: number, video: HTMLVideoElement) {
+  async getPreviewVideoUrl(video_id: number, index: number) {
+    this.randomQueryString = Math.random().toString(36).substring(7);
     this.loading_index = index
     this.content.loading = true;
     await this.content.getVideo480p(video_id)
+  }
+
+
+  onVideoLoaded(video: HTMLVideoElement) {
+    this.content.video_loaded = true;
+    console.log(this.loading_index);
+
+    video.play();
     this.content.loading = false;
-    video.addEventListener('loadedmetadata', () => {
-      video.play();
-    });
+    
+  }
+
+
+  closePreviewVideo() {
+    this.content.video_loaded = false;
+    this.content.loading = false
   }
 }
