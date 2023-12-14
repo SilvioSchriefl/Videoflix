@@ -1,33 +1,25 @@
 <header>
-    <div class="logo">
-        <img src="/assets/img/logo.png" alt="">
-        <span>VideoFlix</span>
-    </div>
-    <img src="/assets/img/account.png" alt="">
+    <app-header></app-header>
 </header>
+
 <div class="main_home">
-    <div class="content">
-        <section>
-            <span class="section_heaadline">Trending</span>
-            <div class="video_content">
-                <div class="arrow_div_left" [class.show_arrow]="hover" (click)="smoothScrollBy(-720)" (mouseover)="hover = true" (mouseout)="hover = false">
-                    <img src="/assets/img/back.png" alt="">
-                </div>
-                <div  class="arrow_div_right" (click)="smoothScrollBy(+720)" [class.show_arrow]="hover" (mouseover)="hover = true" (mouseout)="hover = false">
-                    <img  src="/assets/img/back-right.png" alt="">
-                </div>
-                <div class="scroll" #scrollDiv (mouseover)="hover = true" (mouseout)="hover = false">
-                    <div *ngFor="let thumbnail of  content.thumbnails; let i = index" class="video_thumbnail">
-                        <img [src]="thumbnail.file_url" (mouseenter)="getPreviewVideoUrl(thumbnail.video, i)" class="thumbnail">
-                        <video #video class="video_player" [class.show_video]="content.video_loaded && loading_index == i" [src]="content.preview_video_url + '?' + randomQueryString"  loop (click)="loadFullsizeVideo(thumbnail.video)" (mouseout)="closePreviewVideo()" (loadeddata)="onVideoLoaded(video)"></video>
-                        <div *ngIf="content.loading && loading_index == i" class="video_loader"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+    <section>
+        <span class="section_heaadline">Trending</span>
+        <app-image-slider [input_data]="content.trending_movies"></app-image-slider>
+    </section>
+    <section>
+        <span class="section_heaadline">Action</span>
+        <app-image-slider [input_data]="content.action_movies"></app-image-slider>
+    </section>
+    <section>
+        <span class="section_heaadline">Animation</span>
+        <app-image-slider [input_data]="content.animation_movies"></app-image-slider>
+    </section>
+    <section>
+        <span class="section_heaadline">Adventure</span>
+        <app-image-slider [input_data]="content.adventure_movies"></app-image-slider>
+    </section>
 </div>
-<video  #full_video  [src]="content.fullsize_video_url"></video>
 <video class="background_video" autoplay muted loop>
     <source src="/assets/video/background.mp4" type="video/mp4">
 </video>

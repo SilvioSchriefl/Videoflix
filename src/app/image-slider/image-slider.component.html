@@ -1,0 +1,17 @@
+<section>
+    <div class="arrow_div_left" [class.show_arrow]="hover"  (mouseover)="hover = true"
+        (mouseout)="hover = false" (click)="scrollLeft()">
+        <img src="/assets/img/back.png" alt="">
+    </div>
+    <div class="arrow_div_right"  [class.show_arrow]="hover" (mouseover)="hover = true " (click)="scrollRight()"
+        (mouseout)="hover = false">
+        <img src="/assets/img/back-right.png" alt="">
+    </div>
+    <div class="image_slider_main">
+        <div #scroll_div class="image_slider_scroll" (mouseover)="hover = true" (mouseout)="hover = false">
+            <div *ngFor="let result of input_data" class="image" (click)="content.getMovieVideo(result.id)">
+                <img [src]="content.imageBase_url + result.poster_path" alt="">
+            </div>
+        </div>
+    </div>
+</section>

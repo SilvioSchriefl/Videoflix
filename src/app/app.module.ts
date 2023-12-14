@@ -14,6 +14,9 @@ import { AuthenticationService } from './authentication.service';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
 import { HomeComponent } from './home/home.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { ImageSliderComponent } from './image-slider/image-slider.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { HomeComponent } from './home/home.component';
     EmailConfirmedComponent,
     ResetPasswordComponent,
     SetNewPasswordComponent,
-    HomeComponent
+    HomeComponent,
+    FooterComponent,
+    HeaderComponent,
+    ImageSliderComponent
   ],
   imports: [
     HttpClientModule,

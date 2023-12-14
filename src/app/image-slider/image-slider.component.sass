@@ -1,0 +1,68 @@
+.image_slider_scroll
+    display: flex
+    gap: 25px
+    overflow-x: auto
+    padding: 20px 0
+    img
+        top: 0
+        width: 300px
+        border-radius: 5px
+        cursor: pointer
+        transform: scale(1)
+        transition: 150ms
+        &:hover
+
+            transform: scale(1.05)
+
+.image_slider_main
+    width: 100%
+    overflow: hidden
+    height: 494px
+
+section
+    position: relative
+
+.arrow_div_right
+    z-index: 5
+    transition: 200ms
+    opacity: 0
+    display: flex
+    align-items: center
+    justify-content: center
+    position: absolute
+    right: 0
+    top: calc( 50% - 227px )
+    cursor: pointer
+    height: 450px
+    background-color: rgb(0, 0 ,0, 0.8)
+    img
+        transform: scale(1)
+        transition: 200ms
+    &:hover
+        img
+            transform: scale(1.1)
+
+.arrow_div_left
+    z-index: 5
+    transition: 200ms
+    opacity: 0
+    display: flex
+    align-items: center
+    justify-content: center
+    position: absolute
+    left: 0
+    top: calc( 50% - 227px )
+    cursor: pointer
+    height: 450px
+    background-color: rgb(0, 0 ,0, 0.8)
+    img
+        transform: scale(1)
+        transition: 200ms
+    &:hover
+        img
+            transform: scale(1.1)
+
+.show_arrow
+    transition: 200ms
+    opacity: 1
+    

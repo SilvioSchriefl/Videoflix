@@ -12,9 +12,8 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class HomeComponent implements OnInit {
 
-  @ViewChild('scrollDiv') scrollDiv!: ElementRef;
+  
   @ViewChild('full_video') fullVideo!: ElementRef<HTMLVideoElement>
-  hover: boolean = false
   url: string = environment.baseUrl
   loading_index: number = 0
   open_video: boolean = false
@@ -30,9 +29,9 @@ export class HomeComponent implements OnInit {
 
 
   async ngOnInit(): Promise<void> {
+    await this.content.getMovieByGenres()
+    await this.content.getTrendingMovies()
     let token = localStorage.getItem('token')
-    if (token) await this.content.getThumbnails()
-    if (this.auth.token) await this.content.getThumbnails()
   }
 
 
@@ -43,29 +42,7 @@ export class HomeComponent implements OnInit {
     return (-c / 2) * (t * (t - 2) - 1) + b;
   }
 
-  smoothScrollBy(amount: number) {
-    const startTime = performance.now();
-    const startScrollLeft = this.scrollDiv.nativeElement.scrollLeft;
-    const scroll = (timestamp: number) => {
-      const elapsed = timestamp - startTime;
-      const nextScrollLeft = this.easeInOut(elapsed, startScrollLeft, amount, 100);
-      if (elapsed < 100) {
-        this.scrollDiv.nativeElement.scrollLeft = nextScrollLeft;
-        requestAnimationFrame(scroll);
-      }
-    };
-    requestAnimationFrame(scroll);
-  }
 
-
-  scrollToLeft() {
-    this.scrollDiv.nativeElement.scrollLeft += 360;
-  }
-
-
-  scrollToRight() {
-    this.scrollDiv.nativeElement.scrollLeft -= 360;
-  }
 
 
   stopPropagation(event: Event) {

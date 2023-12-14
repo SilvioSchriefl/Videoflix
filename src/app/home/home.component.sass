@@ -8,6 +8,7 @@
     gap: 20px
 
 .main_home
+    overflow-y: auto
     position: absolute
     top: 0
     left: 0
@@ -19,24 +20,12 @@
     padding-right: 50px
     box-sizing: border-box
 
+
 .section_heaadline
     color: #fff
     font-size: 47px
     font-weight: 700
 
-header
-    box-sizing: border-box
-    display: flex
-    justify-content: space-between
-    width: 100%
-    padding: 50px
-    position: absolute
-    top: 0
-    left: 0
-    z-index: 1
-    img
-        width: 50px
-        height: 50px
 
 .background_video
     position: absolute
@@ -61,59 +50,6 @@ header
     width: 100%
     overflow: hidden
     height: 312px
-
-.arrow_div_right
-    z-index: 5
-    transition: 200ms
-    opacity: 0
-    display: flex
-    align-items: center
-    justify-content: center
-    position: absolute
-    right: 0
-    top: 54px
-    cursor: pointer
-    height: 201px
-    background-color: rgb(0, 0 ,0, 0.8)
-    img
-        transform: scale(1)
-        transition: 200ms
-    &:hover
-        img
-            transform: scale(1.1)
-
-.arrow_div_left
-    z-index: 5
-    transition: 200ms
-    opacity: 0
-    display: flex
-    align-items: center
-    justify-content: center
-    position: absolute
-    left: 0
-    top: 54px
-    cursor: pointer
-    height: 201px
-    background-color: rgb(0, 0 ,0, 0.8)
-    img
-        transform: scale(1)
-        transition: 200ms
-    &:hover
-        img
-            transform: scale(1.1)
-
-.scroll
-    align-items: center
-    scroll-behavior: smooth
-    height: 330px
-    width: 100%
-    overflow-x: auto
-    gap: 20px
-    display: flex
-
-.show_arrow
-    transition: 200ms
-    opacity: 1
 
 .video_thumbnail
     position: relative
