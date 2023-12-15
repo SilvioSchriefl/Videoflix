@@ -10,7 +10,11 @@ import { ContentService } from '../content.service';
 })
 export class LogInComponent implements OnInit {
 
-  token: string = ''
+  regexEmail = new RegExp('^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$');
+  email_valid: boolean = true
+  user_email!: string
+  user_password: string = ''
+
 
   constructor(
     private router: Router,
@@ -21,19 +25,15 @@ export class LogInComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
    let token = localStorage.getItem('token');
-   if (token) {
+   if (token)  {
     this.auth.token = token;
     this.router.navigateByUrl('home')
    }
-    
     this.auth.request_fail = false
     this.auth.request_successfull = false
   }
 
-  regexEmail = new RegExp('^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$');
-  email_valid: boolean = true
-  user_email!: string
-  user_password: string = ''
+
 
   dataChanged() {
     this.email_valid = this.regexEmail.test(this.user_email)

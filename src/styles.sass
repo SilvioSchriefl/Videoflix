@@ -60,6 +60,14 @@ input:-webkit-autofill:focus
     border-radius: 10px
     border: 3px solid #ffffff
 
+section
+    z-index: 1
+    position: relative
+    display: flex
+    flex-direction: column
+    gap: 50px
+    margin: 0 50px
+
 .invalid_button
     cursor: not-allowed !important
     background-color: #686868 !important
@@ -80,10 +88,10 @@ input:-webkit-autofill:focus
         background: rgb(193, 17, 25)
 
 .main
-    background: rgb(0 0 0 / 80%)
+    background: rgb(0 0 0 / 60%)
     border-radius: 20px
-    padding: 25px
-    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.46)
+    padding: 20px
+    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.26)
     width: fit-content
 
 .sub_headline
@@ -92,13 +100,13 @@ input:-webkit-autofill:focus
     font-weight: 700
 
 .shadow
-    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.9) 100%)
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.2) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.2) 100%)
     position: absolute
     top: 0
     left: 0
     height: 100vh
     width: 100%
-    background-color: rgba(0, 0, 0, 0.5)
+    background-color: rgba(0, 0, 0, 0.2)
 
 .go_to
     color: #71736E

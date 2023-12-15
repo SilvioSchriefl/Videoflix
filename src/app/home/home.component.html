@@ -2,8 +2,23 @@
     <app-header></app-header>
 </header>
 
+
+
 <div class="main_home">
-    <section>
+    
+    <div class="slider_div">
+        <div *ngFor="let element of content.trending_movies; let i = index"
+            [@fadeInOut]="i === current_slide_index ? 'visible' : 'hidden'" class="slider_item">
+            <img [src]="content.imageSlider_url + element.backdrop_path" alt="Slide {{ i + 1 }}" />
+        </div>
+        <div class="overlay"></div>
+        <div class="overlay_left"></div>
+        <div  class="slider_movie_details">
+            <img [src]="slider_logo_url">
+            <span>{{overview}}</span>
+        </div>
+    </div>
+    <section class="section">
         <span class="section_heaadline">Trending</span>
         <app-image-slider [input_data]="content.trending_movies"></app-image-slider>
     </section>
@@ -20,7 +35,5 @@
         <app-image-slider [input_data]="content.adventure_movies"></app-image-slider>
     </section>
 </div>
-<video class="background_video" autoplay muted loop>
-    <source src="/assets/video/background.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
+
+

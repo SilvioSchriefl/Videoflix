@@ -4,20 +4,32 @@ import { environment } from '../enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { ContentService } from '../content.service';
 import { AuthenticationService } from '../authentication.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.sass']
+  styleUrls: ['./home.component.sass'],
+  animations: [
+    trigger('fadeInOut', [
+      state('visible', style({ opacity: 1 })),
+      state('hidden', style({ opacity: 0 })),
+      transition('visible => hidden', animate('1000ms ease-out')),
+      transition('hidden => visible', animate('1000ms ease-in')),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
 
-  
+
   @ViewChild('full_video') fullVideo!: ElementRef<HTMLVideoElement>
   url: string = environment.baseUrl
   loading_index: number = 0
   open_video: boolean = false
   randomQueryString: string = ''
+  current_slide_index: number = 0
+  slider_logo_url: string = ''
+  overview: string = ''
 
 
 
@@ -31,15 +43,16 @@ export class HomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.content.getMovieByGenres()
     await this.content.getTrendingMovies()
+    await this.content.getSlideMovieDetails()
+    this.slider_logo_url = this.content.imageBase_url + this.content.trending_movies_details[this.current_slide_index].images.logos[0].file_path
+    this.overview = this.content.trending_movies[this.current_slide_index].overview
     let token = localStorage.getItem('token')
-  }
-
-
-  easeInOut(t: number, b: number, c: number, d: number): number {
-    t /= d / 2;
-    if (t < 1) return (c / 2) * t * t + b;
-    t--;
-    return (-c / 2) * (t * (t - 2) - 1) + b;
+    setInterval(() => {
+      this.current_slide_index = (this.current_slide_index + 1) % this.content.trending_movies.length;
+      this.slider_logo_url = this.content.imageBase_url + this.content.trending_movies_details[this.current_slide_index].images.logos[0].file_path
+      this.overview = this.content.trending_movies[this.current_slide_index].overview
+    }, 8000);
+   
   }
 
 
@@ -84,7 +97,7 @@ export class HomeComponent implements OnInit {
 
     video.play();
     this.content.loading = false;
-    
+
   }
 
 
