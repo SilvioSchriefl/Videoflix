@@ -4,18 +4,44 @@
 
 
 
-<div class="main_home">
+
+<div *ngIf="play">
+    <iframe #youtubePlayer *ngIf="play" width="100%" [height]="height" [src]="video_url" frameborder="0" allowfullscreen></iframe>
+    <div (click)="closeVideo()" class="close_video">
+        <img src="/assets/img/back_video.png" alt="">
+    </div>
+</div>
     
+   
+    
+  
+
+
+
+<div class="main_home">
     <div class="slider_div">
-        <div *ngFor="let element of content.trending_movies; let i = index"
+        <div class="dummy">
+            <img *ngIf="content.popular_movies.length > 0"  [src]="content.imageSlider_url + content.popular_movies[0].backdrop_path" >
+        </div>
+        <div *ngFor="let element of content.popular_movies; let i = index"
             [@fadeInOut]="i === current_slide_index ? 'visible' : 'hidden'" class="slider_item">
-            <img [src]="content.imageSlider_url + element.backdrop_path" alt="Slide {{ i + 1 }}" />
+            <img *ngIf="element.backdrop_path" [src]="content.imageSlider_url + element.backdrop_path">
         </div>
         <div class="overlay"></div>
         <div class="overlay_left"></div>
         <div  class="slider_movie_details">
             <img [src]="slider_logo_url">
             <span>{{overview}}</span>
+        </div>
+        <div class="buttons">
+            <div class="play_button"  (click)="playYouTubeVideo(current_slide_index)">
+                <img src="/assets/img/play_black.png" alt="">
+                <span>Play</span>
+            </div>
+            <div class="info_button">
+                <img src="/assets/img/info.png" alt="">
+                <span>More Info</span>
+            </div>
         </div>
     </div>
     <section class="section">
@@ -33,6 +59,10 @@
     <section>
         <span class="section_heaadline">Adventure</span>
         <app-image-slider [input_data]="content.adventure_movies"></app-image-slider>
+    </section>
+    <section>
+        <span class="section_heaadline">Comedy</span>
+        <app-image-slider [input_data]="content.comedy_movies"></app-image-slider>
     </section>
 </div>
 

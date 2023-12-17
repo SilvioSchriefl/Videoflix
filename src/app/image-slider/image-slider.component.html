@@ -8,9 +8,12 @@
         <img src="/assets/img/back-right.png" alt="">
     </div>
     <div class="image_slider_main">
-        <div #scroll_div class="image_slider_scroll" (mouseover)="hover = true" (mouseout)="hover = false">
-            <div *ngFor="let result of input_data" class="image" (click)="content.getMovieVideo(result.id)">
+        <div #scroll_div class="image_slider_scroll">
+            <div *ngFor="let result of input_data; let i = index" class="image" (click)="content.getMovieVideo(result.id)"  (mouseover)="handleMouseOver(i)" (mouseout)="handleMouseOut()">
                 <img [src]="content.imageBase_url + result.poster_path" alt="">
+                <div [class.show_arrow]="hover && hover_index == i" class="info">
+                    test
+                </div>
             </div>
         </div>
     </div>

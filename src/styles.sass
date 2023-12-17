@@ -50,7 +50,8 @@ input:-webkit-autofill:focus
     scrollbar-color: #8f54a0 #ffffff
 
 *::-webkit-scrollbar
-    width: 0px
+    width: 0
+    height: 0
 
 *::-webkit-scrollbar-track
     background: #ffffff
@@ -144,6 +145,44 @@ section
     width: 20px
     height: 20px
     animation: spin 2s linear infinite
+
+.play_button
+    cursor: pointer
+    width: 150px
+    height: 50px
+    display: flex
+    align-items: center
+    justify-content: center
+    color: black
+    gap: 20px
+    background: #fff
+    border-radius: 5px
+    font-size: 19px
+    font-weight: 700
+    transition: 200ms
+    img
+        width: 30px !important
+    &:hover
+        background: #CFCECE
+
+.info_button
+    cursor: pointer
+    width: 150px
+    height: 50px
+    display: flex
+    align-items: center
+    justify-content: center
+    color: #fff
+    gap: 10px
+    background: #4F5156
+    border-radius: 5px
+    font-size: 19px
+    font-weight: 700
+    transition: 200ms
+    img
+        width: 30px !important
+    &:hover
+        background: #383E3E
 
 @keyframes spin
     0%

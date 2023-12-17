@@ -9,8 +9,8 @@ import { HttpClient } from '@angular/common/http';
 export class ContentService {
 
   genres = {
-    url: ['&with_genres=12', '&with_genres=28', '&with_genres=16'],
-    genre: ['adventure', 'action', 'animation']
+    url: ['&with_genres=12', '&with_genres=28', '&with_genres=16', '&with_genres=35'],
+    genre: ['adventure', 'action', 'animation' , 'comedy']
   }
   thumbnails: any = []
   preview_video_url: string = ''
@@ -21,10 +21,13 @@ export class ContentService {
   imageBase_url: string = 'https://image.tmdb.org/t/p/w500'
   imageSlider_url: string = 'https://image.tmdb.org/t/p/original'
   trending_movies: any = []
+  popular_movies: any = []
   action_movies: any = []
+  comedy_movies: any = []
   animation_movies: any = []
   adventure_movies: any = []
-  trending_movies_details: any = []
+  popular_movies_details: any = []
+  video_id: string = ''
 
 
   constructor(
@@ -80,6 +83,19 @@ export class ContentService {
     }
   }
 
+
+  async getPopularMovies() {
+    let url = "https://api.themoviedb.org/3/movie/popular?api_key=" + this.api_key 
+    try {
+      let response: any = await lastValueFrom(this.http.get(url))
+      console.log(response);
+      this.popular_movies = response.results
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   async getMovieByGenres() {
     for (let i = 0; i < this.genres.url.length; i++) {
       let genre_url = this.genres.url[i];
@@ -99,6 +115,7 @@ export class ContentService {
     if (genre == 'action') this.action_movies = response
     if (genre == 'animation') this.animation_movies = response
     if (genre == 'adventure') this.adventure_movies = response
+    if (genre == 'comedy') this.comedy_movies = response
   }
 
 
@@ -129,19 +146,41 @@ export class ContentService {
 
 
   async getSlideMovieDetails() {
-    for (let i = 0; i < this.trending_movies.length; i++) {
-      let movie = this.trending_movies[i];
+    for (let i = 0; i < this.popular_movies.length; i++) {
+      let movie = this.popular_movies[i];
       let movie_id = movie.id
       let url = 'https://api.themoviedb.org/3/movie/' + movie_id + '?api_key=' + this.api_key + '&append_to_response=videos,images'
       try {
-        let response = await lastValueFrom(this.http.get(url))
-       this.trending_movies_details.push(response)
+        let response:any = await lastValueFrom(this.http.get(url))
+        if(response.backdrop_path && response.images.logos.length > 0) this.popular_movies_details.push(response)
+       
       }
       catch (error) {
         console.log(error);
       }
     }
-    console.log(this.trending_movies_details[0]);
-    
+    console.log(this.popular_movies_details);
+  }
+
+
+  async getTrailer(slider_index: number) {
+    let movie_id = this.popular_movies_details[slider_index].id
+    let url = `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${this.api_key}&name=Official%20Trailer`;
+    try{
+      let response:any = await lastValueFrom(this.http.get(url))
+      this.settVideoId(response.results)
+    }
+    catch (error) {
+      console.log(error);
+    }   
+  }
+
+
+  settVideoId(trailer: any) {
+    trailer.forEach((trailer: any) => {
+      if( trailer.name == 'Official Trailer')  this.video_id = trailer.key
+    });
+    console.log(this.video_id);
+    if( !this.video_id) this.video_id = trailer[0].key
   }
 }

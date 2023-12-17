@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { ContentService } from '../content.service';
 import { AuthenticationService } from '../authentication.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
 
 
   @ViewChild('full_video') fullVideo!: ElementRef<HTMLVideoElement>
+  @ViewChild('youtubePlayer') youtubePlayer!: ElementRef ;
   url: string = environment.baseUrl
   loading_index: number = 0
   open_video: boolean = false
@@ -30,6 +32,9 @@ export class HomeComponent implements OnInit {
   current_slide_index: number = 0
   slider_logo_url: string = ''
   overview: string = ''
+  play: boolean = false
+  video_url!: SafeResourceUrl;
+  height = window.innerHeight 
 
 
 
@@ -37,22 +42,26 @@ export class HomeComponent implements OnInit {
   constructor(
     public auth: AuthenticationService,
     public content: ContentService,
-  ) { }
+    private sanitizer: DomSanitizer,
+  ) {}
+
 
 
   async ngOnInit(): Promise<void> {
+    await this.content.getPopularMovies()
+    await this.content.getSlideMovieDetails()
     await this.content.getMovieByGenres()
     await this.content.getTrendingMovies()
-    await this.content.getSlideMovieDetails()
-    this.slider_logo_url = this.content.imageBase_url + this.content.trending_movies_details[this.current_slide_index].images.logos[0].file_path
-    this.overview = this.content.trending_movies[this.current_slide_index].overview
+    this.slider_logo_url = this.content.imageBase_url + this.content.popular_movies_details[this.current_slide_index].images.logos[0].file_path
+    this.overview = this.content.popular_movies_details[this.current_slide_index].overview
     let token = localStorage.getItem('token')
     setInterval(() => {
-      this.current_slide_index = (this.current_slide_index + 1) % this.content.trending_movies.length;
-      this.slider_logo_url = this.content.imageBase_url + this.content.trending_movies_details[this.current_slide_index].images.logos[0].file_path
-      this.overview = this.content.trending_movies[this.current_slide_index].overview
-    }, 8000);
-   
+
+      this.current_slide_index = (this.current_slide_index + 1) % this.content.popular_movies_details.length;
+      this.slider_logo_url = this.content.imageBase_url + this.content.popular_movies_details[this.current_slide_index].images.logos[0].file_path
+      this.overview = this.content.popular_movies_details[this.current_slide_index].overview
+    }, 5000);
+
   }
 
 
@@ -72,6 +81,17 @@ export class HomeComponent implements OnInit {
         console.error('Fullscreen is not supported in this browser.');
       }
     }
+  }
+
+ async playYouTubeVideo(slider_index: number) {
+    await this.content.getTrailer(slider_index)
+    this.video_url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.content.video_id}?enablejsapi=1&autoplay=1&rel=0&controls=0&modestbranding=1&showinfo=0`);
+    this.play = true
+  }
+
+
+  closeVideo() {
+    this.play = false
   }
 
 

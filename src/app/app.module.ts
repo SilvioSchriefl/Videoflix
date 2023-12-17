@@ -18,6 +18,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { YoutubeVideoComponent } from './youtube-video/youtube-video.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     FooterComponent,
     HeaderComponent,
-    ImageSliderComponent
+    ImageSliderComponent,
+    YoutubeVideoComponent
   ],
   imports: [
     BrowserAnimationsModule,
