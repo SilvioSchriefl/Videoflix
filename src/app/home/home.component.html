@@ -1,16 +1,27 @@
 <header>
     <app-header></app-header>
+    <button (click)="startVideo()">play</button>
 </header>
 
 
 
-
+<!--
 <div *ngIf="play">
     <iframe #youtubePlayer *ngIf="play" width="100%" [height]="height" [src]="video_url" frameborder="0" allowfullscreen></iframe>
-    <div (click)="closeVideo()" class="close_video">
+   
+</div>
+-->
+
+<div  class="youtube_player">
+    <div (click)="closeVideo()" class="close_video" *ngIf="play">
         <img src="/assets/img/back_video.png" alt="">
     </div>
+    <div id="youtube-player"></div>
+    
 </div>
+
+
+
     
    
     
@@ -19,12 +30,13 @@
 
 
 <div class="main_home">
+  
     <div class="slider_div">
         <div class="dummy">
             <img *ngIf="content.popular_movies.length > 0"  [src]="content.imageSlider_url + content.popular_movies[0].backdrop_path" >
         </div>
-        <div *ngFor="let element of content.popular_movies; let i = index"
-            [@fadeInOut]="i === current_slide_index ? 'visible' : 'hidden'" class="slider_item">
+        <div *ngFor="let element of content.popular_movies_details; let i = index"
+            [@fadeInOut]="i === current_slide_index? 'visible' : 'hidden'" class="slider_item">
             <img *ngIf="element.backdrop_path" [src]="content.imageSlider_url + element.backdrop_path">
         </div>
         <div class="overlay"></div>
@@ -43,26 +55,22 @@
                 <span>More Info</span>
             </div>
         </div>
+      
     </div>
     <section class="section">
-        <span class="section_heaadline">Trending</span>
-        <app-image-slider [input_data]="content.trending_movies"></app-image-slider>
+        <app-image-slider [input_data]="content.trending_movies" [headline]="'Trending'"></app-image-slider>
     </section>
     <section>
-        <span class="section_heaadline">Action</span>
-        <app-image-slider [input_data]="content.action_movies"></app-image-slider>
+        <app-image-slider [input_data]="content.action_movies" [headline]="'Action'"></app-image-slider>
     </section>
     <section>
-        <span class="section_heaadline">Animation</span>
-        <app-image-slider [input_data]="content.animation_movies"></app-image-slider>
+        <app-image-slider [input_data]="content.animation_movies" [headline]="'Animation'"></app-image-slider>
     </section>
     <section>
-        <span class="section_heaadline">Adventure</span>
-        <app-image-slider [input_data]="content.adventure_movies"></app-image-slider>
+        <app-image-slider [input_data]="content.adventure_movies" [headline]="'Adventure'"></app-image-slider>
     </section>
     <section>
-        <span class="section_heaadline">Comedy</span>
-        <app-image-slider [input_data]="content.comedy_movies"></app-image-slider>
+        <app-image-slider [input_data]="content.comedy_movies" [headline]="'Comedy'"></app-image-slider>
     </section>
 </div>
 

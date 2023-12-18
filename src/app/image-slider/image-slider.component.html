@@ -1,18 +1,35 @@
 <section>
-    <div class="arrow_div_left" [class.show_arrow]="hover"  (mouseover)="hover = true"
-        (mouseout)="hover = false" (click)="scrollLeft()">
+    <span class="section_heaadline">{{headline}}</span>
+    <div class="arrow_div_left" [class.show_content]="hover" (mouseover)="hover = true" (mouseout)="hover = false"
+        (click)="scrollLeft()">
         <img src="/assets/img/back.png" alt="">
     </div>
-    <div class="arrow_div_right"  [class.show_arrow]="hover" (mouseover)="hover = true " (click)="scrollRight()"
+    <div class="arrow_div_right" [class.show_content]="hover" (mouseover)="hover = true" (click)="scrollRight()"
         (mouseout)="hover = false">
         <img src="/assets/img/back-right.png" alt="">
     </div>
     <div class="image_slider_main">
-        <div #scroll_div class="image_slider_scroll">
-            <div *ngFor="let result of input_data; let i = index" class="image" (click)="content.getMovieVideo(result.id)"  (mouseover)="handleMouseOver(i)" (mouseout)="handleMouseOut()">
-                <img [src]="content.imageBase_url + result.poster_path" alt="">
-                <div [class.show_arrow]="hover && hover_index == i" class="info">
-                    test
+        <div #scroll_div class="image_slider_scroll" >
+            <div *ngFor="let result of input_data; let i = index" class="image" (mouseover)="handleMouseOver(i, result.id)" (mouseout)="handleMouseOut()"
+                (click)="content.getMovieVideo(result.id)">
+                <img [src]="content.imageBase_url + result.poster_path" [class.hover]="hover_info && hover_index == i">
+                <div [class.show_info]="hover_info && hover_index  == i" class="info" (mouseover)="hover_info = true" (mouseout)="hover_info = false" >
+                    <div class="genres">
+                        <div *ngFor="let genre of genres; let i = index">
+                            <span *ngIf="i < 3">{{genre.name}}</span>
+                        </div>
+                    </div>
+                    <div class="info_buttons">
+                        <div class="play">
+                            <img src="/assets/img/play_black.png" alt="">
+                        </div>
+                        <div class="info_image">
+                            <img src="/assets/img/info_white.png" alt="">
+                        </div>
+                        <div class="add">
+                            <img src="/assets/img/add.png" alt="">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

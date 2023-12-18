@@ -10,7 +10,7 @@ export class ContentService {
 
   genres = {
     url: ['&with_genres=12', '&with_genres=28', '&with_genres=16', '&with_genres=35'],
-    genre: ['adventure', 'action', 'animation' , 'comedy']
+    genre: ['adventure', 'action', 'animation', 'comedy']
   }
   thumbnails: any = []
   preview_video_url: string = ''
@@ -85,7 +85,7 @@ export class ContentService {
 
 
   async getPopularMovies() {
-    let url = "https://api.themoviedb.org/3/movie/popular?api_key=" + this.api_key 
+    let url = "https://api.themoviedb.org/3/movie/popular?api_key=" + this.api_key
     try {
       let response: any = await lastValueFrom(this.http.get(url))
       console.log(response);
@@ -119,15 +119,15 @@ export class ContentService {
   }
 
 
-  async getMovieDetails(id: string) {
+  async getMovieDetails(id: string): Promise<any> {
     let url = 'https://api.themoviedb.org/3/movie/' + id + '?api_key=' + this.api_key
     try {
       let response = await lastValueFrom(this.http.get(url))
-      console.log(response);
-
+      return response
     }
     catch (error) {
       console.log(error);
+
     }
   }
 
@@ -137,10 +137,10 @@ export class ContentService {
     try {
       let response = await lastValueFrom(this.http.get(url))
       console.log(response);
+
     }
     catch (error) {
       console.log(error);
-      console.log(url);
     }
   }
 
@@ -151,9 +151,9 @@ export class ContentService {
       let movie_id = movie.id
       let url = 'https://api.themoviedb.org/3/movie/' + movie_id + '?api_key=' + this.api_key + '&append_to_response=videos,images'
       try {
-        let response:any = await lastValueFrom(this.http.get(url))
-        if(response.backdrop_path && response.images.logos.length > 0) this.popular_movies_details.push(response)
-       
+        let response: any = await lastValueFrom(this.http.get(url))
+        if (response.backdrop_path && response.images.logos.length > 0) this.popular_movies_details.push(response)
+
       }
       catch (error) {
         console.log(error);
@@ -166,21 +166,21 @@ export class ContentService {
   async getTrailer(slider_index: number) {
     let movie_id = this.popular_movies_details[slider_index].id
     let url = `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${this.api_key}&name=Official%20Trailer`;
-    try{
-      let response:any = await lastValueFrom(this.http.get(url))
+    try {
+      let response: any = await lastValueFrom(this.http.get(url))
       this.settVideoId(response.results)
     }
     catch (error) {
       console.log(error);
-    }   
+    }
   }
 
 
   settVideoId(trailer: any) {
     trailer.forEach((trailer: any) => {
-      if( trailer.name == 'Official Trailer')  this.video_id = trailer.key
+      if (trailer.name == 'Official Trailer') this.video_id = trailer.key
     });
     console.log(this.video_id);
-    if( !this.video_id) this.video_id = trailer[0].key
+    if (!this.video_id) this.video_id = trailer[0].key
   }
 }

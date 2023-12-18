@@ -10,12 +10,15 @@ export class ImageSliderComponent {
 
   hover: boolean = false;
   @Input() input_data: any = []
+  @Input() headline!: string
   @ViewChild('scroll_div') scrollDiv!: ElementRef;
   hover_index: number = 0;
+  genres:any = []
+  hover_info: boolean = false
 
   constructor(
     public content: ContentService
-  ) {}
+  ) { }
 
 
   scrollRight() {
@@ -33,15 +36,18 @@ export class ImageSliderComponent {
   }
 
 
-  handleMouseOver(index:number) {
-    this.hover = true
+  async handleMouseOver(index: number, movie_id: string) {
+    this.hover_info = true
     this.hover_index = index
+    let movie_detail:any =   await this.content.getMovieDetails(movie_id)
+    this.genres = movie_detail.genres
+    console.log(this.genres);
+    
   }
 
 
   handleMouseOut() {
-    this.hover = false
-    this.hover_index = 0
+    this.hover_info = false
   }
 
 }
