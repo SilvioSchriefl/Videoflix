@@ -1,35 +1,15 @@
-<header>
-    <app-header></app-header>
-    <button (click)="startVideo()">play</button>
-</header>
 
 
 
-<!--
-<div *ngIf="play">
-    <iframe #youtubePlayer *ngIf="play" width="100%" [height]="height" [src]="video_url" frameborder="0" allowfullscreen></iframe>
-   
-</div>
--->
 
-<div  class="youtube_player">
-    <div (click)="closeVideo()" class="close_video" *ngIf="play">
+<div  class="youtube_player" [class.z_index]="content.play">
+    <div (click)="closeVideo()" class="close_video" *ngIf="content.play">
         <img src="/assets/img/back_video.png" alt="">
     </div>
-    <div id="youtube-player"></div>
-    
+    <div id="youtube-player"></div> 
 </div>
 
-
-
-    
-   
-    
-  
-
-
-
-<div class="main_home">
+<div *ngIf="!content.play" class="main_home">
   
     <div class="slider_div">
         <div class="dummy">
@@ -44,20 +24,20 @@
         <div  class="slider_movie_details">
             <img [src]="slider_logo_url">
             <span>{{overview}}</span>
-        </div>
-        <div class="buttons">
-            <div class="play_button"  (click)="playYouTubeVideo(current_slide_index)">
-                <img src="/assets/img/play_black.png" alt="">
-                <span>Play</span>
-            </div>
-            <div class="info_button">
-                <img src="/assets/img/info.png" alt="">
-                <span>More Info</span>
+            <div class="buttons">
+                <div class="play_button"  (click)="playYouTubeVideo(current_slide_index)">
+                    <img src="/assets/img/play_black.png" alt="">
+                    <span>Play</span>
+                </div>
+                <div class="info_button">
+                    <img src="/assets/img/info.png" alt="">
+                    <span>More Info</span>
+                </div>
             </div>
         </div>
       
     </div>
-    <section class="section">
+    <section>
         <app-image-slider [input_data]="content.trending_movies" [headline]="'Trending'"></app-image-slider>
     </section>
     <section>

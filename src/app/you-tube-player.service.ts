@@ -32,7 +32,7 @@ export class YouTubePlayerService {
   createPlayer(elementId: string, videoId: string) {
     if (this.apiLoaded) {
       this.player = new YT.Player(elementId, {
-        height: window.innerHeight,
+        height: '100%',
         width: '100%',
         videoId: videoId,
         
@@ -40,7 +40,7 @@ export class YouTubePlayerService {
           frameborder: '0',
           modestbranding: '1', 
           allowfullscreen: '1',
-          controls: '0',
+          controls: 1,
           rel: '0',
           fs: '1',
         
@@ -55,7 +55,6 @@ export class YouTubePlayerService {
   }
 
   private onPlayerReady(event: any) {
-    this.toggleFullScreen()
     this.player.playVideo();
   }
 

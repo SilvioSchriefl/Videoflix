@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit {
   current_slide_index: number = 0
   slider_logo_url: string = ''
   overview: string = ''
-  play: boolean = false
   video_url!: SafeResourceUrl;
   height = window.innerHeight
   private player: any;
@@ -73,40 +72,22 @@ export class HomeComponent implements OnInit {
   }
 
 
-  startVideo() {
-    this.youtube.loadYouTubeAPI().then(() => {
-      this.youtube.createPlayer('youtube-player', 'UdFeVo0cODs');
-      this.play = true
-    });
-  }
-  
-
-
   stopPropagation(event: Event) {
     event.stopPropagation();
   };
 
 
-  playVideo() {
-    const videoElement = this.fullVideo.nativeElement;
-    if (videoElement) {
-      if (videoElement.requestFullscreen) {
-        videoElement.requestFullscreen();
-      } else {
-        console.error('Fullscreen is not supported in this browser.');
-      }
-    }
-  }
-
   async playYouTubeVideo(slider_index: number) {
-    await this.content.getTrailer(slider_index)
-    this.video_url = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.content.video_id}?enablejsapi=1&autoplay=1&rel=0&controls=0&modestbranding=1&showinfo=0`);
-    this.play = true
+    let movie_id = this.content.popular_movies_details[slider_index].id
+    this.youtube.loadYouTubeAPI().then(async () => {
+      this.youtube.createPlayer('youtube-player',await this.content.getTrailer(movie_id));
+      this.content.play = true
+    });
   }
 
 
   closeVideo() {
-    this.play = false
+    this.content.play = false
     this.youtube.destroyPlayer()
   }
 
@@ -130,10 +111,21 @@ export class HomeComponent implements OnInit {
   onVideoLoaded(video: HTMLVideoElement) {
     this.content.video_loaded = true;
     console.log(this.loading_index);
-
     video.play();
     this.content.loading = false;
 
+  }
+
+
+  playVideo() {
+    const videoElement = this.fullVideo.nativeElement;
+    if (videoElement) {
+      if (videoElement.requestFullscreen) {
+        videoElement.requestFullscreen();
+      } else {
+        console.error('Fullscreen is not supported in this browser.');
+      }
+    }
   }
 
 

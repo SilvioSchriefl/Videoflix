@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 import { ContentService } from '../content.service';
+import { RouteGuardService } from '../route-guard.service';
 
 @Component({
   selector: 'app-log-in',
@@ -19,7 +20,8 @@ export class LogInComponent implements OnInit {
   constructor(
     private router: Router,
     public auth: AuthenticationService,
-    public content: ContentService
+    public content: ContentService,
+    public guard: RouteGuardService,
   ) { }
 
 
@@ -27,6 +29,7 @@ export class LogInComponent implements OnInit {
    let token = localStorage.getItem('token');
    if (token)  {
     this.auth.token = token;
+    this.guard.authenticated = true;
     this.router.navigateByUrl('home')
    }
     this.auth.request_fail = false
@@ -64,6 +67,9 @@ export class LogInComponent implements OnInit {
     }
     await this.auth.signIn(body)
     this.auth.loading = false
-    if (this.auth.request_successfull) this.router.navigateByUrl('home')
+    if (this.auth.request_successfull) {
+      this.guard.authenticated = true;
+      this.router.navigateByUrl('home')
+    } 
   }
 }

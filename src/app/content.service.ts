@@ -27,7 +27,7 @@ export class ContentService {
   animation_movies: any = []
   adventure_movies: any = []
   popular_movies_details: any = []
-  video_id: string = ''
+  play: boolean = false
 
 
   constructor(
@@ -120,14 +120,13 @@ export class ContentService {
 
 
   async getMovieDetails(id: string): Promise<any> {
-    let url = 'https://api.themoviedb.org/3/movie/' + id + '?api_key=' + this.api_key
+    let url = 'https://api.themoviedb.org/3/movie/' + id + '?api_key=' + this.api_key + '&append_to_response=videos,images,similar,credits'
     try {
       let response = await lastValueFrom(this.http.get(url))
       return response
     }
     catch (error) {
       console.log(error);
-
     }
   }
 
@@ -137,7 +136,6 @@ export class ContentService {
     try {
       let response = await lastValueFrom(this.http.get(url))
       console.log(response);
-
     }
     catch (error) {
       console.log(error);
@@ -153,22 +151,19 @@ export class ContentService {
       try {
         let response: any = await lastValueFrom(this.http.get(url))
         if (response.backdrop_path && response.images.logos.length > 0) this.popular_movies_details.push(response)
-
       }
       catch (error) {
         console.log(error);
       }
     }
-    console.log(this.popular_movies_details);
   }
 
 
-  async getTrailer(slider_index: number) {
-    let movie_id = this.popular_movies_details[slider_index].id
+  async getTrailer(movie_id: string) {
     let url = `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${this.api_key}&name=Official%20Trailer`;
     try {
       let response: any = await lastValueFrom(this.http.get(url))
-      this.settVideoId(response.results)
+      return this.setVideoId(response.results)
     }
     catch (error) {
       console.log(error);
@@ -176,11 +171,12 @@ export class ContentService {
   }
 
 
-  settVideoId(trailer: any) {
-    trailer.forEach((trailer: any) => {
-      if (trailer.name == 'Official Trailer') this.video_id = trailer.key
+  setVideoId(trailers: any) {
+    let video_id
+    trailers.forEach((trailer: any) => {
+      if (trailer.name == 'Official Trailer') video_id = trailer.key
     });
-    console.log(this.video_id);
-    if (!this.video_id) this.video_id = trailer[0].key
+    if (!video_id) video_id = trailers[0].key
+    return video_id
   }
 }
