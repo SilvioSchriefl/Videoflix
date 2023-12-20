@@ -19,6 +19,7 @@ import { HeaderComponent } from './header/header.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { YoutubeVideoComponent } from './youtube-video/youtube-video.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { YoutubeVideoComponent } from './youtube-video/youtube-video.component';
     FooterComponent,
     HeaderComponent,
     ImageSliderComponent,
-    YoutubeVideoComponent
+    YoutubeVideoComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserAnimationsModule,

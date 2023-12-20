@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
 import { HomeComponent } from './home/home.component';
 import { RouteGuardService } from './route-guard.service';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
     {path: 'email_confirmed', component: EmailConfirmedComponent},
     {path: 'set_new_password', component: SetNewPasswordComponent},
     {path: 'home', component: HomeComponent, canActivate: [RouteGuardService]},
+    {path: 'watchlist', component: WatchlistComponent, canActivate: [RouteGuardService]},
 ];
 
 @NgModule({

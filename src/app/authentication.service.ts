@@ -14,6 +14,10 @@ export class AuthenticationService {
   request_fail: boolean = false
   request_successfull: boolean = false
   loading: boolean = false
+  current_user:any = {
+    id: '',
+    user_name: '',
+  }
 
   constructor(
     private http: HttpClient,
@@ -40,7 +44,10 @@ export class AuthenticationService {
       console.log(response);
       localStorage.setItem('token', response.token);
       localStorage.setItem('user_name', response.user_name);
+      localStorage.setItem('id', response.id);
       this.token = response.token;
+      this.current_user.id = response.id
+      this.current_user.user_name = response.user_name
       this.request_successfull = true
       await this.content.getThumbnails();
     } catch (error: any) {

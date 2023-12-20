@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ContentService } from '../content.service';
 import { YouTubePlayerService } from '../you-tube-player.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Component({
   selector: 'app-image-slider',
@@ -16,10 +17,12 @@ export class ImageSliderComponent {
   hover_index: number = 0;
   genres: any = []
   hover_info: boolean = false
+  movie_detail:any = []
 
   constructor(
     public content: ContentService,
     public youtube: YouTubePlayerService,
+    public auth: AuthenticationService
   ) { }
 
 
@@ -42,10 +45,9 @@ export class ImageSliderComponent {
     this.hover = true;
     this.hover_info = true
     this.hover_index = index
-    let movie_detail: any = await this.content.getMovieDetails(movie_id)
-    this.genres = movie_detail.genres
-    console.log(movie_detail);
-
+    this.movie_detail = await this.content.getMovieDetails(movie_id)
+    this.genres = this.movie_detail.genres
+    console.log(this.movie_detail);
   }
 
 
@@ -67,6 +69,16 @@ export class ImageSliderComponent {
 
   openMovieDetail(movie_id: string) {
 
+  }
+
+
+  updateWatchList() {
+    this.content.watchlist.push(this.movie_detail.id)
+    let body = {
+      id: this.auth.current_user.id,
+      watchlist: this.content.watchlist
+    }
+    this.content.updateWatchList(body);
   }
 
 }

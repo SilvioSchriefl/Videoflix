@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { environment } from './enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContentService {
+
 
   genres = {
     url: ['&with_genres=12', '&with_genres=28', '&with_genres=16', '&with_genres=35'],
@@ -28,6 +30,7 @@ export class ContentService {
   adventure_movies: any = []
   popular_movies_details: any = []
   play: boolean = false
+  watchlist:any = []
 
 
   constructor(
@@ -178,5 +181,18 @@ export class ContentService {
     });
     if (!video_id) video_id = trailers[0].key
     return video_id
+  }
+
+
+ async updateWatchList(body: any) {
+    let url = environment.baseUrl + '/watchlist/'    
+    try {
+    let response = await lastValueFrom(this.http.patch(url, body))
+    console.log(response); 
+    this.watchlist = response
+    }
+    catch (error) {
+      console.log(error); 
+    }
   }
 }

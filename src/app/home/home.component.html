@@ -21,7 +21,8 @@
         </div>
         <div class="overlay"></div>
         <div class="overlay_left"></div>
-        <div  class="slider_movie_details">
+        <div *ngIf="content.loading" class="loader"></div>
+        <div *ngIf="!content.loading" class="slider_movie_details">
             <img [src]="slider_logo_url">
             <span>{{overview}}</span>
             <div class="buttons">
