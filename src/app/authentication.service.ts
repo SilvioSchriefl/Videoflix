@@ -17,6 +17,7 @@ export class AuthenticationService {
   current_user:any = {
     id: '',
     user_name: '',
+    watchlist: [],
   }
 
   constructor(
@@ -41,10 +42,7 @@ export class AuthenticationService {
     const url = environment.baseUrl + '/log_in/';
     try {
       let response: any = await lastValueFrom(this.http.post(url, body));
-      console.log(response);
-      localStorage.setItem('token', response.token);
-      localStorage.setItem('user_name', response.user_name);
-      localStorage.setItem('id', response.id);
+      this.setLocalStorage(response)
       this.token = response.token;
       this.current_user.id = response.id
       this.current_user.user_name = response.user_name
@@ -55,8 +53,14 @@ export class AuthenticationService {
       if (error.error.detail) this.error_text = error.error.detail
       else this.error_text = 'Error in the request'
       this.request_fail = true
-
     }
+  }
+
+
+  setLocalStorage(response: any) {
+    localStorage.setItem('token', response.token);
+    localStorage.setItem('user_name', response.user_name);
+    localStorage.setItem('id', response.id);
   }
 
 

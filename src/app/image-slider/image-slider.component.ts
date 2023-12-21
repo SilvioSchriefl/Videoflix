@@ -72,13 +72,13 @@ export class ImageSliderComponent {
   }
 
 
-  updateWatchList() {
-    this.content.watchlist.push(this.movie_detail.id)
+  async updateWatchList() {
+    this.content.watchlist.push(this.movie_detail)
     let body = {
       id: this.auth.current_user.id,
       watchlist: this.content.watchlist
     }
-    this.content.updateWatchList(body);
+     await this.content.updateWatchList(body);
   }
 
 }

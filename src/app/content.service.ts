@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from './enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -30,12 +30,17 @@ export class ContentService {
   adventure_movies: any = []
   popular_movies_details: any = []
   play: boolean = false
-  watchlist:any = []
+  watchlist: any = []
+
 
 
   constructor(
     private http: HttpClient,
   ) { }
+
+
+
+  
 
 
   async getThumbnails() {
@@ -184,15 +189,28 @@ export class ContentService {
   }
 
 
- async updateWatchList(body: any) {
-    let url = environment.baseUrl + '/watchlist/'    
+  async updateWatchList(body: any) {
+    let url = environment.baseUrl + '/watchlist/'
     try {
-    let response = await lastValueFrom(this.http.patch(url, body))
-    console.log(response); 
-    this.watchlist = response
+      let response = await lastValueFrom(this.http.patch(url, body))
+      console.log(response);
+      this.watchlist.watchlist = response
     }
     catch (error) {
-      console.log(error); 
+      console.log(error);
+    }
+  }
+
+
+  async getWatchList(user_id: number) {
+    let url = environment.baseUrl + '/watchlist/' + user_id + '/'
+    try {
+      let response: any = await lastValueFrom(this.http.get(url))
+      console.log(response);
+      this.watchlist = response.watchlist
+    }
+    catch (error) {
+      console.log(error);
     }
   }
 }
