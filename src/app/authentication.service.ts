@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from './enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { ContentService } from './content.service';

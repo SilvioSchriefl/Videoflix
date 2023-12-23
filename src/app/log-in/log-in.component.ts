@@ -38,7 +38,6 @@ export class LogInComponent implements OnInit {
    }
     this.auth.request_fail = false
     this.auth.request_successfull = false
-    this.loadWatchlist()
   }
 
 
@@ -75,14 +74,6 @@ export class LogInComponent implements OnInit {
     if (this.auth.request_successfull) {
       this.guard.authenticated = true;
       this.router.navigateByUrl('home')
-      this.loadWatchlist()
     } 
-  }
-
-
-  async loadWatchlist() {
-    let user_id = this.auth.current_user.id
-      await this.content.getWatchList(user_id)
-      console.log(this.content.watchlist);
   }
 }

@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.content.loading = true;
+    await this.content.getWatchList(this.auth.current_user.id)
     await this.content.getPopularMovies()
     await this.content.getSlideMovieDetails()
     await this.content.getMovieByGenres()

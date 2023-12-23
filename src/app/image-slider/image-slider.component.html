@@ -10,12 +10,12 @@
     </div>
     <div class="image_slider_main">
         <div #scroll_div class="image_slider_scroll" >
-            <div *ngFor="let result of input_data; let i = index" class="image" (mouseover)="handleMouseOver(i, result.id)" (mouseout)="handleMouseOut()">
+            <div *ngFor="let result of input_data; let i = index" class="image" (mouseover)="handleMouseOver(i, result.id, input_data)" (mouseout)="handleMouseOut()">
                 <img  [src]="content.imageBase_url + result.poster_path" [class.hover]="hover_info && hover_index == i">
                 <div [class.show_info]="hover_info && hover_index  == i" class="info" (mouseover)="hover_info = true" (mouseout)="hover_info = false" >
                     <div class="genres">
-                        <div *ngFor="let genre of genres; let i = index">
-                            <span *ngIf="i < 3">{{genre.name}}</span>
+                        <div *ngFor="let genre of genres; let g = index">
+                            <span *ngIf="g < 3">{{genre.name}}</span>
                         </div>
                     </div>
                     <div class="info_buttons">
@@ -25,8 +25,9 @@
                         <div class="info_image">
                             <img src="/assets/img/info_white.png" alt="">
                         </div>
-                        <div class="add" (click)="updateWatchList()">
-                            <img src="/assets/img/add.png" alt="">
+                        <div class="add" (click)="updateWatchList(result.id, i, input_data)">
+                            <img *ngIf="!result.in_watchlist" src="/assets/img/add.png" alt="">
+                            <img *ngIf="result.in_watchlist"  src="/assets/img/done.png" alt="">
                         </div>
                     </div>
                 </div>
