@@ -62,8 +62,6 @@ export class HomeComponent implements OnInit {
     await this.content.getWatchList(this.auth.current_user.id)
     await this.content.getPopularMovies()
     await this.content.getSlideMovieDetails()
-    await this.content.getMovieByGenres()
-    await this.content.getTrendingMovies()
     this.content.loading = false
     this.slider_logo_url = this.content.imageBase_url + this.content.popular_movies_details[this.current_slide_index].images.logos[0].file_path
     this.overview = this.content.popular_movies_details[this.current_slide_index].overview

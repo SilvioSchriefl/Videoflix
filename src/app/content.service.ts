@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { AfterViewInit, EventEmitter, Injectable, OnInit, Output } from '@angular/core';
 import { environment } from './enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -12,14 +12,16 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class ContentService {
+
+export class ContentService  {
 
 
   genres = {
-    url: ['&with_genres=12', '&with_genres=28', '&with_genres=16', '&with_genres=35'],
-    genre: ['adventure', 'action', 'animation', 'comedy']
+    url: ['&with_genres=12', '&with_genres=28', '&with_genres=16', '&with_genres=35', '&with_genres=878'],
+    genre: ['adventure', 'action', 'animation', 'comedy', 'Science Fiction']
   }
   
+
   thumbnails = []
   preview_video_url: string = ''
   loading: boolean = false
@@ -34,9 +36,11 @@ export class ContentService {
   comedy_movies = []
   animation_movies = []
   adventure_movies = []
+  science_fiction_movies = []
   popular_movies_details: MovieDetail[] = []
   play: boolean = false
   watchlist: Watchlist[] = []
+  isFunctionComplete = false;
 
 
 
@@ -44,11 +48,7 @@ export class ContentService {
   constructor(
     private http: HttpClient,
   ) { }
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    throw new Error('Method not implemented.');
-  }
-
-
+  
 
   async getThumbnails() {
     let url = environment.baseUrl + '/thumbnail/'
@@ -131,6 +131,7 @@ export class ContentService {
     if (genre == 'animation') this.animation_movies = response
     if (genre == 'adventure') this.adventure_movies = response
     if (genre == 'comedy') this.comedy_movies = response
+    if (genre == 'Science Fiction') this.science_fiction_movies = response 
   }
 
 

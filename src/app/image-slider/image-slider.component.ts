@@ -1,13 +1,13 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ContentService } from '../content.service';
 import { YouTubePlayerService } from '../you-tube-player.service';
 import { AuthenticationService } from '../authentication.service';
-import { MovieDetail } from '../Interfaces/movie-detail.interface';
+
 
 @Component({
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
-  styleUrls: ['./image-slider.component.sass']
+  styleUrls: ['./image-slider.component.sass'],
 })
 export class ImageSliderComponent implements OnInit {
 
@@ -19,7 +19,8 @@ export class ImageSliderComponent implements OnInit {
   genres: any = []
   hover_info: boolean = false
   movie_detail: any = []
-  add_watchlist_img_src: string = ''
+  scrollable: boolean = false
+
 
   constructor(
     public content: ContentService,
@@ -28,15 +29,20 @@ export class ImageSliderComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.content.checkIfMovieIsInWatchList(this.input_data);
-    console.log(this.input_data);
-    }, 1000);
-    
+  async ngOnInit() {
+    await this.content.getTrendingMovies()
+    await this.content.getMovieByGenres()
+    this.content.checkIfMovieIsInWatchList(this.input_data)
+    this.checkScrollbar();
   }
 
-  
+
+  checkScrollbar() {
+    let scrollDiv = this.scrollDiv.nativeElement
+    if (scrollDiv.scrollWidth > scrollDiv.clientWidth) this.scrollable = true
+    else this.scrollable = false
+  }
+
 
 
   scrollRight() {
@@ -60,6 +66,8 @@ export class ImageSliderComponent implements OnInit {
     this.hover_index = index
     this.movie_detail = await this.content.getMovieDetails(movie_id)
     this.genres = this.movie_detail.genres
+    console.log(this.movie_detail);
+    
   }
 
 
@@ -98,6 +106,7 @@ export class ImageSliderComponent implements OnInit {
       watchlist: this.content.watchlist
     }
     await this.content.updateWatchList(body, this.auth.current_user.id);
+    this.setWatchlistStatus()
   }
 
 
@@ -105,12 +114,24 @@ export class ImageSliderComponent implements OnInit {
     movie_array[index].in_watchlist = false
     let watchlist_movie_ids = this.content.watchlist.map(item => item.id)
     let i = watchlist_movie_ids.indexOf(movie_id)
-    this.content.watchlist.splice(index, 1)
+    this.content.watchlist.splice(i, 1)
     let body = {
       id: this.auth.current_user.id,
       watchlist: this.content.watchlist
     }
     await this.content.updateWatchList(body, this.auth.current_user.id);
+    this.setWatchlistStatus()
+  }
+
+
+  setWatchlistStatus() {
+    this.content.checkIfMovieIsInWatchList(this.content.trending_movies)
+    this.content.checkIfMovieIsInWatchList(this.content.popular_movies)
+    this.content.checkIfMovieIsInWatchList(this.content.action_movies)
+    this.content.checkIfMovieIsInWatchList(this.content.animation_movies)
+    this.content.checkIfMovieIsInWatchList(this.content.adventure_movies)
   }
 }
+
+
 
