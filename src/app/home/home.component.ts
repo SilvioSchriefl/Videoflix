@@ -1,12 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../enviroments/enviroments';
-import { lastValueFrom } from 'rxjs';
 import { ContentService } from '../content.service';
 import { AuthenticationService } from '../authentication.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { YouTubePlayerService } from '../you-tube-player.service';
+import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 declare const YT: any;
@@ -32,7 +33,9 @@ declare global {
 export class HomeComponent implements OnInit {
 
 
+
   @ViewChild('full_video') fullVideo!: ElementRef<HTMLVideoElement>
+  @ViewChild(MovieDetailComponent) movieDetail!: MovieDetailComponent
   url: string = environment.baseUrl
   loading_index: number = 0
   open_video: boolean = false
@@ -42,7 +45,8 @@ export class HomeComponent implements OnInit {
   overview: string = ''
   video_url!: SafeResourceUrl;
   height = window.innerHeight
-  private player: any;
+  width = window.innerWidth
+  
 
 
 
@@ -71,11 +75,6 @@ export class HomeComponent implements OnInit {
       this.overview = this.content.popular_movies_details[this.current_slide_index].overview
     }, 3000);
   }
-
-
-  stopPropagation(event: Event) {
-    event.stopPropagation();
-  };
 
 
   async playYouTubeVideo(slider_index: number) {
@@ -133,5 +132,23 @@ export class HomeComponent implements OnInit {
   closePreviewVideo() {
     this.content.video_loaded = false;
     this.content.loading = false
+  }
+
+
+/**
+ * Opens the movie details for the given data.
+ *
+ * @param {any} data - The data to open movie details for.
+ * @return {Promise<void>} - A promise that resolves once the movie details are opened.
+ */
+  async openMovieDetails(data: any): Promise<void> {    
+    let movie_id
+    if( typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
+    else movie_id = data.id
+    this.content.movie_detail = await this.content.getMovieDetails(movie_id)
+    this.content.open_movie_detail = true
+    this.movieDetail.getLogoUrl()
+    this.movieDetail.playYouTubeVideo()
+    console.log(this.content.movie_detail);
   }
 }

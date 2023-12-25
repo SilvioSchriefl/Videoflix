@@ -20,6 +20,8 @@ import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { YoutubeVideoComponent } from './youtube-video/youtube-video.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
+import { MovieDetailComponent } from './movie-detail/movie-detail.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -35,14 +37,16 @@ import { WatchlistComponent } from './watchlist/watchlist.component';
     HeaderComponent,
     ImageSliderComponent,
     YoutubeVideoComponent,
-    WatchlistComponent
+    WatchlistComponent,
+    MovieDetailComponent
   ],
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

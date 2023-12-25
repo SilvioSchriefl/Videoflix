@@ -11,7 +11,7 @@
     <div class="image_slider_main">
         <div #scroll_div class="image_slider_scroll" >
             <div *ngFor="let result of input_data; let i = index" class="image" >
-                <img  [src]="content.imageBase_url + result.poster_path" [class.hover]="hover_info && hover_index == i" (mouseenter)="handleMouseOver(i, result.id, input_data)" (mouseleave)="handleMouseOut()">
+                <img  [src]="content.imageBase_url + result.poster_path" [class.hover]="hover_info && hover_index == i" (mouseenter)="handleMouseOver(i, result.id, input_data)" (mouseleave)="handleMouseOut()" (click)="openMovieDetail(result.id)">
                 <div [class.show_info]="hover_info && hover_index  == i" class="info" (mouseover)="hover_info = true" (mouseout)="hover_info = false" >
                     <div class="genres">
                         <div *ngFor="let genre of genres; let g = index">

@@ -1,0 +1,22 @@
+<div [class.show_shadow]="content.open_movie_detail && youtube.play" class="shadow" (click)="closeMovieDetail()">
+    <div class="main_div" (click)="$event.stopPropagation()">
+        <div class="overlay">
+            <div class="play_logo">
+                <img [src]="logo_url" alt="">
+                <div class="play_add">
+                    <div class="play_button"  (click)="playYouTubeVideo()">
+                        <img src="/assets/img/play_black.png" alt="">
+                        <span>Play</span>
+                    </div>
+                    <div class="add" >
+                        <img  src="/assets/img/add.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  class="youtube_player">
+            <div id="youtube-player2"></div> 
+        </div>
+    </div>
+</div>
+

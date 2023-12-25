@@ -1,7 +1,7 @@
 
 
 
-
+<app-movie-detail></app-movie-detail>
 <div  class="youtube_player" [class.z_index]="content.play">
     <div (click)="closeVideo()" class="close_video" *ngIf="content.play">
         <img src="/assets/img/back_video.png" alt="">
@@ -12,16 +12,18 @@
 <div *ngIf="!content.play" class="main_home">
   
     <div class="slider_div">
+        
         <div class="dummy">
             <img *ngIf="content.popular_movies.length > 0"  [src]="content.imageSlider_url + content.popular_movies[0].backdrop_path" >
         </div>
         <div *ngFor="let element of content.popular_movies_details; let i = index"
             [@fadeInOut]="i === current_slide_index? 'visible' : 'hidden'" class="slider_item">
             <img *ngIf="element.backdrop_path" [src]="content.imageSlider_url + element.backdrop_path">
+            
         </div>
         <div class="overlay"></div>
         <div class="overlay_left"></div>
-        <div *ngIf="content.loading" class="loader"></div>
+        <mat-spinner class="spinner" *ngIf="content.loading" ></mat-spinner>
         <div *ngIf="!content.loading" class="slider_movie_details">
             <img [src]="slider_logo_url">
             <span>{{overview}}</span>
@@ -30,7 +32,7 @@
                     <img src="/assets/img/play_black.png" alt="">
                     <span>Play</span>
                 </div>
-                <div class="info_button">
+                <div class="info_button" (click)="openMovieDetails(current_slide_index)">
                     <img src="/assets/img/info.png" alt="">
                     <span>More Info</span>
                 </div>
@@ -39,22 +41,22 @@
       
     </div>
     <section>
-        <app-image-slider [input_data]="content.trending_movies" [headline]="'Trending'"></app-image-slider>
+        <app-image-slider [input_data]="content.trending_movies" [headline]="'Trending'" (openMovie)="openMovieDetails($event)"></app-image-slider>
     </section>
     <section>
-        <app-image-slider [input_data]="content.action_movies" [headline]="'Action'"></app-image-slider>
+        <app-image-slider [input_data]="content.action_movies" [headline]="'Action'" (openMovie)="openMovieDetails($event)"></app-image-slider>
     </section>
     <section>
-        <app-image-slider [input_data]="content.animation_movies" [headline]="'Animation'"></app-image-slider>
+        <app-image-slider [input_data]="content.animation_movies" [headline]="'Animation'" (openMovie)="openMovieDetails($event)"></app-image-slider>
     </section>
     <section>
-        <app-image-slider [input_data]="content.adventure_movies" [headline]="'Adventure'"></app-image-slider>
+        <app-image-slider [input_data]="content.adventure_movies" [headline]="'Adventure'" (openMovie)="openMovieDetails($event)"></app-image-slider>
     </section>
     <section>
-        <app-image-slider [input_data]="content.comedy_movies" [headline]="'Comedy'"></app-image-slider>
+        <app-image-slider [input_data]="content.comedy_movies" [headline]="'Comedy'" (openMovie)="openMovieDetails($event)"></app-image-slider>
     </section>
     <section>
-        <app-image-slider [input_data]="content.science_fiction_movies" [headline]="'Science Fiction'"></app-image-slider>
+        <app-image-slider [input_data]="content.science_fiction_movies" [headline]="'Science Fiction'" (openMovie)="openMovieDetails($event)"></app-image-slider>
     </section>
 </div>
 

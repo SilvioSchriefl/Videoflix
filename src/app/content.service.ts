@@ -40,7 +40,9 @@ export class ContentService  {
   popular_movies_details: MovieDetail[] = []
   play: boolean = false
   watchlist: Watchlist[] = []
+  movie_detail: any = []
   isFunctionComplete = false;
+  open_movie_detail: boolean = false
 
 
 

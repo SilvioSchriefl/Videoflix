@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ContentService } from '../content.service';
 import { YouTubePlayerService } from '../you-tube-player.service';
 import { AuthenticationService } from '../authentication.service';
+import { HomeComponent } from '../home/home.component';
 
 
 @Component({
@@ -11,6 +12,8 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class ImageSliderComponent implements OnInit {
 
+
+  @Output('openMovie') openMovie: EventEmitter<any> = new EventEmitter<number>();
   hover: boolean = false;
   @Input() input_data: any = []
   @Input() headline!: string
@@ -18,7 +21,6 @@ export class ImageSliderComponent implements OnInit {
   hover_index: number = 0;
   genres: any = []
   hover_info: boolean = false
-  movie_detail: any = []
   scrollable: boolean = false
 
 
@@ -64,9 +66,9 @@ export class ImageSliderComponent implements OnInit {
     this.hover = true;
     this.hover_info = true
     this.hover_index = index
-    this.movie_detail = await this.content.getMovieDetails(movie_id)
-    this.genres = this.movie_detail.genres
-    console.log(this.movie_detail);
+    this.content.movie_detail = await this.content.getMovieDetails(movie_id)
+    this.genres = this.content.movie_detail.genres
+    console.log(this.content.movie_detail);
     
   }
 
@@ -84,11 +86,6 @@ export class ImageSliderComponent implements OnInit {
       this.youtube.createPlayer('youtube-player', await this.content.getTrailer(movie_id));
       this.content.play = true
     });
-  }
-
-
-  openMovieDetail(movie_id: string) {
-
   }
 
 
@@ -130,6 +127,15 @@ export class ImageSliderComponent implements OnInit {
     this.content.checkIfMovieIsInWatchList(this.content.action_movies)
     this.content.checkIfMovieIsInWatchList(this.content.animation_movies)
     this.content.checkIfMovieIsInWatchList(this.content.adventure_movies)
+  }
+
+
+  openMovieDetail(id: number) {
+    let parameter = {
+      id: id,
+      data_type: 'movie_id'
+    }
+    this.openMovie.emit(parameter);
   }
 }
 

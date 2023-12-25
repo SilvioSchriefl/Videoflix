@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 
 declare var YT: any;
 
@@ -8,9 +8,13 @@ declare var YT: any;
 export class YouTubePlayerService {
 
   apiLoaded: boolean = false;
-  private player: any; 
+  private player: any;
+  play:boolean = false
 
   constructor() { }
+
+
+ 
 
   async loadYouTubeAPI() {
     if (!this.apiLoaded) {
@@ -20,7 +24,6 @@ export class YouTubePlayerService {
         tag.onload = () => resolve();
         document.head.appendChild(tag);
       });
-
       this.apiLoaded = true;
     }
   }
@@ -35,18 +38,27 @@ export class YouTubePlayerService {
         height: '100%',
         width: '100%',
         videoId: videoId,
-        
+
         playerVars: {
-          frameborder: '0',
-          modestbranding: '1', 
-          allowfullscreen: '1',
-          controls: 1,
-          rel: '0',
-          fs: '1',
-        
+          'playlist': videoId,
+          'frameborder': 0,
+          'modestbranding': 1,
+          'allowfullscreen': 1,
+          'controls': 1,
+          'rel': 0,
+          'fs': 1,
+          'loop': 1,
+
         },
         events: {
           'onReady': this.onPlayerReady.bind(this),
+        },
+        'onStateChange': (event: any) => {
+          if (event.data === YT.PlayerState.ENDED) {
+            this.player.playVideo();
+            console.log('end');
+            
+          }
         },
       });
     } else {
@@ -56,6 +68,7 @@ export class YouTubePlayerService {
 
   private onPlayerReady(event: any) {
     this.player.playVideo();
+    this.play = true
   }
 
 
@@ -76,21 +89,5 @@ export class YouTubePlayerService {
       console.error('YouTube Player not created yet.');
     }
   }
-
-
-  private toggleFullScreen() {
-    const iframe = this.player.getIframe();
-
-    if (iframe.requestFullscreen) {
-      iframe.requestFullscreen();
-    } else if (iframe.mozRequestFullScreen) {
-      iframe.mozRequestFullScreen();
-    } else if (iframe.webkitRequestFullscreen) {
-      iframe.webkitRequestFullscreen();
-    } else if (iframe.msRequestFullscreen) {
-      iframe.msRequestFullscreen();
-    }
-  }
-
 
 }
