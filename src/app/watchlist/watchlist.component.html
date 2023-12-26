@@ -1,6 +1,6 @@
-
+<app-movie-detail></app-movie-detail>
 <div class="watchlist">
 <section>
-<app-image-slider [input_data]="content.watchlist" [headline]="'My Watchlist'"></app-image-slider>
+<app-image-slider [input_data]="content.watchlist" [headline]="'My Watchlist'" (openMovie)="openMovieDetails($event)"></app-image-slider>
 </section>
 </div>

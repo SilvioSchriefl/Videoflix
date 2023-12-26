@@ -105,7 +105,6 @@ export class ContentService  {
     let url = "https://api.themoviedb.org/3/movie/popular?api_key=" + this.api_key
     try {
       let response = await lastValueFrom(this.http.get<Results>(url))
-      console.log(response);
       this.popular_movies = response.results
     }
     catch (error) {
@@ -216,7 +215,6 @@ export class ContentService  {
     let url = environment.baseUrl + '/watchlist/' + user_id + '/'
     try {
       let response: any = await lastValueFrom(this.http.get(url))
-      console.log(response);
       this.watchlist = response.watchlist
     }
     catch (error) {

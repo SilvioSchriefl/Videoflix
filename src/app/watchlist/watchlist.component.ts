@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ContentService } from '../content.service';
 import { AuthenticationService } from '../authentication.service';
+import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
 
 @Component({
   selector: 'app-watchlist',
@@ -9,12 +10,27 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class WatchlistComponent  {
 
+  @ViewChild(MovieDetailComponent) movieDetail!: MovieDetailComponent
+
 
 
 constructor(
   public content: ContentService,
   public auth: AuthenticationService
 ) {}
+
+
+async openMovieDetails(data: any): Promise<void> {    
+  let movie_id
+  if( typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
+  else movie_id = data.id
+  this.content.movie_detail = await this.content.getMovieDetails(movie_id)
+  if(data.in_watchlist) this.content.movie_detail.in_watchlist = true
+  this.content.open_movie_detail = true
+  this.movieDetail.getLogoUrl()
+  this.movieDetail.playYouTubeVideo()
+  console.log(this.content.movie_detail);
+}
 
 
   

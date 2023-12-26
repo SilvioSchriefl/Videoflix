@@ -22,6 +22,7 @@ import { YoutubeVideoComponent } from './youtube-video/youtube-video.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     FormsModule,
     BrowserModule,
     AppRoutingModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

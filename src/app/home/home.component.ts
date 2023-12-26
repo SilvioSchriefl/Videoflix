@@ -7,7 +7,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { YouTubePlayerService } from '../you-tube-player.service';
 import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 
 declare const YT: any;
@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
   video_url!: SafeResourceUrl;
   height = window.innerHeight
   width = window.innerWidth
+  logo_urls: string[] = []
   
 
 
@@ -62,16 +63,19 @@ export class HomeComponent implements OnInit {
 
 
   async ngOnInit(): Promise<void> {
+    
+    
     this.content.loading = true;
     await this.content.getWatchList(this.auth.current_user.id)
     await this.content.getPopularMovies()
     await this.content.getSlideMovieDetails()
+    this.getLogoUrl()
     this.content.loading = false
-    this.slider_logo_url = this.content.imageBase_url + this.content.popular_movies_details[this.current_slide_index].images.logos[0].file_path
+    this.slider_logo_url = this.logo_urls[0]
     this.overview = this.content.popular_movies_details[this.current_slide_index].overview
     setInterval(() => {
       this.current_slide_index = (this.current_slide_index + 1) % this.content.popular_movies_details.length;
-      this.slider_logo_url = this.content.imageBase_url + this.content.popular_movies_details[this.current_slide_index].images.logos[0].file_path
+      this.slider_logo_url = this.logo_urls[this.current_slide_index]
       this.overview = this.content.popular_movies_details[this.current_slide_index].overview
     }, 3000);
   }
@@ -135,20 +139,27 @@ export class HomeComponent implements OnInit {
   }
 
 
-/**
- * Opens the movie details for the given data.
- *
- * @param {any} data - The data to open movie details for.
- * @return {Promise<void>} - A promise that resolves once the movie details are opened.
- */
-  async openMovieDetails(data: any): Promise<void> {    
+  async openMovieDetails(data: any) {    
     let movie_id
     if( typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
     else movie_id = data.id
     this.content.movie_detail = await this.content.getMovieDetails(movie_id)
+    if (data.in_watchlist) this.content.movie_detail.in_watchlist = true
     this.content.open_movie_detail = true
-    this.movieDetail.getLogoUrl()
+   this.movieDetail.getLogoUrl()
+    await this.movieDetail.getSimilarMoviesDetails()
     this.movieDetail.playYouTubeVideo()
-    console.log(this.content.movie_detail);
+  }
+
+
+  getLogoUrl() {
+   this.content.popular_movies_details.forEach(element => {
+    let logos = element.images.logos
+      let en_logos: any[] = []
+      logos.forEach((logo: any) => {
+        if(logo.iso_639_1 == 'en') en_logos.push(logo.file_path)
+      });
+      this.logo_urls.push(this.content.imageBase_url + en_logos[0])
+   });
   }
 }

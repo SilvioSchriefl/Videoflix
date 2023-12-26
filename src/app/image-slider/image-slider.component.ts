@@ -13,7 +13,7 @@ import { HomeComponent } from '../home/home.component';
 export class ImageSliderComponent implements OnInit {
 
 
-  @Output('openMovie') openMovie: EventEmitter<any> = new EventEmitter<number>();
+  @Output('openMovie') openMovie: EventEmitter<any> = new EventEmitter();
   hover: boolean = false;
   @Input() input_data: any = []
   @Input() headline!: string
@@ -68,8 +68,6 @@ export class ImageSliderComponent implements OnInit {
     this.hover_index = index
     this.content.movie_detail = await this.content.getMovieDetails(movie_id)
     this.genres = this.content.movie_detail.genres
-    console.log(this.content.movie_detail);
-    
   }
 
 
@@ -130,12 +128,21 @@ export class ImageSliderComponent implements OnInit {
   }
 
 
-  openMovieDetail(id: number) {
+  openMovieDetail(id: number, index: number, movie_array: any, in_watchlist: boolean) {
     let parameter = {
+      in_watchlist: in_watchlist,
+      index: index,
+      movie_array: movie_array,
       id: id,
       data_type: 'movie_id'
     }
     this.openMovie.emit(parameter);
+  }
+
+
+  getToolTipText(in_watchlist: boolean) {
+    if (in_watchlist) return 'Remove from Watchlist'
+    else return 'Add to Watchlist'
   }
 }
 

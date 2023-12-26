@@ -12,14 +12,12 @@
 <div *ngIf="!content.play" class="main_home">
   
     <div class="slider_div">
-        
         <div class="dummy">
             <img *ngIf="content.popular_movies.length > 0"  [src]="content.imageSlider_url + content.popular_movies[0].backdrop_path" >
         </div>
         <div *ngFor="let element of content.popular_movies_details; let i = index"
             [@fadeInOut]="i === current_slide_index? 'visible' : 'hidden'" class="slider_item">
             <img *ngIf="element.backdrop_path" [src]="content.imageSlider_url + element.backdrop_path">
-            
         </div>
         <div class="overlay"></div>
         <div class="overlay_left"></div>
@@ -28,7 +26,8 @@
             <img [src]="slider_logo_url">
             <span>{{overview}}</span>
             <div class="buttons">
-                <div class="play_button"  (click)="playYouTubeVideo(current_slide_index)">
+                <div class="play_button" (click)="playYouTubeVideo(current_slide_index)">
+                    
                     <img src="/assets/img/play_black.png" alt="">
                     <span>Play</span>
                 </div>
