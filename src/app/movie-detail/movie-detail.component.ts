@@ -33,6 +33,7 @@ export class MovieDetailComponent {
     this.content.open_movie_detail = false
     this.youtube.destroyPlayer()
     this.similar_movies = []
+    this.content.movie_detail = []
   }
 
 
@@ -41,16 +42,27 @@ export class MovieDetailComponent {
   };
 
 
-  async playYouTubeVideo() {
+  async playBackgroundYouTubeVideo() {
     let movie_id = this.content.movie_detail.id
     this.youtube.loadYouTubeAPI().then(async () => {
       this.youtube.createPlayer('youtube-player2', await this.content.getTrailer(movie_id));
+    });
+  }
+
+
+  async playYouTubeVideo() {
+    this.content.play = true
+    let movie_id = this.content.movie_detail.id
+    console.log(movie_id);
+    
+    this.youtube.loadYouTubeAPI().then(async () => {
+      this.youtube.createPlayer('youtube-player', await this.content.getTrailer(movie_id));
     });
     this.content.loading = false
   }
 
 
-  getLogoUrl() {
+  async getLogoUrl() {
     let logos = this.content.movie_detail.images.logos
     let en_logos: any[] = []
     logos.forEach((logo: any) => {

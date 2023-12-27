@@ -29,9 +29,11 @@ export class LogInComponent implements OnInit {
    let token = localStorage.getItem('token');
    let id = localStorage.getItem('id');
    let user_name = localStorage.getItem('user_name');
+   let email = localStorage.getItem('email');
    if (token)  {
     this.auth.current_user.user_name = user_name
     this.auth.current_user.id = id
+    this.auth.current_user.email = email
     this.auth.token = token;
     this.guard.authenticated = true;
     this.router.navigateByUrl('home')

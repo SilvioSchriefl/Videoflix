@@ -43,6 +43,7 @@ export class ContentService  {
   movie_detail: any = []
   isFunctionComplete = false;
   open_movie_detail: boolean = false
+  scroll_top: boolean = true
 
 
 

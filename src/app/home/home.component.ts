@@ -47,7 +47,8 @@ export class HomeComponent implements OnInit {
   height = window.innerHeight
   width = window.innerWidth
   logo_urls: string[] = []
-  
+
+
 
 
 
@@ -58,13 +59,14 @@ export class HomeComponent implements OnInit {
     public content: ContentService,
     private sanitizer: DomSanitizer,
     public youtube: YouTubePlayerService,
+    private elementRef: ElementRef,
   ) { }
 
 
 
   async ngOnInit(): Promise<void> {
-    
-    
+
+
     this.content.loading = true;
     await this.content.getWatchList(this.auth.current_user.id)
     await this.content.getPopularMovies()
@@ -81,10 +83,17 @@ export class HomeComponent implements OnInit {
   }
 
 
+  onScroll(scrollDiv: HTMLElement) {
+    // Überprüfe, ob der Inhalt ganz oben ist
+    if (scrollDiv.scrollTop === 0) this.content.scroll_top = true
+    else this.content.scroll_top = false
+  }
+
+
   async playYouTubeVideo(slider_index: number) {
     let movie_id = this.content.popular_movies_details[slider_index].id
     this.youtube.loadYouTubeAPI().then(async () => {
-      this.youtube.createPlayer('youtube-player',await this.content.getTrailer(movie_id));
+      this.youtube.createPlayer('youtube-player', await this.content.getTrailer(movie_id));
       this.content.play = true
     });
   }
@@ -139,27 +148,30 @@ export class HomeComponent implements OnInit {
   }
 
 
-  async openMovieDetails(data: any) {    
+  async openMovieDetails(data: any) {
+    if (this.content.open_movie_detail) return
+    this.content.open_movie_detail = true
+    this.content.loading = true
     let movie_id
-    if( typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
+    if (typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
     else movie_id = data.id
     this.content.movie_detail = await this.content.getMovieDetails(movie_id)
     if (data.in_watchlist) this.content.movie_detail.in_watchlist = true
-    this.content.open_movie_detail = true
-   this.movieDetail.getLogoUrl()
+    await this.movieDetail.getLogoUrl()
     await this.movieDetail.getSimilarMoviesDetails()
-    this.movieDetail.playYouTubeVideo()
+    await this.movieDetail.playBackgroundYouTubeVideo()
+    this.content.loading = false
   }
 
 
   getLogoUrl() {
-   this.content.popular_movies_details.forEach(element => {
-    let logos = element.images.logos
+    this.content.popular_movies_details.forEach(element => {
+      let logos = element.images.logos
       let en_logos: any[] = []
       logos.forEach((logo: any) => {
-        if(logo.iso_639_1 == 'en') en_logos.push(logo.file_path)
+        if (logo.iso_639_1 == 'en') en_logos.push(logo.file_path)
       });
       this.logo_urls.push(this.content.imageBase_url + en_logos[0])
-   });
+    });
   }
 }

@@ -1,4 +1,4 @@
-<header>
+<header [class.scroll_background]="!content.scroll_top">
     <div class="nav_logo">
         <div class="logo">
             <img src="/assets/img/logo.png" alt="">
@@ -9,7 +9,7 @@
         </nav>  
     </div>
     
-    <div class="profile">
+    <div class="profile" (click)="auth.userLogOut()">
         <img src="/assets/img/profil.png" alt="">
     </div>
 </header>
