@@ -39,11 +39,12 @@ export class ContentService  {
   science_fiction_movies = []
   popular_movies_details: MovieDetail[] = []
   play: boolean = false
-  watchlist: Watchlist[] = []
+  watchlist:any = []
   movie_detail: any = []
   isFunctionComplete = false;
   open_movie_detail: boolean = false
   scroll_top: boolean = true
+  tooltip_text: string = ''
 
 
 
@@ -138,7 +139,7 @@ export class ContentService  {
 
 
   async getMovieDetails(id: string): Promise<any> {
-    let url = 'https://api.themoviedb.org/3/movie/' + id + '?api_key=' + this.api_key + '&append_to_response=videos,images,similar,credits'
+    let url = 'https://api.themoviedb.org/3/movie/' + id + '?api_key=' + this.api_key + '&append_to_response=videos,images,similar,credits,recommendations'
     try {
       let response = await lastValueFrom(this.http.get(url))
       return response
@@ -225,10 +226,16 @@ export class ContentService  {
 
 
   async checkIfMovieIsInWatchList(movies: any) {
-    let watchlist_movie_ids = this.watchlist.map(item => item.id)
+    let watchlist_movie_ids = this.watchlist.map((item: { id: number; }) => item.id)
     movies.forEach((movie: any) => {
       if (watchlist_movie_ids.includes(movie.id)) movie.in_watchlist = true
       else movie.in_watchlist = false
     });
+  }
+
+
+  getToolTipText(watchlist_status:boolean) {
+    if (watchlist_status) this.tooltip_text = 'Remove from Watchlist'
+    else this.tooltip_text = 'Add to Watchlist'
   }
 }

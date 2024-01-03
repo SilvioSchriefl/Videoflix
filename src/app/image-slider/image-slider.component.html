@@ -1,33 +1,42 @@
 <section>
     <span class="section_heaadline">{{headline}}</span>
-    <div *ngIf="scrollable" class="arrow_div_left" [class.show_content]="hover" (mouseover)="hover = true" (mouseout)="hover = false"
-        (click)="scrollLeft()">
+    <div *ngIf="scrollable && scrollable_left != 0" class="arrow_div_left" [class.show_content]="hover"
+        (mouseover)="hover = true" (mouseout)="hover = false" (click)="scrollLeft()">
         <img src="/assets/img/back.png" alt="">
     </div>
-    <div *ngIf="scrollable" class="arrow_div_right" [class.show_content]="hover" (mouseover)="hover = true" (click)="scrollRight()"
-        (mouseout)="hover = false">
+    <div *ngIf="scrollable && scrollable_right" class="arrow_div_right" [class.show_content]="hover"
+        (mouseover)="hover = true" (click)="scrollRight()" (mouseout)="hover = false">
         <img src="/assets/img/back-right.png" alt="">
     </div>
-    <div class="image_slider_main">
-        <div #scroll_div class="image_slider_scroll" >
-            <div *ngFor="let result of input_data; let i = index" class="image" >
-                <img  [src]="content.imageBase_url + result.poster_path" [class.hover]="hover_info && hover_index == i" (mouseenter)="handleMouseOver(i, result.id, input_data)" (mouseleave)="handleMouseOut()" (click)="openMovieDetail(result.id, i, input_data, result.in_watchlist)">
-                <div [class.show_info]="hover_info && hover_index  == i" class="info" (mouseover)="hover_info = true" (mouseout)="hover_info = false" >
+    <div class="image_slider_main" (mouseenter)="checkScrollbar()">
+        <div #scroll_div class="image_slider_scroll">
+            <div *ngFor="let movie of input_data; let i = index" class="image">
+                <img [src]="content.imageBase_url + movie.poster_path" [class.hover]="hover_info && hover_index == i"
+                    (mouseenter)="handleMouseOver(i, movie.id, input_data)" (mouseleave)="handleMouseOut()"
+                    (click)="openMovieDetail(movie.id, i, input_data, movie.in_watchlist)">
+                <div [class.show_info]="hover_info && hover_index  == i" class="info" (mouseover)="hover_info = true"
+                    (mouseout)="hover_info = false">
                     <div class="genres">
                         <div *ngFor="let genre of genres; let g = index">
                             <span *ngIf="g < 3">{{genre.name}}</span>
                         </div>
                     </div>
                     <div class="info_buttons">
-                        <div class="play" (click)="playYoutubeVideo(i, result.id)">
+                        <div class="play" (click)="playYoutubeVideo(i, movie.id)">
                             <img src="/assets/img/play_black.png" alt="">
                         </div>
-                        <div class="info_image">
-                            <img src="/assets/img/info_white.png" alt="">
+
+                        <div class="add" (click)="updateWatchList(movie.id, i, input_data)" (mouseover)="content.getToolTipText(movie.in_watchlist)"
+                        [matTooltip]="content.tooltip_text" matTooltipPosition="above">
+                            <div *ngIf="!movie.in_watchlist" class="add_button">
+                                <img src="/assets/img/plus.png" alt="">
+                            </div>
+                            <div *ngIf="movie.in_watchlist" class="add_button">
+                                <img src="/assets/img/done.png" alt="">
+                            </div>
                         </div>
-                        <div class="add" (click)="updateWatchList(result.id, i, input_data)" [matTooltip]="getToolTipText(result.in_watchlist)"  matTooltipPosition="above">
-                            <img *ngIf="!result.in_watchlist" src="/assets/img/add.png" alt="">
-                            <img *ngIf="result.in_watchlist"  src="/assets/img/done.png" alt="">
+                        <div class="add_button" (click)="openMovieDetail(movie.id, i, input_data, movie.in_watchlist)">
+                            <img src="/assets/img/down.png" alt="">
                         </div>
                     </div>
                 </div>

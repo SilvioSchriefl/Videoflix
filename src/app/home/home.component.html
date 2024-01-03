@@ -20,7 +20,6 @@
         </div>
         <div class="overlay"></div>
         <div class="overlay_left"></div>
-        <mat-spinner class="spinner" *ngIf="content.loading"></mat-spinner>
         <div *ngIf="!content.loading" class="slider_movie_details">
             <img [src]="slider_logo_url">
             <span>{{overview}}</span>
@@ -36,7 +35,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div class="sections">
         <section>

@@ -1,0 +1,56 @@
+.input_div {
+  position: relative;
+}
+
+.error {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  color: #D87405;
+}
+
+.form {
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.invalid {
+  border-bottom: 2px solid #D87405;
+}
+
+.headline {
+  color: #fff;
+  font-size: 48px;
+  font-weight: 700;
+}
+
+.description {
+  color: #71736E;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  width: 440px;
+  position: absolute;
+  left: calc(50% - 20px);
+  top: calc(50% - 56px);
+}
+
+.go_to {
+  margin-top: 25px;
+  font-size: 16px;
+  color: #71736E;
+  display: flex;
+  gap: 10px;
+}
+.go_to :nth-child(2) {
+  color: #fff;
+  cursor: pointer;
+}
+.go_to :nth-child(2):hover {
+  transition: 150ms;
+  text-decoration: underline;
+}/*# sourceMappingURL=sign-up.component.css.map */

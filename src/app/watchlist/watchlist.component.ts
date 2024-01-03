@@ -31,8 +31,7 @@ export class WatchlistComponent {
     this.content.open_movie_detail = true
     this.movieDetail.getLogoUrl()
     this.movieDetail.playBackgroundYouTubeVideo()
-    await this.movieDetail.getSimilarMoviesDetails()
-    console.log(this.content.movie_detail);
+    await this.movieDetail.getRecommendationMoviesDetails()
   }
 
 

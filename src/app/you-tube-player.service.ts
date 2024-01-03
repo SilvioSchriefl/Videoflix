@@ -9,12 +9,12 @@ export class YouTubePlayerService {
 
   apiLoaded: boolean = false;
   private player: any;
-  play:boolean = false
+  play: boolean = false
 
   constructor() { }
 
 
- 
+
 
   async loadYouTubeAPI() {
     if (!this.apiLoaded) {
@@ -57,7 +57,7 @@ export class YouTubePlayerService {
           if (event.data === YT.PlayerState.ENDED) {
             this.player.playVideo();
             console.log('end');
-            
+
           }
         },
       });
@@ -91,6 +91,20 @@ export class YouTubePlayerService {
   }
 
 
-  
+  muteVideoTone() {
+    if (this.player) {
+      this.player.mute();
+    } else {
+      console.error('YouTube Player not created yet.');
+    }
+  }
 
+
+  unMuteVideoTone() {
+    if (this.player) {
+      this.player.unMute();   
+    } else {
+      console.error('YouTube Player not created yet.');
+    }
+  }
 }

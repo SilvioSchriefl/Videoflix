@@ -1,24 +1,34 @@
+
 <div [class.show_shadow]="content.open_movie_detail && youtube.play" class="shadow" (click)="closeMovieDetail()">
     <div class="main_div" (click)="$event.stopPropagation()">
-        <div class="youtube_player">
+        <div #player class="youtube_player">
             <div id="youtube-player2"></div>
         </div>
         <div class="overlay">
 
-            <div class="close">
-                <img src="/assets/img/close.png" (click)="closeMovieDetail()" alt="">
+            <div class="close" (click)="closeMovieDetail()" alt="">
+                <img src="/assets/img/close.png" >
             </div>
+            <div  class=" mute_button" (click)="toggleMuteTone()">
+                <img *ngIf="!tone_muted" src="/assets/img/speaker.png" alt="">
+                <img *ngIf="tone_muted" src="/assets/img/speaker_mute.png" alt="">
+            </div>
+            
             <div class="play_logo">
-                <img class="logo" [src]="logo_url" alt="">
+                <img *ngIf="logo_url != 'noLogo'" class="logo" [src]="logo_url" alt="">
+                <span class="title" *ngIf="logo_url == 'noLogo'">{{content.movie_detail.title}}</span>
                 <div class="play_add">
                     <div class="play_button" (click)="playYouTubeVideo()">
                         <img src="/assets/img/play_black.png" alt="">
                         <span>Play</span>
                     </div>
-                    <div class="add" (click)="updateWatchList(content.movie_detail)"
-                        [matTooltip]="getToolTipText(content.movie_detail.in_watchlist)" matTooltipPosition="above">
-                        <img *ngIf="!content.movie_detail.in_watchlist" src="/assets/img/add.png" alt="">
-                        <img *ngIf="content.movie_detail.in_watchlist" src="/assets/img/done.png" alt="">
+                    <div class="add" (click)="updateWatchList(content.movie_detail)" [matTooltip]="getToolTipText(content.movie_detail.in_watchlist)" matTooltipPosition="above">
+                        <div *ngIf="!content.movie_detail.in_watchlist" class="add_button">
+                            <img src="/assets/img/plus.png" alt="">
+                        </div>
+                        <div *ngIf="content.movie_detail.in_watchlist" class="add_button">
+                            <img src="/assets/img/done.png" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -46,14 +56,33 @@
                         </div>
                     </div>
                     <span class="overview">{{content.movie_detail.overview}}</span>
-                    <span class="similar_title_headline">Similar titles</span>
+                    <span class="recommendations_title_headline">Recommendations</span>
                 </div>
-                <div class="similar_titles">
-                    <div *ngFor="let movie of similar_movies let i = index" class="similar_movie_main">
-                        <ng-container *ngIf="i < 6">
-                            <img class="similar_img" src="{{content.imageBase_url + movie.backdrop_path}}" alt="">
-                            <img class="similar_logo" src="{{content.imageBase_url + movie.en_logo}}" alt="">
+                <div class="recommendations_titles">
+                    <span *ngIf="recommendations_movies.length == 0" class="no_recommendations">No recommendations available</span>
+                    <div *ngFor="let movie of recommendations_movies let i = index" class="recommendations_movie_main" [class.d_none]="i > 8" (mouseenter)="showPLayButton(i)" (mouseleave)="hidePlayButton()" (click)="playRecommendYouTubeVideo(movie)">
+                        <ng-container>
+                            <img class="recommendations_img" src="{{content.imageBase_url + movie.backdrop_path}}" alt="">
+                            <img class="recommendations_logo" src="{{content.imageBase_url + movie.en_logo}}" alt="">
+                            <div [class.show_playbutton]="show_play_button && i == hover_index" class="play">
+                                <img src="/assets/img/play_black.png" alt="">
+                            </div>
                         </ng-container>
+                        <div class="recommendations_detail">
+                            <span>{{getProductionYearRecommendMovie(recommendations_movies[i].release_date)}}</span>
+                            <div class="recommendations_overview">
+                                {{recommendations_movies[i].overview}}
+                            </div>
+                            <div (mouseover)="content.getToolTipText(movie.in_watchlist)" class="recommendations_add_button" (click)="setMovieWatchlistStatus(movie)" [matTooltip]="content.tooltip_text" matTooltipPosition="above">
+                                <div *ngIf="!movie.in_watchlist" class="add_button">
+                                    <img src="/assets/img/plus.png" alt="">
+                                </div>
+                                <div *ngIf="movie.in_watchlist" class="add_button">
+                                    <img src="/assets/img/done.png" alt="">
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>

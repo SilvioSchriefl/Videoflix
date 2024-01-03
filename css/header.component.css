@@ -1,0 +1,35 @@
+.logo img {
+  width: 150px;
+}
+
+.profile {
+  cursor: pointer;
+}
+.profile img {
+  width: 50px;
+  height: 50px;
+}
+
+.scroll_background:before {
+  opacity: 1;
+}
+
+nav {
+  display: flex;
+  color: #D6D6D6;
+  font-size: 14;
+  transition: 150ms;
+  gap: 20px;
+}
+nav span {
+  cursor: pointer;
+}
+nav span:hover {
+  color: #a3a3a3;
+}
+
+.nav_logo {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}/*# sourceMappingURL=header.component.css.map */
