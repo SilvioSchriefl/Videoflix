@@ -8,6 +8,7 @@
     z-index: 15
     border-radius: 12px
     overflow: auto
+    background: #181818
 
 .shadow
     opacity: 0
@@ -237,8 +238,8 @@
     .youtube_player
         left: unset
         width: 100%
-        height: 100%
-        top: -280px
+        height: 800px
+        top: -142px
 
     .main_div
         width: 100%
@@ -247,7 +248,29 @@
         top: 0
         border-radius: 0
 
+@media (max-width: 1200px)
+
+    .overlay
+        background: linear-gradient(0deg, rgb(24, 24, 24) 64%, rgba(255, 255, 255, 0) 80%)
+
+    .youtube_player
+
+        top: -150px
+
+@media (max-width: 1100px)
+
+    .overlay
+        background: linear-gradient(0deg, rgb(24, 24, 24) 64%, rgba(255, 255, 255, 0) 80%)
+
 @media (max-width: 1000px)
+
+
+
+    .info_div_main
+        top: 530px
+
+    .overlay
+        background: linear-gradient(0deg, rgb(24, 24, 24) 68%, rgba(255, 255, 255, 0) 80%)
 
     .play_logo
         left: 20px
@@ -259,7 +282,7 @@
         width: 400px
 
     .youtube_player
-        top: -380px
+        top: -205px
 
     .credits_main
         gap: 5px
@@ -271,10 +294,18 @@
         top: 445px
         right: 20px
 
+@media (max-width: 900px)
+
+    .youtube_player
+        top: -147px
+
 @media (max-width: 800px)
 
+    .overlay
+        background: linear-gradient(0deg, rgb(24, 24, 24) 66%, rgba(255, 255, 255, 0) 80%)
+
     .info_div_main
-        top: 515px
+        top: 475px
 
     .play_logo
         top: 310px
@@ -285,6 +316,9 @@
     .mute_button
         top: 380px
 
+    .youtube_player
+        top: -260px
+
 @media (max-width: 725px)
 
     .recommendations_img
@@ -292,6 +326,15 @@
         width: 500px
 
 @media (max-width: 700px)
+
+    .info_div_main
+        top: 354px
+
+    .mute_button
+        top: 275px
+
+    .play_logo
+        top: 205px
 
     .overview
         width: 100%
@@ -301,16 +344,22 @@
         flex-direction: column
         gap: 15px
 
+    .overlay
+        background: linear-gradient(0deg, rgb(24, 24, 24) 77%, rgba(255, 255, 255, 0) 80%)
+
 @media (max-width: 600px)
+
+    .overlay
+        background: linear-gradient(0deg, rgb(24, 24, 24) 76%, rgba(255, 255, 255, 0) 80%)
+
+    .youtube_player
+        top: -234px
 
     .credits_genres
         width: 100%
 
     .info_div_main
         top: 350px
-
-    .youtube_player
-        top: -480px
 
     .mute_button
         top: 252px
@@ -327,6 +376,11 @@
 
 @media (max-width: 500px)
 
+   
+
+    .info_div_main
+        top: 300px
+
     .description
         font-size: 14px
 
@@ -339,8 +393,73 @@
     .mute_button
         top: 203px
 
+    .youtube_player
+        top: -297px
+
 @media (max-width: 400px)
 
-     .recommendations_img
+    .youtube_player
+        top: -321px
+
+    .recommendations_img
         height: 180px
         width: 300px
+
+@media (max-height: 1200px) and (orientation: landscape)
+    .overlay
+        background: linear-gradient(0deg, rgb(24, 24, 24) 40%, rgba(255, 255, 255, 0) 80%)
+
+@media (max-height: 800px) and (orientation: landscape)
+    .overlay
+        background: linear-gradient(0deg, rgb(24, 24, 24) 26%, rgba(255, 255, 255, 0) 80%)
+    .info_div_main
+        top: 595px
+        background: #181818
+
+@media (max-height: 450px) and (orientation: landscape)
+
+    .info_div_main
+        top: 411px
+        background: #181818
+
+    .play_logo
+        top: 235px
+
+    .mute_button
+        top: 335px
+
+@media (max-height: 400px) and (orientation: landscape)
+
+    .info_div_main
+        top: 389px
+        background: #181818
+
+    .play_logo
+        top: 205px
+
+    .mute_button
+        top: 305px
+
+@media (max-height: 375px) and (orientation: landscape)
+
+    .info_div_main
+        top: 350px
+        background: #181818
+
+    .play_logo
+        top: 205px
+
+    .mute_button
+        top: 272px
+
+@media (max-height: 375px) and (orientation: landscape)
+
+    .info_div_main
+        top: 278px
+        background: #181818
+
+    .play_logo
+        top: 155px
+
+    .mute_button
+        top: 219px
