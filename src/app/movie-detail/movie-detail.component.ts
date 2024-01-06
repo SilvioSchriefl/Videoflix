@@ -25,7 +25,7 @@ export class MovieDetailComponent {
   tone_muted: boolean = false
   show_play_button: boolean = false
   hover_index: number = 0
-  current_movie!: object
+  recommend_video: boolean = false
 
 
   constructor(
@@ -41,11 +41,6 @@ export class MovieDetailComponent {
     this.recommendations_movies = []
     this.content.movie_detail = []
   }
-
-
-  stopPropagation(event: Event) {
-    event.stopPropagation();
-  };
 
 
   async playBackgroundYouTubeVideo() {
@@ -68,8 +63,8 @@ export class MovieDetailComponent {
 
 
   playRecommendYouTubeVideo( movie: { id: string; }) {
-    this.current_movie = movie
-    this.closeMovieDetail()
+    this.recommend_video = true
+    this.youtube.destroyPlayer()
     this.content.play = true
     this.youtube.loadYouTubeAPI().then(async () => {
       this.youtube.createPlayer('youtube-player', await this.content.getTrailer(movie.id));

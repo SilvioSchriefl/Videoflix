@@ -1,7 +1,8 @@
 <footer>
-    <div>
-        <span>This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
+    <div class="tmdb_notice">
+        
         <div class="logo">
+            <a href="https://www.themoviedb.org/" target="_blank">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 190.24 81.52">
                 <defs>
@@ -25,9 +26,13 @@
                     </g>
                 </g>
             </svg>
+        </a>
         </div>
+        <span>This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
+    
     </div>
     <div class="legal">
-        <span>Impressum</span><span>Legal Notice</span>
+        <span (click)="goToImprint()">Imprint</span>
+        <span  (click)="goToLegalNotice()" >Legal Notice</span>
     </div>
 </footer>

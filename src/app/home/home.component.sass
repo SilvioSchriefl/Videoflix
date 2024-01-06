@@ -139,7 +139,7 @@
     font-size: 36px
     font-weight: 200
     position: absolute
-    top: 300px
+    top: 380px
     left: 50px
     z-index: 10
     width: 1000px
@@ -150,7 +150,6 @@
     gap: 50px
     img
         width: 300px
-        object-fit: cover
 
 .buttons
     position: absolute
@@ -165,3 +164,70 @@
     position: absolute
     top: 300px
     left: calc( 50% - 50px )
+
+.search_results
+    display: none
+    position: absolute
+    top: 0px
+    left: 0px
+    width: 100%
+    height: 100vh
+    margin-top: 200px
+
+.show_search_results
+    display: block
+
+@media only screen and (max-width: 1500px)
+
+    .close_video
+        top: 50px
+        left: 50px
+
+@media only screen and (max-width: 1200px)
+
+    .slider_movie_details
+        font-size: 24px
+        width: calc( 100% - 100px )
+        img
+            width: 200px
+
+    .buttons
+        bottom: 100px
+
+    .sections
+        top: 880px
+
+@media only screen and (max-width: 700px)
+
+    .close_video
+        top: 25px
+        left: 25px
+        img
+            height: 30px
+            width: 30px
+
+    .slider_movie_details
+        height: 300px
+        font-size: 18px
+        img
+            width: 150px
+
+    .buttons
+        bottom: 270px
+        right: -25px
+        left: unset
+        gap: 20px
+
+    .sections
+        top: 660px
+
+@media only screen and (max-width: 500px)
+
+    .slider_div
+        display: none
+
+    .sections
+        top: 120px
+
+    .spinner
+        display: none

@@ -3,9 +3,6 @@
     gap: 25px
     overflow-x: auto
     padding: 20px 0
-    &:hover
-        .info
-            transform: scale(1.05)
 
 .image_slider_main
     width: 100%
@@ -58,9 +55,8 @@
 
 .image
     position: relative
-    width: 300px
+    width: max-content
     img
-        top: 0
         width: 300px
         height: 450px
         border-radius: 5px
@@ -68,10 +64,8 @@
         transform: scale(1)
         transition: 150ms
 
-
 .info
     box-sizing: border-box
-    bottom: -200px
     background: #181818
     height: 86px
     width: 100%
@@ -79,6 +73,7 @@
     padding: 15px
     display: none
     justify-content: space-between
+    transform: scale(1.02)
 
 .show_content
     transition: 200ms
@@ -118,4 +113,76 @@
             height: 20px
 
 .hover
-    transform: scale(1.05)  !important
+    transform: scale(1.02) !important
+
+.error
+    position: absolute
+    top: 60px
+    left: 50px
+    color: #D87405
+
+.no_results
+    color: #fff
+    font-size: 24px
+    font-weight: 200
+
+@media only screen and (max-width: 1200px)
+
+    .add_button
+        width: 30px
+        height: 30px
+        img
+            width: 15px !important
+            height: 15px !important
+    .info
+        .play
+            height: 30px
+            width: 30px
+            img
+                width: 15px
+                height: 15px
+    .info_buttons
+        width: 100%
+        justify-content: center
+
+    .image
+        width: max-content
+        height: max-content
+        img
+            width: 200px
+            height: 300px
+
+    .info
+        margin-top: -3px
+        font-size: 12px
+        height: 60px
+        padding: 10px
+        align-items: center
+
+    .genres
+        display: none
+
+    .image_slider_main
+        height: 300px
+
+    .arrow_div_left
+        top: calc( 50% - 111px )
+        height: 307px
+
+    .arrow_div_right
+        top: calc( 50% - 111px )
+        height: 307px
+
+    .hover
+        transform: scale(1) !important
+
+@media only screen and (max-width: 500px)
+
+    .section_heaadline
+        font-size: 24px
+
+    .arrow_div_left
+        display: none
+
+    .arrow_div_right
+        display: none

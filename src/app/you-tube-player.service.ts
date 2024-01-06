@@ -107,4 +107,22 @@ export class YouTubePlayerService {
       console.error('YouTube Player not created yet.');
     }
   }
+
+
+  pauseVideo() {
+    if (this.player) {
+      this.player.pauseVideo();
+    } else {
+      console.error('YouTube Player not created yet.');
+    }
+  }
+
+
+  unPauseVideo() {
+    if (this.player) {
+      this.player.playVideo();
+    } else {
+      console.error('YouTube Player not created yet.');
+    }
+  }
 }

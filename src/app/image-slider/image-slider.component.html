@@ -10,19 +10,21 @@
     </div>
     <div class="image_slider_main" (mouseenter)="checkScrollbar()">
         <div #scroll_div class="image_slider_scroll">
-            <div *ngFor="let movie of input_data; let i = index" class="image">
-                <img [src]="content.imageBase_url + movie.poster_path" [class.hover]="hover_info && hover_index == i"
+            <span class="no_results" *ngIf="input_data.length == 0">Your search for "{{content.search_text}}" returned no results</span>
+            <div *ngFor="let movie of input_data; let i = index" class="image">  
+                <img *ngIf="movie.poster_path" [src]="content.imageBase_url + movie.poster_path" [class.hover]="hover_info && hover_index == i"
                     (mouseenter)="handleMouseOver(i, movie.id, input_data)" (mouseleave)="handleMouseOut()"
                     (click)="openMovieDetail(movie.id, i, input_data, movie.in_watchlist)">
-                <div [class.show_info]="hover_info && hover_index  == i" class="info" (mouseover)="hover_info = true"
-                    (mouseout)="hover_info = false">
+                <div [class.show_info]="hover_info && hover_index == i || window_width < 1200" class="info" (mouseover)="hover_info = true"
+                    (mouseout)="hover_info = false && video_error = false">
+                    <span *ngIf="video_error" class="error">No trailer available</span>
                     <div class="genres">
-                        <div *ngFor="let genre of genres; let g = index">
-                            <span *ngIf="g < 3">{{genre.name}}</span>
+                        <div *ngFor="let genre of movie.genres; let g = index">
+                            <span *ngIf="g < 3">{{genre}}</span>
                         </div>
                     </div>
                     <div class="info_buttons">
-                        <div class="play" (click)="playYoutubeVideo(i, movie.id)">
+                        <div class="play" (click)="playYoutubeVideo(i, movie.id)" >
                             <img src="/assets/img/play_black.png" alt="">
                         </div>
 

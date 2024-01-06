@@ -18,11 +18,16 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { YoutubeVideoComponent } from './youtube-video/youtube-video.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
+import { ImprintComponent } from './imprint/imprint.component';
+import {MatButtonModule} from '@angular/material/button';
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -37,9 +42,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FooterComponent,
     HeaderComponent,
     ImageSliderComponent,
-    YoutubeVideoComponent,
     WatchlistComponent,
-    MovieDetailComponent
+    MovieDetailComponent,
+    LegalNoticeComponent,
+    ImprintComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -48,7 +55,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     BrowserModule,
     AppRoutingModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

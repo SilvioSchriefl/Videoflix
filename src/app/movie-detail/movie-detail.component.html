@@ -73,7 +73,7 @@
                             <div class="recommendations_overview">
                                 {{recommendations_movies[i].overview}}
                             </div>
-                            <div (mouseover)="content.getToolTipText(movie.in_watchlist)" class="recommendations_add_button" (click)="setMovieWatchlistStatus(movie)" [matTooltip]="content.tooltip_text" matTooltipPosition="above">
+                            <div (mouseover)="content.getToolTipText(movie.in_watchlist)" class="recommendations_add_button" (click)="setMovieWatchlistStatus(movie)" [matTooltip]="content.tooltip_text" matTooltipPosition="above" (click)="$event.stopPropagation()">
                                 <div *ngIf="!movie.in_watchlist" class="add_button">
                                     <img src="/assets/img/plus.png" alt="">
                                 </div>

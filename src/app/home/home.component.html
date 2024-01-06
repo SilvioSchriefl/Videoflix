@@ -1,5 +1,10 @@
+
 <app-movie-detail></app-movie-detail>
-<mat-spinner class="spinner" *ngIf="content.loading " ></mat-spinner>
+
+
+<app-image-slider class="search_results" [class.show_search_results]="content.open_search_results" [input_data]="content.search_results" [headline]="'Search results'"(openMovie)="openMovieDetails($event)"></app-image-slider>
+
+
 <div class="youtube_player" [class.z_index]="content.play">
     <div (click)="closeVideo()" class="close_video" *ngIf="content.play">
         <img src="/assets/img/back_video.png" alt="">
@@ -7,8 +12,8 @@
     <div id="youtube-player"></div>
 </div>
 
-<div #home *ngIf="!content.play" class="main_home" (scroll)="onScroll(home)">
-
+<div #home *ngIf="!content.play && !content.open_search_results" class="main_home" (scroll)="onScroll(home)">
+    <mat-spinner class="spinner" *ngIf="content.loading " ></mat-spinner>
     <div class="slider_div">
         <div class="dummy">
             <img *ngIf="content.popular_movies.length > 0"
@@ -36,7 +41,7 @@
             </div>
         </div>
     </div>
-    <div class="sections">
+    <div class="sections" >
         <section>
             <app-image-slider [input_data]="content.trending_movies" [headline]="'Trending'"
                 (openMovie)="openMovieDetails($event)"></app-image-slider>
@@ -59,6 +64,14 @@
         </section>
         <section>
             <app-image-slider [input_data]="content.science_fiction_movies" [headline]="'Science Fiction'"
+                (openMovie)="openMovieDetails($event)"></app-image-slider>
+        </section>
+        <section>
+            <app-image-slider [input_data]="content.war_movies" [headline]="'War'"
+                (openMovie)="openMovieDetails($event)"></app-image-slider>
+        </section>
+        <section>
+            <app-image-slider [input_data]="content.thriller_movies" [headline]="'Thriller'"
                 (openMovie)="openMovieDetails($event)"></app-image-slider>
         </section>
     </div>

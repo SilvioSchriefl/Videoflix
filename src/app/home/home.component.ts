@@ -51,15 +51,10 @@ export class HomeComponent implements OnInit {
 
 
 
-
-
-
   constructor(
     public auth: AuthenticationService,
     public content: ContentService,
-    private sanitizer: DomSanitizer,
     public youtube: YouTubePlayerService,
-    private elementRef: ElementRef,
   ) { }
 
 
@@ -98,6 +93,10 @@ export class HomeComponent implements OnInit {
 
 
   closeVideo() {
+    if(this.movieDetail.recommend_video) {
+      this.movieDetail.recommend_video = false
+      this.movieDetail.playBackgroundYouTubeVideo()
+    }
     this.content.play = false
     this.youtube.destroyPlayer()
   }

@@ -1,12 +1,16 @@
 <app-movie-detail></app-movie-detail>
-<div  class="youtube_player" [class.z_index]="content.play">
+<div class="youtube_player" [class.z_index]="content.play">
     <div (click)="closeVideo()" class="close_video" *ngIf="content.play">
         <img src="/assets/img/back_video.png" alt="">
     </div>
-    <div id="youtube-player"></div> 
+    <div id="youtube-player"></div>
 </div>
-<div class="watchlist">
-<section>
-<app-image-slider [input_data]="content.watchlist" [headline]="'My Watchlist'" (openMovie)="openMovieDetails($event)"></app-image-slider>
-</section>
+<div class="watchlist" *ngIf=" !content.open_search_results">
+    <section>
+        <app-image-slider [input_data]="content.watchlist" [headline]="'My Watchlist'"
+            (openMovie)="openMovieDetails($event)"></app-image-slider>
+    </section>
 </div>
+<app-image-slider class="search_results" [class.show_search_results]="content.open_search_results"
+    [input_data]="content.search_results" [headline]="'Search results'"
+    (openMovie)="openMovieDetails($event)"></app-image-slider>

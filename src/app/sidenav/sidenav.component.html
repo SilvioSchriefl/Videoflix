@@ -1,0 +1,11 @@
+<div class="sidenav">
+    <div class="profile">
+        <img src="/assets/img/profil.png" alt="">
+        {{auth.current_user.user_name}}
+    </div>
+    <span (click)="goToHome()">Home</span>
+    <span (click)="goToWatchlist()">Watchlist</span>
+    <span (click)="auth.userLogOut()">Log out</span>
+    <span (click)="goToImprint()">Imprint</span>
+    <span (click)="goToLegalNotice()">Legal Notice</span>
+</div>

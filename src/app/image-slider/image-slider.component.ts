@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ContentService } from '../content.service';
 import { YouTubePlayerService } from '../you-tube-player.service';
 import { AuthenticationService } from '../authentication.service';
 import { HomeComponent } from '../home/home.component';
-import { Observable, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import { Observable, Subscription, distinctUntilChanged, fromEvent, map } from 'rxjs';
+import { WindowResizeService } from '../window-resize.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { Observable, distinctUntilChanged, fromEvent, map } from 'rxjs';
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.sass'],
 })
-export class ImageSliderComponent implements OnInit {
+export class ImageSliderComponent implements OnInit, OnDestroy  {
 
 
   @Output('openMovie') openMovie: EventEmitter<any> = new EventEmitter();
@@ -19,6 +20,7 @@ export class ImageSliderComponent implements OnInit {
   @Input() input_data: any = []
   @Input() headline!: string
   @ViewChild('scroll_div') scrollDiv!: ElementRef;
+  private resizeSubscription!: Subscription;
   hover_index: number = 0;
   genres: any = []
   hover_info: boolean = false
@@ -26,22 +28,36 @@ export class ImageSliderComponent implements OnInit {
   scrollable_left: number = 0
   scrollable_right: boolean = true
   scrollLeftObservable!: Observable<number>;
+  video_error: boolean = false
+  window_width!: number;
 
 
 
   constructor(
     public content: ContentService,
     public youtube: YouTubePlayerService,
-    public auth: AuthenticationService
+    public auth: AuthenticationService,
+    public window: WindowResizeService,
   ) { }
 
 
   async ngOnInit() {
+    this.resizeSubscription = this.window.resize$.subscribe((width: number) => {
+      this.window_width = width;
+    });
+    this.window_width = window.innerWidth
     await this.content.getTrendingMovies()
-    await this.content.getMovieByGenres() 
+    await this.content.getMovieByGenres()
+    this.content.getGenreNames(this.input_data)
     this.content.checkIfMovieIsInWatchList(this.input_data)
     this.checkScrollbar();
     this.initializeScrollObserver()
+    console.log(this.input_data);
+  }
+
+
+  ngOnDestroy() {
+    this.resizeSubscription.unsubscribe();
   }
 
 
@@ -49,18 +65,18 @@ export class ImageSliderComponent implements OnInit {
     let scrollEvent$ = fromEvent(this.scrollDiv.nativeElement, 'scroll');
     this.scrollLeftObservable = scrollEvent$.pipe(
       map(() => Math.floor(this.scrollDiv.nativeElement.scrollLeft)),
-      distinctUntilChanged() 
+      distinctUntilChanged()
     );
 
- 
+
     this.scrollLeftObservable.subscribe((scrollLeftValue) => {
-      if(this.scrollDiv.nativeElement.scrollWidth - this.scrollDiv.nativeElement.clientWidth == scrollLeftValue) this.scrollable_right = false
+      if (this.scrollDiv.nativeElement.scrollWidth - this.scrollDiv.nativeElement.clientWidth == scrollLeftValue) this.scrollable_right = false
       else this.scrollable_right = true
       this.scrollable_left = scrollLeftValue
     });
   }
-    
-  
+
+
   checkScrollbar() {
     let scrollDiv = this.scrollDiv.nativeElement
     if (scrollDiv.scrollWidth > scrollDiv.clientWidth) this.scrollable = true
@@ -96,16 +112,20 @@ export class ImageSliderComponent implements OnInit {
   handleMouseOut() {
     this.hover_info = false
     this.hover = false
+    this.video_error = false
   }
 
 
   async playYoutubeVideo(index: number, movie_id: string) {
     let movie_detail: any = await this.content.getMovieDetails(movie_id)
-    let video_id = await this.content.setVideoId(movie_detail.videos.results)
-    this.youtube.loadYouTubeAPI().then(async () => {
-      this.youtube.createPlayer('youtube-player', await this.content.getTrailer(movie_id));
-      this.content.play = true
-    });
+    if (movie_detail.videos.results.length > 0) {
+      await this.content.setVideoId(movie_detail.videos.results)
+      this.youtube.loadYouTubeAPI().then(async () => {
+        this.youtube.createPlayer('youtube-player', await this.content.getTrailer(movie_id));
+        this.content.play = true
+      });
+    }
+    else this.video_error = true
   }
 
 

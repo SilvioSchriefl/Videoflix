@@ -4,3 +4,30 @@
 .legal
     display: flex
     flex-direction: column
+    width: 120px
+    span
+        cursor: pointer
+        &:hover
+            transition: 150ms
+            text-decoration: underline
+            color: #fff
+
+.tmdb_notice
+    display: flex
+    gap: 10px
+    align-items: center    
+    span
+        font-size: 14px
+        width: 200px
+
+@media  ( max-width: 1000px )
+
+    .legal
+        gap: 5px
+
+@media  ( max-width: 500px )
+        
+        .logo
+            width: 50px
+       
+    
