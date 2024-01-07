@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { WindowResizeService } from '../window-resize.service';
 
 @Component({
   selector: 'app-footer',
@@ -10,7 +11,7 @@ export class FooterComponent {
 
 
   constructor(
-    public router: Router
+    public router: Router,
   ) { }
 
 

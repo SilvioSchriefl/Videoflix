@@ -79,7 +79,7 @@ export class YouTubePlayerService {
 
 
   /**
-   * A description of the entire function.
+   * Start the video when the player is ready.
    *
    * @param {any} event - the event object for the 'onPlayerReady' event
    */
