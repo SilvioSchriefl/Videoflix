@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 import { ContentService } from '../content.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -21,25 +23,24 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ],
 })
 
-
-
 export class HeaderComponent {
 
   show_logout: boolean = false;
-  searching: boolean = false;
-  
+
+
 
   constructor(
     public router: Router,
     public auth: AuthenticationService,
-    public content: ContentService
+    public content: ContentService,
+    public dialog: MatDialog
   ) { }
 
 
   @HostListener('document:click', ['$event'])
   handleGlobalClick(event: Event): void {
     if (this.content.search_text == '') {
-      this.searching = false
+      this.content.searching = false
       this.content.search_text = ''
     }
   }
@@ -50,7 +51,7 @@ export class HeaderComponent {
    *
    */
   goToWatchlist() {
-    this.searching = false
+    this.content.searching = false
     this.content.open_search_results = false
     this.router.navigateByUrl('watchlist')
   }
@@ -61,7 +62,7 @@ export class HeaderComponent {
    *
    */
   goToHome() {
-    this.searching = false
+    this.content.searching = false
     this.content.open_search_results = false
     this.router.navigateByUrl('home')
   }
@@ -88,20 +89,26 @@ export class HeaderComponent {
 
 
   openSearchInput() {
-    if(this.content.open_sidebar) this.content.open_sidebar = false
+    if (this.content.open_sidebar) this.content.open_sidebar = false
     this.content.search_text = ''
-    this.searching = true
+    this.content.searching = true
   }
 
 
   closeSearchInput() {
-    this.searching = false
+    this.content.searching = false
     this.content.open_search_results = false
   }
 
 
   toggleSidebar() {
+
     this.content.open_sidebar = !this.content.open_sidebar
   }
 
+
+  openDialog() {
+    this.show_logout = false
+    this.dialog.open(DeleteAccountDialogComponent);
+  }
 }

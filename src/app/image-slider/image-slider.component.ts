@@ -52,7 +52,6 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
     this.content.checkIfMovieIsInWatchList(this.input_data)
     this.checkScrollbar();
     this.initializeScrollObserver()
-    console.log(this.input_data);
   }
 
 

@@ -28,6 +28,8 @@ import { ImprintComponent } from './imprint/imprint.component';
 import {MatButtonModule} from '@angular/material/button';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MatIconModule } from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { MatIconModule } from '@angular/material/icon';
     MovieDetailComponent,
     LegalNoticeComponent,
     ImprintComponent,
-    SidenavComponent
+    SidenavComponent,
+    DeleteAccountDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -59,6 +62,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

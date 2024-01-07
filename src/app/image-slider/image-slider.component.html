@@ -10,7 +10,7 @@
     </div>
     <div class="image_slider_main" (mouseenter)="checkScrollbar()">
         <div #scroll_div class="image_slider_scroll">
-            <span class="no_results" *ngIf="input_data.length == 0">Your search for "{{content.search_text}}" returned no results</span>
+            <span class="no_results" *ngIf="input_data.length == 0 && content.searching">Your search for "{{content.search_text}}" returned no results</span>
             <div *ngFor="let movie of input_data; let i = index" class="image">  
                 <img *ngIf="movie.poster_path" [src]="content.imageBase_url + movie.poster_path" [class.hover]="hover_info && hover_index == i"
                     (mouseenter)="handleMouseOver(i, movie.id, input_data)" (mouseleave)="handleMouseOut()"

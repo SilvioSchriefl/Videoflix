@@ -9,7 +9,7 @@ import { RouteGuardService } from '../route-guard.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.sass']
 })
-export class LogInComponent implements OnInit {
+export class LogInComponent implements OnInit  {
 
   regexEmail = new RegExp('^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$');
   email_valid: boolean = true
@@ -40,6 +40,7 @@ export class LogInComponent implements OnInit {
    }
     this.auth.request_fail = false
     this.auth.request_successfull = false
+    console.log(this.auth.token);
   }
 
 
@@ -76,6 +77,7 @@ export class LogInComponent implements OnInit {
     if (this.auth.request_successfull) {
       this.guard.authenticated = true;
       this.router.navigateByUrl('home')
+      this.auth.request_successfull = false
     } 
   }
 }

@@ -49,6 +49,7 @@ export class ContentService {
   all_movies: any = []
   search_text: string = '';
   open_sidebar: boolean = false;
+  searching: boolean = false;
   genre_ids: Genre_ids[] = [
     { name: 'Action', id: 28 },
     { name: 'Adventure', id: 12 },

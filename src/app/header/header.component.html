@@ -1,6 +1,6 @@
 <header [class.scroll_background]="!content.scroll_top">
     <div class="nav_logo">
-        <button mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()">
+        <button *ngIf="router.url == '/home' || router.url == '/watchlist'" mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()">
             <mat-icon>menu</mat-icon>
           </button>
         <div class="logo">
@@ -16,7 +16,7 @@
     </div>
 
     <div class="search_main" (click)="$event.stopPropagation()">
-        <div  [class.show_search]="searching" class="search_input">
+        <div  [class.show_search]="content.searching" class="search_input">
             <input type="text" placeholder="Title" [(ngModel)]="content.search_text" (ngModelChange)="dataChanged()" maxlength="30">
                 <img class="search_icon_input" src="/assets/img/search.png" alt="">
                 <img *ngIf="content.search_text != ''" class="close_icon" src="/assets/img/close.png" alt="" (click)="closeSearchInput()">
@@ -29,8 +29,9 @@
         <div *ngIf="show_logout" class="space"></div>
     </div>
     <div *ngIf="router.url == '/home' || router.url == '/watchlist'" class="logout" [class.show_logout]="show_logout" (mouseenter)="showLogout()"
-        (mouseleave)="hideLogout()" (click)="auth.userLogOut()">
-        <span>Log out from Videoflix</span>
+        (mouseleave)="hideLogout()" >
+        <span (click)="auth.userLogOut()" (click)="show_logout = false">Log out from Videoflix</span>
+        <span (click)="openDialog()">Delete your account</span>
     </div>
 </header>
 <app-sidenav [class.show_sidebar]="content.open_sidebar" class="sidebar"></app-sidenav>

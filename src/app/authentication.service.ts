@@ -113,6 +113,18 @@ export class AuthenticationService {
       this.error_text = 'Error in the request';
     }
   }
+
+
+  async deleteUserAccount() {
+    let url = environment.baseUrl + '/delete_account/';
+    try {
+      await lastValueFrom(this.http.delete(url));
+      localStorage.clear();
+      this.request_successfull = true
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 

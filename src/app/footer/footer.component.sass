@@ -15,7 +15,7 @@
 .tmdb_notice
     display: flex
     gap: 10px
-    align-items: center    
+    align-items: center
     span
         font-size: 14px
         width: 200px
@@ -24,10 +24,29 @@
 
     .legal
         gap: 5px
+    .tmdb_notice
+        span
+            font-size: 12px
 
 @media  ( max-width: 500px )
-        
-        .logo
-            width: 50px
-       
+
+    .logo
+        width: 80px
+
+    .tmdb_notice
+        width:  250px
+        font-size: 11px
+
+    .legal
+        font-size: 14px
+
+@media (max-height: 800px) and (orientation: landscape)
+
+    .logo
+        width: 55px
+
+    .tmdb_notice
+        span
+            font-size: 11px
+
     

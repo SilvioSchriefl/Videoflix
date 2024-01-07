@@ -17,6 +17,8 @@ export class SidenavComponent {
   ) { }
 
   goToHome() {
+    this.content.searching = false
+    this.content.open_search_results = false
     this.content.open_sidebar = false
     this.router.navigateByUrl('home');
 
@@ -24,18 +26,24 @@ export class SidenavComponent {
 
 
   goToWatchlist() {
+    this.content.searching = false
+    this.content.open_search_results = false
     this.content.open_sidebar = false
     this.router.navigateByUrl('watchlist');
   }
 
 
   goToImprint() {
+    this.content.searching = false
+    this.content.open_search_results = false
     this.content.open_sidebar = false
     this.router.navigateByUrl('imprint');
   }
 
 
   goToLegalNotice() {
+    this.content.searching = false
+    this.content.open_search_results = false
     this.content.open_sidebar = false
     this.router.navigateByUrl('legal_notice');
   }

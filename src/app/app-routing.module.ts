@@ -22,6 +22,8 @@ const routes: Routes = [
     ]
   },
     {path: 'email_confirmed', component: EmailConfirmedComponent},
+    {path: 'token_used', component: EmailConfirmedComponent},
+    {path: 'user_not_found', component: EmailConfirmedComponent},
     {path: 'set_new_password', component: SetNewPasswordComponent},
     {path: 'home', component: HomeComponent, canActivate: [RouteGuardService]},
     {path: 'watchlist', component: WatchlistComponent, canActivate: [RouteGuardService]},

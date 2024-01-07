@@ -1,14 +1,16 @@
 
 <div class="main_div">
-    <header>
-        <div class="logo">
-            <img src="/assets/img/logo.png" alt="">
-            <span>VideoFlix</span>
-        </div>
-    </header>
-    <div class="main_confirmed">
+    <div *ngIf="router.url == '/email_confirmed'" class="main_confirmed">
         <span class="success">Email confirmed successfully.</span>
         <span>You have successfully activated the account. You can now close this window</span>
+    </div>
+    <div *ngIf="router.url == '/token_used'" class="main_confirmed">
+        <span class="success">The email has already been confirmed.</span>
+        <span> You can now close this window</span>
+    </div>
+    <div *ngIf="router.url == '/user_not_found'" class="main_confirmed">
+        <span class="success">User not found.</span>
+        <span>You can now close this window</span>
     </div>
 </div>
 <div class="shadow"></div>

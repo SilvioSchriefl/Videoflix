@@ -17,7 +17,7 @@
 
 .router
     position: absolute
-    left: calc( 50% - 225px )
+    left: calc( 50% - 221px )
     top: calc( 50% - 225px )
     z-index: 1
 
@@ -27,6 +27,25 @@
     font-weight: 700
     font-size: 54px
     position: absolute
-    left: calc( 50% - 327px )
+    left: calc( 50% - 284px )
     top: calc( 50% - 400px )
     width: max-content
+
+@media  ( max-width: 650px )
+
+    .headline
+        font-size: 30px
+        left: calc(50% - 158px)
+        top: 15%
+
+@media  ( max-width: 500px )
+    .router
+        left: 0
+        width: 100%
+        position: relative
+        top: calc( 50% - 175px )
+
+    .main_div
+        box-sizing: border-box
+        padding-left: 20px
+        padding-right: 20px
