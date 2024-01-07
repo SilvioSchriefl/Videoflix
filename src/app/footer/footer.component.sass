@@ -4,7 +4,6 @@
 .legal
     display: flex
     flex-direction: column
-    width: 120px
     span
         cursor: pointer
         &:hover
@@ -27,11 +26,13 @@
     .tmdb_notice
         span
             font-size: 12px
+    .logo
+        width: 80px
 
 @media  ( max-width: 500px )
 
-    .logo
-        width: 80px
+    .legal
+        display: none
 
     .tmdb_notice
         width:  250px

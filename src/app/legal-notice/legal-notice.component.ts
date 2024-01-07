@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class LegalNoticeComponent {
 
+
+  back() {
+    window.history.back();
+  }
+
 }

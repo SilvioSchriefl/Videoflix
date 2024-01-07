@@ -1,6 +1,6 @@
 <header [class.scroll_background]="!content.scroll_top">
     <div class="nav_logo">
-        <button *ngIf="router.url == '/home' || router.url == '/watchlist'" mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()">
+        <button *ngIf="router.url == '/home' || router.url == '/watchlist'  || router.url == '/legal_notice' || router.url == '/imprint'" mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()">
             <mat-icon>menu</mat-icon>
           </button>
         <div class="logo">

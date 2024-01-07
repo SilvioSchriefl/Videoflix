@@ -15,9 +15,10 @@ export class EmailConfirmedComponent  {
   ) {}
 
 
-
-
-
+  /**
+   * Navigates to the login page.
+   *
+   */
   goToLogin() {
     this.router.navigateByUrl('log_in');
   }

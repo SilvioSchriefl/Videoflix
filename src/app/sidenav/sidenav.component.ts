@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 import { ContentService } from '../content.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -13,7 +15,8 @@ export class SidenavComponent {
   constructor(
     public router: Router,
     public auth: AuthenticationService,
-    public content: ContentService
+    public content: ContentService,
+    public dialog: MatDialog
   ) { }
 
   goToHome() {
@@ -47,6 +50,16 @@ export class SidenavComponent {
     this.content.open_sidebar = false
     this.router.navigateByUrl('legal_notice');
   }
-  
 
+
+  userLogOut() {
+    this.content.open_sidebar = false
+    this.auth.userLogOut();
+  }
+
+
+  openDialog() {
+    this.content.open_sidebar = false
+    this.dialog.open(DeleteAccountDialogComponent);
+  }
 }

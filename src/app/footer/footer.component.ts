@@ -14,13 +14,20 @@ export class FooterComponent {
   ) { }
 
 
+  /**
+   * Navigates to the legal notice page.
+   *
+   */
   goToLegalNotice() {
     this.router.navigateByUrl('legal_notice');
   }
 
 
+  /**
+   * Navigates to the imprint page.
+   *
+   */
   goToImprint() {
     this.router.navigateByUrl('imprint');
   }
-
 }

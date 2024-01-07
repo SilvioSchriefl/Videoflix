@@ -22,12 +22,21 @@ export class DeleteAccountDialogComponent {
   ) { }
 
 
-  onNoClick(): void {
+  /**
+   * Closes the dialog when the "No" button is clicked.
+   *
+   */
+  onNoClick() {
     this.dialogRef.close();
   }
 
 
-  async deleteAccount() {
+  /**
+   * Deletes the user account asynchronously.
+   *
+   * @return {Promise<void>} Promise that resolves when the account is deleted.
+   */
+  async deleteAccount(): Promise<void> {
     this.auth.loading = true;
     await this.auth.deleteUserAccount();
     this.auth.loading = false;

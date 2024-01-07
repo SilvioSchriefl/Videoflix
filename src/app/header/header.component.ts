@@ -38,7 +38,12 @@ export class HeaderComponent {
 
 
   @HostListener('document:click', ['$event'])
-  handleGlobalClick(event: Event): void {
+/**
+ * Handle global click event.
+ *
+ * @param {Event} event - The event object.
+ */
+  handleGlobalClick(event: Event) {
     if (this.content.search_text == '') {
       this.content.searching = false
       this.content.search_text = ''
@@ -48,7 +53,6 @@ export class HeaderComponent {
 
   /**
    * Navigates to the watchlist page.
-   *
    */
   goToWatchlist() {
     this.content.searching = false
@@ -59,7 +63,6 @@ export class HeaderComponent {
 
   /**
    * Navigates to the home page.
-   *
    */
   goToHome() {
     this.content.searching = false
@@ -68,16 +71,25 @@ export class HeaderComponent {
   }
 
 
+  /**
+   * Show the logout.
+   */
   showLogout() {
     this.show_logout = true;
   }
 
 
+  /**
+   * Hides the logout button.
+   */
   hideLogout() {
     this.show_logout = false;
   }
 
 
+  /**
+   * Check if the data has changed and update the search results accordingly.
+   */
   dataChanged() {
     if (this.content.search_text == '') this.content.open_search_results = false
     else {
@@ -88,6 +100,9 @@ export class HeaderComponent {
   }
 
 
+  /**
+   * Opens the search input.
+   */
   openSearchInput() {
     if (this.content.open_sidebar) this.content.open_sidebar = false
     this.content.search_text = ''
@@ -95,18 +110,26 @@ export class HeaderComponent {
   }
 
 
+  /**
+   * Closes the search input and resets the search results.
+   */
   closeSearchInput() {
     this.content.searching = false
     this.content.open_search_results = false
   }
 
 
+  /**
+   * Toggles the sidebar by changing the value of the `open_sidebar` property in the `content` object.
+   */
   toggleSidebar() {
-
     this.content.open_sidebar = !this.content.open_sidebar
   }
 
 
+/**
+ * Opens the delete account dialog.
+ */
   openDialog() {
     this.show_logout = false
     this.dialog.open(DeleteAccountDialogComponent);
