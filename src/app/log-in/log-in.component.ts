@@ -9,7 +9,7 @@ import { RouteGuardService } from '../route-guard.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.sass']
 })
-export class LogInComponent implements OnInit  {
+export class LogInComponent implements OnInit {
 
   regexEmail = new RegExp('^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$');
   email_valid: boolean = true
@@ -25,24 +25,25 @@ export class LogInComponent implements OnInit  {
   ) { }
 
 
-/**
- * Initializes the component and performs some setup tasks.
- *
- * @return {Promise<void>} Promise that resolves when the function completes.
- */
+  /**
+   * Initializes the component and performs some setup tasks.
+   *
+   * @return {Promise<void>} Promise that resolves when the function completes.
+   */
   async ngOnInit(): Promise<void> {
-   let token = localStorage.getItem('token');
-   let id = localStorage.getItem('id');
-   let user_name = localStorage.getItem('user_name');
-   let email = localStorage.getItem('email');
-   if (token)  {
-    this.auth.current_user.user_name = user_name
-    this.auth.current_user.id = id
-    this.auth.current_user.email = email
-    this.auth.token = token;
-    this.guard.authenticated = true;
-    this.router.navigateByUrl('home')
-   }
+    this.auth.token = '';
+    let token = localStorage.getItem('token');
+    let id = localStorage.getItem('id');
+    let user_name = localStorage.getItem('user_name');
+    let email = localStorage.getItem('email');
+    if (token) {
+      this.auth.current_user.user_name = user_name
+      this.auth.current_user.id = id
+      this.auth.current_user.email = email
+      this.auth.token = token;
+      this.guard.authenticated = true;
+      this.router.navigateByUrl('home')
+    }
     this.auth.request_fail = false
     this.auth.request_successfull = false
     console.log(this.auth.token);
@@ -98,6 +99,6 @@ export class LogInComponent implements OnInit  {
       this.guard.authenticated = true;
       this.router.navigateByUrl('home')
       this.auth.request_successfull = false
-    } 
+    }
   }
 }
