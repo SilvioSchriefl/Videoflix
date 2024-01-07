@@ -13,8 +13,12 @@ export class StartComponent implements OnInit {
   ) {}
 
 
+  /**
+   * Initializes the component and navigates to the '/log_in' route.
+   *
+   * @return {void} This function does not return a value.
+   */
   ngOnInit(): void {
     this.router.navigateByUrl('/log_in')
   }
-
 }

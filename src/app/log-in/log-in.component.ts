@@ -25,6 +25,11 @@ export class LogInComponent implements OnInit  {
   ) { }
 
 
+/**
+ * Initializes the component and performs some setup tasks.
+ *
+ * @return {Promise<void>} Promise that resolves when the function completes.
+ */
   async ngOnInit(): Promise<void> {
    let token = localStorage.getItem('token');
    let id = localStorage.getItem('id');
@@ -45,26 +50,41 @@ export class LogInComponent implements OnInit  {
 
 
 
+  /**
+   * Updates the value of 'email_valid' based on the validity of 'user_email'.
+   */
   dataChanged() {
     this.email_valid = this.regexEmail.test(this.user_email)
   }
 
 
+  /**
+   * Navigates to the sign-up page.
+   */
   goToSignUp() {
     this.router.navigateByUrl('register')
   }
 
 
+  /**
+   * Navigates to the reset password page.
+   */
   goToResetPassword() {
     this.router.navigateByUrl('reset_pw')
   }
 
 
+  /**
+   * Sets the focus on the input element.
+   */
   inputFocus() {
     this.auth.request_fail = false
   }
 
 
+  /**
+   * Sign in to the application.
+   */
   async signIn() {
     if (!this.email_valid) return
     this.auth.loading = true

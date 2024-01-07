@@ -19,6 +19,10 @@ export class SidenavComponent {
     public dialog: MatDialog
   ) { }
 
+
+  /**
+   * Navigates to the home page.
+   */
   goToHome() {
     this.content.searching = false
     this.content.open_search_results = false
@@ -28,6 +32,9 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Navigates to the watchlist page.
+   */
   goToWatchlist() {
     this.content.searching = false
     this.content.open_search_results = false
@@ -36,6 +43,9 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Navigates to the imprint page.
+   */
   goToImprint() {
     this.content.searching = false
     this.content.open_search_results = false
@@ -44,6 +54,9 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Navigates to the legal notice page.
+   */
   goToLegalNotice() {
     this.content.searching = false
     this.content.open_search_results = false
@@ -52,12 +65,18 @@ export class SidenavComponent {
   }
 
 
+  /**
+   * Logs out the user and closes the sidebar.
+   */
   userLogOut() {
     this.content.open_sidebar = false
     this.auth.userLogOut();
   }
 
 
+  /**
+   * Opens the delete account dialog.
+   */
   openDialog() {
     this.content.open_sidebar = false
     this.dialog.open(DeleteAccountDialogComponent);

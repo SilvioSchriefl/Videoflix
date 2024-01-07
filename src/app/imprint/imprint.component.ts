@@ -8,8 +8,10 @@ import { Component } from '@angular/core';
 export class ImprintComponent {
 
 
+  /**
+   * redirects to the last page
+   */
   back() {
     window.history.back();
   }
-
 }

@@ -35,6 +35,9 @@ export class MovieDetailComponent {
   ) { }
 
 
+  /**
+   * Closes the movie detail view and destroys the player.
+   */
   closeMovieDetail() {
     this.content.open_movie_detail = false
     this.youtube.destroyPlayer()
@@ -43,7 +46,12 @@ export class MovieDetailComponent {
   }
 
 
-  async playBackgroundYouTubeVideo() {
+/**
+ * Plays a YouTube video in the background.
+ *
+ * @return {Promise<void>} - A promise that resolves when the video starts playing.
+ */
+  async playBackgroundYouTubeVideo(): Promise<void> {
     let player = this.player.nativeElement.ViewChild
     let movie_id = this.content.movie_detail.id
     this.youtube.loadYouTubeAPI().then(async () => {
@@ -52,6 +60,9 @@ export class MovieDetailComponent {
   }
 
 
+  /**
+   * Plays a YouTube video.
+   */
   async playYouTubeVideo() {
     this.content.play = true
     let movie_id = this.content.movie_detail.id
@@ -62,6 +73,11 @@ export class MovieDetailComponent {
   }
 
 
+  /**
+   * Plays the recommended YouTube video.
+   *
+   * @param {object} movie - The movie object containing the ID of the video.
+   */
   playRecommendYouTubeVideo( movie: { id: string; }) {
     this.recommend_video = true
     this.youtube.destroyPlayer()
@@ -72,7 +88,10 @@ export class MovieDetailComponent {
   }
 
 
-  async getLogoUrl() {
+  /**
+   * Retrieves the URL of the logo.
+   */
+   getLogoUrl() {
     let logos = this.content.movie_detail.images.logos
     let en_logos: any[] = []
     logos.forEach((logo: any) => {
@@ -83,7 +102,14 @@ export class MovieDetailComponent {
   }
 
 
-  async updateWatchList(movie: { object: any, in_watchlist: boolean, id: string }) {
+  /**
+   * Updates the watchlist status of a movie.
+   *
+   * @param {object} movie - The movie object.
+   * @param {boolean} movie.in_watchlist - The current watchlist status of the movie.
+   * @param {string} movie.id - The ID of the movie.
+   */
+ updateWatchList(movie: { object: any, in_watchlist: boolean, id: string }) {
     if (movie.in_watchlist) {
       this.content.movie_detail.in_watchlist = false
       this.removeFromWatchlist(movie.id)
@@ -95,7 +121,13 @@ export class MovieDetailComponent {
   }
 
 
-  async addToWatchlist(movie: any) { 
+  /**
+   * Adds a movie to the watchlist.
+   *
+   * @param {any} movie - The movie to add to the watchlist.
+   * @return {Promise<void>} - A promise that resolves when the movie is successfully added to the watchlist.
+   */
+  async addToWatchlist(movie: any): Promise<void> { 
     this.content.watchlist.push(movie)
     let body = {
       id: this.auth.current_user.id,
@@ -106,7 +138,13 @@ export class MovieDetailComponent {
   }
 
 
-  async removeFromWatchlist(movie_id: string) {
+  /**
+   * Removes a movie from the watchlist.
+   *
+   * @param {string} movie_id - The ID of the movie to be removed.
+   * @return {Promise<void>} - A Promise that resolves when the movie is removed from the watchlist.
+   */
+  async removeFromWatchlist(movie_id: string): Promise<void> {
     let watchlist_movie_ids = this.content.watchlist.map((item: { id: any; }) => item.id)
     let i = watchlist_movie_ids.indexOf(movie_id)
     this.content.watchlist.splice(i, 1)
@@ -119,6 +157,11 @@ export class MovieDetailComponent {
   }
 
 
+  /**
+   * Set the watchlist status for all movies in the content.
+   *
+   * This function checks if each movie in the content is in the user's watchlist and updates the watchlist status accordingly.
+   */
   setWatchlistStatus() {
     this.content.checkIfMovieIsInWatchList(this.content.trending_movies)
     this.content.checkIfMovieIsInWatchList(this.content.popular_movies)
@@ -129,31 +172,56 @@ export class MovieDetailComponent {
   }
 
 
-  getToolTipText(in_watchlist: boolean) {
+  /**
+   * Returns the tooltip text based on the provided boolean value.
+   *
+   * @param {boolean} in_watchlist - Indicates whether the item is in the watchlist.
+   * @return {string} The tooltip text. If in_watchlist is true, it returns 'Remove from Watchlist', otherwise it returns 'Add to Watchlist'.
+   */
+  getToolTipText(in_watchlist: boolean): string {
     if (in_watchlist) return 'Remove from Watchlist'
     else return 'Add to Watchlist'
   }
 
 
-  getProductionYear() {
+  /**
+   * Get the production year of the movie.
+   *
+   * @return {number} The production year of the movie.
+   */
+  getProductionYear(): number {
     let date = new Date(this.content.movie_detail.release_date)
     return date.getFullYear()
   }
 
 
-  getProductionYearRecommendMovie(release_date:string) {
+  /**
+   * Calculates the production year of a recommended movie based on the given release date.
+   *
+   * @param {string} release_date - The release date of the movie in the format "YYYY-MM-DD".
+   * @return {number} The production year of the recommended movie.
+   */
+  getProductionYearRecommendMovie(release_date:string): number {
     let date = new Date(release_date)
     return date.getFullYear()
   }
 
 
-  getRuntime() {
+  /**
+   * Calculates the total runtime of the movie.
+   *
+   * @return {string} The total runtime of the movie in hours and minutes.
+   */
+  getRuntime(): string {
     let hours = Math.floor(this.content.movie_detail.runtime / 60);
     let minutes = this.content.movie_detail.runtime % 60;
     return `${hours} hrs ${minutes} min`
   }
 
 
+  /**
+   * Retrieves details of recommended movies and adds them to the recommendations_movies array.
+   */
   async getRecommendationMoviesDetails() {
     let recommendation_movies = this.content.movie_detail.recommendations.results
     recommendation_movies.forEach(async (movie: any) => {
@@ -173,6 +241,11 @@ export class MovieDetailComponent {
   }
 
 
+/**
+ * Checks whether a movie is in the watchlist.
+ *
+ * @param {any} movie - The movie object to check.
+ */
   checkWhetherMovieInWatchlist(movie:any) {
     let watchlist_movie_ids = this.content.watchlist.map((item: { id: number; }) => item.id)
     if (watchlist_movie_ids.includes(movie.id)) movie.in_watchlist = true
@@ -180,6 +253,13 @@ export class MovieDetailComponent {
   }
 
 
+  /**
+   * Toggles the watchlist status of a movie.
+   *
+   * @param {Object} movie - The movie object.
+   * @param {boolean} movie.in_watchlist - The current watchlist status of the movie.
+   * @param {string} movie.id - The ID of the movie.
+   */
   setMovieWatchlistStatus(movie: { in_watchlist: boolean, id: string } ) {
     if (movie.in_watchlist) {
       movie.in_watchlist = false
@@ -192,6 +272,9 @@ export class MovieDetailComponent {
   }
 
 
+  /**
+   * Toggle the mute state for the tone.
+   */
   toggleMuteTone() {
     if (this.tone_muted) {
       this.tone_muted = false
@@ -203,12 +286,20 @@ export class MovieDetailComponent {
   }
 
 
+/**
+ * Shows the play button for the specified index.
+ *
+ * @param {number} i - The index of the element.
+ */
   showPLayButton(i: number) {
     this.hover_index = i
     this.show_play_button = true
   }
 
 
+  /**
+   * Hides the play button.
+   */
   hidePlayButton() {
     this.show_play_button = false
   }

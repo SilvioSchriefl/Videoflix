@@ -15,7 +15,7 @@ export class AuthenticationService {
   request_fail: boolean = false
   request_successfull: boolean = false
   loading: boolean = false
-  current_user:any = {
+  current_user: any = {
     id: '',
     user_name: '',
     watchlist: [],
@@ -29,11 +29,19 @@ export class AuthenticationService {
   ) { }
 
 
-  async signUp(body: { password: string; user_name: string; email: string; }) {
+  /**
+   * Asynchronously signs up a user.
+   *
+   * @param {Object} body - The user's sign up details.
+   * @param {string} body.password - The user's password.
+   * @param {string} body.user_name - The user's username.
+   * @param {string} body.email - The user's email address.
+   * @return {Promise<void>} - A promise that resolves when the sign up is successful.
+   */
+  async signUp(body: { password: string; user_name: string; email: string; }): Promise<void> {
     const url = environment.baseUrl + '/register/';
     try {
       let response = await lastValueFrom(this.http.post(url, body));
-      console.log(response);
       this.request_successfull = true
     } catch (error: any) {
       console.log(error);
@@ -41,7 +49,15 @@ export class AuthenticationService {
   }
 
 
-  async signIn(body: { password: string; email: string }) {
+  /**
+   * Sign in using the provided credentials.
+   *
+   * @param {Object} body - The credentials for signing in.
+   *   @param {string} body.password - The password for the user.
+   *   @param {string} body.email - The email for the user.
+   * @return {Promise<void>} A promise that resolves when the sign in is successful.
+   */
+  async signIn(body: { password: string; email: string }): Promise<void> {
     const url = environment.baseUrl + '/log_in/';
     try {
       let response: any = await lastValueFrom(this.http.post(url, body));
@@ -61,6 +77,11 @@ export class AuthenticationService {
   }
 
 
+  /**
+   * Sets the specified values in the local storage.
+   *
+   * @param {any} response - The response object containing the values to be set in the local storage.
+   */
   setLocalStorage(response: any) {
     localStorage.setItem('token', response.token);
     localStorage.setItem('user_name', response.user_name);
@@ -69,6 +90,11 @@ export class AuthenticationService {
   }
 
 
+  /**
+   * Requests a password reset.
+   *
+   * @param {any} body - The request body.
+   */
   async requestResetPassword(body: any) {
     const url = environment.baseUrl + '/request_reset_password/';
     try {
@@ -83,19 +109,25 @@ export class AuthenticationService {
   }
 
 
-  async userLogOut() {
+  /**
+   * Logs out the user.
+   *
+   * @return {Promise<void>} - Returns a promise that resolves when the user has been logged out.
+   */
+  async userLogOut(): Promise<void> {
     let url = environment.baseUrl + '/logout/';
     let body = {
       email: this.current_user.email
     }
     try {
-     await lastValueFrom(this.http.post(url, body));
+      await lastValueFrom(this.http.post(url, body));
       this.router.navigateByUrl('');
       localStorage.clear()
     } catch (error) {
       console.log(error);
+    }
   }
-  }
+
 
   /**
    * Sets a new password.
@@ -104,9 +136,8 @@ export class AuthenticationService {
    */
   async setNewPassword(body: any) {
     const url = environment.baseUrl + '/set_password/';
-  
     try {
-      const response = await lastValueFrom(this.http.post(url, body));
+      await lastValueFrom(this.http.post(url, body));
       this.request_successfull = true;
     } catch (error: any) {
       this.request_fail = true;
@@ -115,7 +146,12 @@ export class AuthenticationService {
   }
 
 
-  async deleteUserAccount() {
+  /**
+   * Deletes the user account.
+   *
+   * @return {Promise<void>} - Resolves when the user account is successfully deleted.
+   */
+  async deleteUserAccount(): Promise<void> {
     let url = environment.baseUrl + '/delete_account/';
     try {
       await lastValueFrom(this.http.delete(url));

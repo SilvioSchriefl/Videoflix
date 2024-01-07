@@ -15,6 +15,13 @@ export class InerceptorService {
     ) { }
 
   
+  /**
+   * Intercept the HTTP request and add authorization token if available.
+   *
+   * @param {HttpRequest<any>} request - The HTTP request to intercept.
+   * @param {HttpHandler} next - The next HTTP handler in the chain.
+   * @return {Observable<HttpEvent<any>>} The observable that represents the HTTP response.
+   */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.auth.token.length > 0) {	
       request = request.clone({

@@ -22,6 +22,12 @@ export class WatchlistComponent {
   ) { }
 
 
+  /**
+   * Opens the details of a movie.
+   *
+   * @param {any} data - The data for the movie. It can be either a number representing the index of the movie in the popular_movies_details array, or an object with an id property representing the id of the movie.
+   * @return {Promise<void>} Returns a Promise that resolves to void.
+   */
   async openMovieDetails(data: any): Promise<void> {
     let movie_id
     if (typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
@@ -35,6 +41,10 @@ export class WatchlistComponent {
   }
 
 
+  /**
+   * Closes the video by setting the `play` property of `this.content` to `false`
+   * and destroying the YouTube player.
+   */
   closeVideo() {
     this.content.play = false
     this.youtube.destroyPlayer()

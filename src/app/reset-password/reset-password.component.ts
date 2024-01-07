@@ -16,16 +16,26 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     public auth: AuthenticationService,
     private router: Router
-  ) {}
+  ) { }
 
+
+  /**
+   * Initializes the component and sets the initial values for the `request_successfull` and `request_fail` properties of the `auth` object.
+   */
   ngOnInit(): void {
-     this.auth.request_successfull = false
-     this.auth.request_fail = false
+    this.auth.request_successfull = false
+    this.auth.request_fail = false
   }
 
-  async sendMail() {
+  
+  /**
+   * Sends an email.
+   *
+   * @return {Promise<void>} - A promise that resolves when the email has been sent.
+   */
+  async sendMail(): Promise<void> {
     this.email_valid = this.regexEmail.test(this.user_email)
-    if (!this.email_valid  || this.user_email.length == 0) return
+    if (!this.email_valid || this.user_email.length == 0) return
     this.auth.loading = true
     let body = {
       'email': this.user_email
@@ -35,18 +45,26 @@ export class ResetPasswordComponent implements OnInit {
   }
 
 
+  /**
+   * Updates the value of the 'email_valid' property based on the result of testing the 'user_email' against the 'regexEmail' regular expression.
+   */
   dataChanged() {
     this.email_valid = this.regexEmail.test(this.user_email)
   }
 
 
+  /**
+   * A description of the entire function.
+   */
   inputFocus() {
     this.auth.request_fail = false
   }
 
 
+  /**
+   * Go to the login page.
+   */
   goToLogin() {
     this.router.navigateByUrl('log_in')
   }
-
 }

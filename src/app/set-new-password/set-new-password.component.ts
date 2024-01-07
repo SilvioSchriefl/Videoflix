@@ -22,20 +22,31 @@ export class SetNewPasswordComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
+
+  /**
+   * Initializes the component.
+   */
+  ngOnInit() {
     this.auth.request_fail = false
     this.auth.request_successfull = false
     this.route.queryParams.subscribe(params => {
-    this.user_id = params['user_id'];  
+      this.user_id = params['user_id'];
     });
     this.auth.request_successfull = false
   }
 
+
+  /**
+   * Navigates to the login page.
+   */
   goToLogin() {
     this.router.navigateByUrl('log_in');
   }
 
 
+  /**
+   * Sets a new password for the user.
+   */
   async setNewPassword() {
     if (this.password_1 != this.password_2 && this.password_1.length > 0) this.pw_not_match = true
     else this.pw_not_match = false
@@ -50,8 +61,10 @@ export class SetNewPasswordComponent implements OnInit {
   }
 
 
+  /**
+   * Sets the focus on the input element.
+   */
   inputFocus() {
     this.pw_not_match = false
   }
-
 }

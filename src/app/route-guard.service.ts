@@ -13,6 +13,13 @@ export class RouteGuardService {
   ) { }
 
 
+  /**
+   * Checks if the user can activate the given route.
+   *
+   * @param {ActivatedRouteSnapshot} next - The next route that will be activated.
+   * @param {RouterStateSnapshot} state - The router state snapshot.
+   * @return {boolean} Returns true if the user is authenticated and can activate the route, false otherwise.
+   */
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

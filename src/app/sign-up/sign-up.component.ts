@@ -9,17 +9,6 @@ import { Router } from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
-  constructor(
-    public auth: AuthenticationService,
-    private router: Router,
-  ) { }
-
-
-  ngOnInit(): void {
-    this.auth.request_fail = false
-    this.auth.request_successfull = false
-  }
-
 
   user_name: string = ''
   email_valid: boolean = true
@@ -32,7 +21,27 @@ export class SignUpComponent implements OnInit {
   user_name_error: boolean = false
 
 
-  async signUp() {
+  constructor(
+    public auth: AuthenticationService,
+    private router: Router,
+  ) { }
+
+
+  /**
+   * Initializes the component and sets the authentication request flags to false.
+   */
+  ngOnInit() {
+    this.auth.request_fail = false
+    this.auth.request_successfull = false
+  }
+
+
+  /**
+   * Sign up function.
+   *
+   * @return {Promise<void>} - Promise that resolves when sign up is completed.
+   */
+  async signUp(): Promise<void> {
     this.email_valid = this.regexEmail.test(this.user_email)
     if (this.password_1 === this.password_2 && this.password_1.length > 0) this.pw_not_match = false
     else this.pw_not_match = true
@@ -49,6 +58,12 @@ export class SignUpComponent implements OnInit {
     this.auth.loading = false
   }
 
+
+  /**
+   * Sets the focus on the specified input field.
+   *
+   * @param {string} inputfield - The name of the input field to set focus on.
+   */
   inputFocus(inputfield: string) {
     if (inputfield == 'name') this.user_name_error = false
     if (inputfield == 'password') this.pw_not_match = false
@@ -56,8 +71,10 @@ export class SignUpComponent implements OnInit {
   }
 
 
+  /**
+   * Navigates to the login page.
+   */
   goToLogin() {
     this.router.navigateByUrl('log_in')
   }
-
 }

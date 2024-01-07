@@ -8,6 +8,10 @@ import { Component } from '@angular/core';
 export class LegalNoticeComponent {
 
 
+  
+  /**
+   * Redirects to the last page
+   */
   back() {
     window.history.back();
   }

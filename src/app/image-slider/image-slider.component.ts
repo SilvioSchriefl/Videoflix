@@ -41,6 +41,9 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   ) { }
 
 
+  /**
+   * Initializes the component and subscribes to the window resize event.
+   */
   async ngOnInit() {
     this.resizeSubscription = this.window.resize$.subscribe((width: number) => {
       this.window_width = width;
@@ -55,19 +58,23 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+  /**
+   * Destroys the component and unsubscribes from the resize subscription.
+   */
   ngOnDestroy() {
     this.resizeSubscription.unsubscribe();
   }
 
 
+/**
+ * Initializes the scroll observer for the given scroll div element.
+ */
   initializeScrollObserver() {
     let scrollEvent$ = fromEvent(this.scrollDiv.nativeElement, 'scroll');
     this.scrollLeftObservable = scrollEvent$.pipe(
       map(() => Math.floor(this.scrollDiv.nativeElement.scrollLeft)),
       distinctUntilChanged()
     );
-
-
     this.scrollLeftObservable.subscribe((scrollLeftValue) => {
       if (this.scrollDiv.nativeElement.scrollWidth - this.scrollDiv.nativeElement.clientWidth == scrollLeftValue) this.scrollable_right = false
       else this.scrollable_right = true
@@ -76,6 +83,9 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+  /**
+   * Checks if there is a scrollbar in the scrollable div element.
+   */
   checkScrollbar() {
     let scrollDiv = this.scrollDiv.nativeElement
     if (scrollDiv.scrollWidth > scrollDiv.clientWidth) this.scrollable = true
@@ -83,14 +93,20 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
-
+  /**
+   * Scrolls the content to the right.
+   */
   scrollRight() {
     this.scrollDiv.nativeElement.scroll({
       left: this.scrollDiv.nativeElement.scrollLeft + 1000,
       behavior: 'smooth'
     });
   }
+  
 
+  /**
+   * Scrolls the content of the scrollDiv to the left by 1000 pixels.
+   */
   scrollLeft() {
     this.scrollDiv.nativeElement.scroll({
       left: this.scrollDiv.nativeElement.scrollLeft - 1000,
@@ -99,6 +115,13 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+  /**
+   * Handles the mouse over event for a movie item.
+   *
+   * @param {number} index - The index of the movie in the array.
+   * @param {string} movie_id - The ID of the movie.
+   * @param {any} movie_array - The array of movies.
+   */
   async handleMouseOver(index: number, movie_id: string, movie_array: any) {
     this.hover = true;
     this.hover_info = true
@@ -108,6 +131,9 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+  /**
+   * Handles the mouse out event.
+   */
   handleMouseOut() {
     this.hover_info = false
     this.hover = false
@@ -115,6 +141,12 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+  /**
+   * Asynchronously plays a YouTube video.
+   *
+   * @param {number} index - The index of the video.
+   * @param {string} movie_id - The ID of the movie.
+   */
   async playYoutubeVideo(index: number, movie_id: string) {
     let movie_detail: any = await this.content.getMovieDetails(movie_id)
     if (movie_detail.videos.results.length > 0) {
@@ -128,12 +160,25 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+  /**
+   * Updates the watchlist by toggling the "in_watchlist" property of a movie at the specified index.
+   *
+   * @param {string} movie_id - The ID of the movie.
+   * @param {number} index - The index of the movie in the movie array.
+   * @param {any[]} movie_array - The array of movies.
+   */
   async updateWatchList(movie_id: string, index: number, movie_array: any) {
     if (movie_array[index].in_watchlist) this.removeFromWatchlist(index, movie_array, movie_id)
     else this.addToWatchlist(index, movie_array)
   }
 
 
+  /**
+   * Adds a movie to the watchlist at the specified index.
+   *
+   * @param {number} index - The index at which to add the movie.
+   * @param {any[]} movie_array - The array of movies.
+   */
   async addToWatchlist(index: number, movie_array: any) {
     movie_array[index].in_watchlist = true
     this.content.watchlist.push(movie_array[index])
@@ -146,6 +191,13 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+/**
+ * Removes a movie from the watchlist at the specified index.
+ *
+ * @param {number} index - The index of the movie to be removed.
+ * @param {any[]} movie_array - The array of movies.
+ * @param {string} movie_id - The ID of the movie to be removed.
+ */
   async removeFromWatchlist(index: number, movie_array: any, movie_id: string) {
     movie_array[index].in_watchlist = false
     let watchlist_movie_ids = this.content.watchlist.map((item: { id: number; }) => item.id)
@@ -160,6 +212,9 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+/**
+ * Sets the watchlist status for all movies in the content.
+ */
   setWatchlistStatus() {
     this.content.checkIfMovieIsInWatchList(this.content.trending_movies)
     this.content.checkIfMovieIsInWatchList(this.content.popular_movies)
@@ -169,6 +224,14 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
+/**
+ * Opens the movie detail for the given movie ID.
+ *
+ * @param {number} id - The ID of the movie.
+ * @param {number} index - The index of the movie in the array.
+ * @param {any} movie_array - The array of movies.
+ * @param {boolean} in_watchlist - Indicates whether the movie is in the watchlist.
+ */
   openMovieDetail(id: number, index: number, movie_array: any, in_watchlist: boolean) {
     let parameter = {
       in_watchlist: in_watchlist,
