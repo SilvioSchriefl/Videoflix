@@ -110,13 +110,14 @@ export class HomeComponent implements OnInit {
   /**
    * Close the video.
    */
-  closeVideo() {
-    if(this.movieDetail.recommend_video) {
-      this.movieDetail.recommend_video = false
-      this.movieDetail.playBackgroundYouTubeVideo()
-    }
+  async closeVideo() {
     this.content.play = false
     this.youtube.destroyPlayer()
+    if(this.movieDetail.play_video_from_detail) {
+      this.movieDetail.play_video_from_detail = false
+      await this.movieDetail.playBackgroundYouTubeVideo()
+    }
+    
   }
 
 
@@ -199,7 +200,7 @@ export class HomeComponent implements OnInit {
     else movie_id = data.id
     this.content.movie_detail = await this.content.getMovieDetails(movie_id)
     if (data.in_watchlist) this.content.movie_detail.in_watchlist = true
-    await this.movieDetail.getLogoUrl()
+     this.movieDetail.getLogoUrl()
     await this.movieDetail.getRecommendationMoviesDetails()
     await this.movieDetail.playBackgroundYouTubeVideo()
   }

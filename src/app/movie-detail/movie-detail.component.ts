@@ -25,7 +25,8 @@ export class MovieDetailComponent {
   tone_muted: boolean = false
   show_play_button: boolean = false
   hover_index: number = 0
-  recommend_video: boolean = false
+  play_video_from_detail: boolean = false
+ 
 
 
   constructor(
@@ -46,13 +47,12 @@ export class MovieDetailComponent {
   }
 
 
-/**
- * Plays a YouTube video in the background.
- *
- * @return {Promise<void>} - A promise that resolves when the video starts playing.
- */
+  /**
+   * Plays a YouTube video in the background.
+   *
+   * @return {Promise<void>} - A promise that resolves when the video starts playing.
+   */
   async playBackgroundYouTubeVideo(): Promise<void> {
-    let player = this.player.nativeElement.ViewChild
     let movie_id = this.content.movie_detail.id
     this.youtube.loadYouTubeAPI().then(async () => {
       this.youtube.createPlayer('youtube-player2', await this.content.getTrailer(movie_id));
@@ -64,6 +64,8 @@ export class MovieDetailComponent {
    * Plays a YouTube video.
    */
   async playYouTubeVideo() {
+    this.play_video_from_detail = true
+    this.youtube.destroyPlayer()
     this.content.play = true
     let movie_id = this.content.movie_detail.id
     this.youtube.loadYouTubeAPI().then(async () => {
@@ -78,8 +80,8 @@ export class MovieDetailComponent {
    *
    * @param {object} movie - The movie object containing the ID of the video.
    */
-  playRecommendYouTubeVideo( movie: { id: string; }) {
-    this.recommend_video = true
+  playRecommendYouTubeVideo(movie: { id: string; }) {
+    this.play_video_from_detail = true
     this.youtube.destroyPlayer()
     this.content.play = true
     this.youtube.loadYouTubeAPI().then(async () => {
@@ -91,13 +93,13 @@ export class MovieDetailComponent {
   /**
    * Retrieves the URL of the logo.
    */
-   getLogoUrl() {
+  getLogoUrl() {
     let logos = this.content.movie_detail.images.logos
     let en_logos: any[] = []
     logos.forEach((logo: any) => {
       if (logo.iso_639_1 == 'en') en_logos.push(logo)
     });
-    if(en_logos.length > 0) this.logo_url = this.content.imageBase_url + en_logos[0].file_path
+    if (en_logos.length > 0) this.logo_url = this.content.imageBase_url + en_logos[0].file_path
     else this.logo_url = 'noLogo'
   }
 
@@ -109,15 +111,15 @@ export class MovieDetailComponent {
    * @param {boolean} movie.in_watchlist - The current watchlist status of the movie.
    * @param {string} movie.id - The ID of the movie.
    */
- updateWatchList(movie: { object: any, in_watchlist: boolean, id: string }) {
+  updateWatchList(movie: { object: any, in_watchlist: boolean, id: string }) {
     if (movie.in_watchlist) {
       this.content.movie_detail.in_watchlist = false
       this.removeFromWatchlist(movie.id)
-    } 
+    }
     else {
       this.content.movie_detail.in_watchlist = true
       this.addToWatchlist(movie)
-    } 
+    }
   }
 
 
@@ -127,7 +129,7 @@ export class MovieDetailComponent {
    * @param {any} movie - The movie to add to the watchlist.
    * @return {Promise<void>} - A promise that resolves when the movie is successfully added to the watchlist.
    */
-  async addToWatchlist(movie: any): Promise<void> { 
+  async addToWatchlist(movie: any): Promise<void> {
     this.content.watchlist.push(movie)
     let body = {
       id: this.auth.current_user.id,
@@ -201,7 +203,7 @@ export class MovieDetailComponent {
    * @param {string} release_date - The release date of the movie in the format "YYYY-MM-DD".
    * @return {number} The production year of the recommended movie.
    */
-  getProductionYearRecommendMovie(release_date:string): number {
+  getProductionYearRecommendMovie(release_date: string): number {
     let date = new Date(release_date)
     return date.getFullYear()
   }
@@ -231,25 +233,25 @@ export class MovieDetailComponent {
         recommendation_movie.images.logos.forEach((logo: any) => {
           if (logo.iso_639_1 == 'en') en_logos.push(logo)
         });
-        if(en_logos.length > 0) recommendation_movie.en_logo = en_logos[0].file_path
+        if (en_logos.length > 0) recommendation_movie.en_logo = en_logos[0].file_path
       }
       if (recommendation_movie.backdrop_path && recommendation_movie.en_logo) {
         this.checkWhetherMovieInWatchlist(recommendation_movie)
         this.recommendations_movies.push(recommendation_movie)
-      } 
+      }
     });
   }
 
 
-/**
- * Checks whether a movie is in the watchlist.
- *
- * @param {any} movie - The movie object to check.
- */
-  checkWhetherMovieInWatchlist(movie:any) {
+  /**
+   * Checks whether a movie is in the watchlist.
+   *
+   * @param {any} movie - The movie object to check.
+   */
+  checkWhetherMovieInWatchlist(movie: any) {
     let watchlist_movie_ids = this.content.watchlist.map((item: { id: number; }) => item.id)
     if (watchlist_movie_ids.includes(movie.id)) movie.in_watchlist = true
-      else movie.in_watchlist = false
+    else movie.in_watchlist = false
   }
 
 
@@ -260,15 +262,15 @@ export class MovieDetailComponent {
    * @param {boolean} movie.in_watchlist - The current watchlist status of the movie.
    * @param {string} movie.id - The ID of the movie.
    */
-  setMovieWatchlistStatus(movie: { in_watchlist: boolean, id: string } ) {
+  setMovieWatchlistStatus(movie: { in_watchlist: boolean, id: string }) {
     if (movie.in_watchlist) {
       movie.in_watchlist = false
       this.removeFromWatchlist(movie.id)
-    } 
+    }
     else {
       movie.in_watchlist = true
       this.addToWatchlist(movie)
-    } 
+    }
   }
 
 
@@ -278,19 +280,20 @@ export class MovieDetailComponent {
   toggleMuteTone() {
     if (this.tone_muted) {
       this.tone_muted = false
-      this.youtube.unMuteVideoTone()} 
+      this.youtube.unMuteVideoTone()
+    }
     else {
       this.tone_muted = true
       this.youtube.muteVideoTone()
-    } 
+    }
   }
 
 
-/**
- * Shows the play button for the specified index.
- *
- * @param {number} i - The index of the element.
- */
+  /**
+   * Shows the play button for the specified index.
+   *
+   * @param {number} i - The index of the element.
+   */
   showPLayButton(i: number) {
     this.hover_index = i
     this.show_play_button = true
