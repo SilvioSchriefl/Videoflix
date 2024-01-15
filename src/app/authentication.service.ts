@@ -4,22 +4,24 @@ import { environment } from './enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { ContentService } from './content.service';
 import { Router } from '@angular/router';
+import { User } from './Interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  token: string = ''
+  token: string | undefined = ''
   error_text: string = ''
   request_fail: boolean = false
   request_successfull: boolean = false
   loading: boolean = false
-  current_user: any = {
+  current_user: User = {
     id: '',
     user_name: '',
     watchlist: [],
-    email: ''
+    email: '',
+    token: ''
   }
 
   constructor(
@@ -41,35 +43,35 @@ export class AuthenticationService {
   async signUp(body: { password: string; user_name: string; email: string; }): Promise<void> {
     const url = environment.baseUrl + '/register/';
     try {
-      let response = await lastValueFrom(this.http.post(url, body));
+      await lastValueFrom(this.http.post(url, body));
       this.request_successfull = true
     } catch (error: any) {
-      console.log(error);
+      console.error;
     }
   }
 
 
+  
   /**
-   * Sign in using the provided credentials.
+   * Sign in with the given credentials.
    *
    * @param {Object} body - The credentials for signing in.
-   *   @param {string} body.password - The password for the user.
-   *   @param {string} body.email - The email for the user.
-   * @return {Promise<void>} A promise that resolves when the sign in is successful.
+   *   - {string} password - The password for the user.
+   *   - {string} email - The email address of the user.
+   * @return {Promise<void>} A promise that resolves when the sign-in process is complete.
    */
   async signIn(body: { password: string; email: string }): Promise<void> {
     const url = environment.baseUrl + '/log_in/';
     try {
-      let response: any = await lastValueFrom(this.http.post(url, body));
+      let response = await lastValueFrom(this.http.post<User>(url, body));
       this.setLocalStorage(response)
       this.token = response.token;
       this.current_user.id = response.id
       this.current_user.user_name = response.user_name
       this.current_user.email = response.email
       this.request_successfull = true
-      await this.content.getThumbnails();
     } catch (error: any) {
-      console.log(error);
+      console.error;
       if (error.error.detail) this.error_text = error.error.detail
       else this.error_text = 'Error in the request'
       this.request_fail = true
@@ -77,12 +79,13 @@ export class AuthenticationService {
   }
 
 
+ 
   /**
-   * Sets the specified values in the local storage.
+   * Sets the values of 'token', 'user_name', 'id', and 'email' in the local storage.
    *
-   * @param {any} response - The response object containing the values to be set in the local storage.
+   * @param {User} response - The user object containing the values to be set.
    */
-  setLocalStorage(response: any) {
+  setLocalStorage(response: User) {
     localStorage.setItem('token', response.token);
     localStorage.setItem('user_name', response.user_name);
     localStorage.setItem('id', response.id);
@@ -90,16 +93,17 @@ export class AuthenticationService {
   }
 
 
+  
   /**
-   * Requests a password reset.
+   * Handles the request to reset the password.
    *
-   * @param {any} body - The request body.
+   * @param {any} body - The request body containing the necessary information.
+   * @return {Promise<void>} - A Promise that resolves with no value when the request is successful.
    */
-  async requestResetPassword(body: any) {
+  async requestResetPassword(body: { email: string; }): Promise<void> {
     const url = environment.baseUrl + '/request_reset_password/';
     try {
-      let response: any = await lastValueFrom(this.http.post(url, body));
-      console.log(response);
+      await lastValueFrom(this.http.post(url, body));
       this.request_successfull = true
     } catch (error: any) {
       this.request_fail = true
@@ -129,12 +133,16 @@ export class AuthenticationService {
   }
 
 
+ 
   /**
-   * Sets a new password.
+   * Asynchronously sets a new password for a user.
    *
-   * @param {any} body - The body of the request.
+   * @param {Object} body - An object containing the user ID and the new password.
+   * @param {number} body.user_id - The ID of the user.
+   * @param {string} body.password - The new password for the user.
+   * @return {Promise<void>} - A promise that resolves with no value upon successful completion.
    */
-  async setNewPassword(body: any) {
+  async setNewPassword(body: { user_id: number; password: string; }): Promise<void> {
     const url = environment.baseUrl + '/set_password/';
     try {
       await lastValueFrom(this.http.post(url, body));
@@ -158,7 +166,7 @@ export class AuthenticationService {
       localStorage.clear();
       this.request_successfull = true
     } catch (error) {
-      console.log(error);
+      console.error;
     }
   }
 }

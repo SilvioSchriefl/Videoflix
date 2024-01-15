@@ -23,7 +23,7 @@ export class InerceptorService {
    * @return {Observable<HttpEvent<any>>} The observable that represents the HTTP response.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.auth.token.length > 0) {	
+    if (this.auth.token) {	
       request = request.clone({
         setHeaders: { Authorization: `Token ${this.auth.token}` }
       });      

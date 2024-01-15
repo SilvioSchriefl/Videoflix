@@ -12,7 +12,7 @@ import { WindowResizeService } from '../window-resize.service';
   templateUrl: './image-slider.component.html',
   styleUrls: ['./image-slider.component.sass'],
 })
-export class ImageSliderComponent implements OnInit, OnDestroy  {
+export class ImageSliderComponent implements OnInit, OnDestroy {
 
 
   @Output('openMovie') openMovie: EventEmitter<any> = new EventEmitter();
@@ -66,9 +66,9 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
-/**
- * Initializes the scroll observer for the given scroll div element.
- */
+  /**
+   * Initializes the scroll observer for the given scroll div element.
+   */
   initializeScrollObserver() {
     let scrollEvent$ = fromEvent(this.scrollDiv.nativeElement, 'scroll');
     this.scrollLeftObservable = scrollEvent$.pipe(
@@ -102,7 +102,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
       behavior: 'smooth'
     });
   }
-  
+
 
   /**
    * Scrolls the content of the scrollDiv to the left by 1000 pixels.
@@ -150,7 +150,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   async playYoutubeVideo(index: number, movie_id: string) {
     let movie_detail: any = await this.content.getMovieDetails(movie_id)
     if (movie_detail.videos.results.length > 0) {
-      await this.content.setVideoId(movie_detail.videos.results)
+      this.content.setVideoId(movie_detail.videos.results)
       this.youtube.loadYouTubeAPI().then(async () => {
         this.youtube.createPlayer('youtube-player', await this.content.getTrailer(movie_id));
         this.content.play = true
@@ -191,13 +191,13 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
-/**
- * Removes a movie from the watchlist at the specified index.
- *
- * @param {number} index - The index of the movie to be removed.
- * @param {any[]} movie_array - The array of movies.
- * @param {string} movie_id - The ID of the movie to be removed.
- */
+  /**
+   * Removes a movie from the watchlist at the specified index.
+   *
+   * @param {number} index - The index of the movie to be removed.
+   * @param {any[]} movie_array - The array of movies.
+   * @param {string} movie_id - The ID of the movie to be removed.
+   */
   async removeFromWatchlist(index: number, movie_array: any, movie_id: string) {
     movie_array[index].in_watchlist = false
     let watchlist_movie_ids = this.content.watchlist.map((item: { id: number; }) => item.id)
@@ -212,26 +212,28 @@ export class ImageSliderComponent implements OnInit, OnDestroy  {
   }
 
 
-/**
- * Sets the watchlist status for all movies in the content.
- */
+  /**
+   * Sets the watchlist status for all movies in the content.
+   */
   setWatchlistStatus() {
     this.content.checkIfMovieIsInWatchList(this.content.trending_movies)
     this.content.checkIfMovieIsInWatchList(this.content.popular_movies)
     this.content.checkIfMovieIsInWatchList(this.content.action_movies)
     this.content.checkIfMovieIsInWatchList(this.content.animation_movies)
     this.content.checkIfMovieIsInWatchList(this.content.adventure_movies)
+    this.content.checkIfMovieIsInWatchList(this.content.war_movies)
+    this.content.checkIfMovieIsInWatchList(this.content.thriller_movies)
   }
 
 
-/**
- * Opens the movie detail for the given movie ID.
- *
- * @param {number} id - The ID of the movie.
- * @param {number} index - The index of the movie in the array.
- * @param {any} movie_array - The array of movies.
- * @param {boolean} in_watchlist - Indicates whether the movie is in the watchlist.
- */
+  /**
+   * Opens the movie detail for the given movie ID.
+   *
+   * @param {number} id - The ID of the movie.
+   * @param {number} index - The index of the movie in the array.
+   * @param {any} movie_array - The array of movies.
+   * @param {boolean} in_watchlist - Indicates whether the movie is in the watchlist.
+   */
   openMovieDetail(id: number, index: number, movie_array: any, in_watchlist: boolean) {
     let parameter = {
       in_watchlist: in_watchlist,

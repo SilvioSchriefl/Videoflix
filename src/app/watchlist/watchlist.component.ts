@@ -41,12 +41,18 @@ export class WatchlistComponent {
   }
 
 
+ 
   /**
-   * Closes the video by setting the `play` property of `this.content` to `false`
-   * and destroying the YouTube player.
+   * Closes the video by stopping playback, destroying the YouTube player, and optionally playing a background video.
+   *
+   * @return {Promise<void>} Promise that resolves when the video is closed.
    */
-  closeVideo() {
+  async closeVideo() {
     this.content.play = false
     this.youtube.destroyPlayer()
+    if(this.movieDetail.play_video_from_detail) {
+      this.movieDetail.play_video_from_detail = false
+      await this.movieDetail.playBackgroundYouTubeVideo()
+    }
   }
 }

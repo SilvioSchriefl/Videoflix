@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from './enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { MovieDetail } from './Interfaces/movie-detail.interface';
-import { Results } from './Interfaces/movie-detail.interface';
 import { Genre_ids } from './Interfaces/genre_ids.interface';
+import { VideoResponse } from './Interfaces/VideoResponse.interface';
+import { Watchlist } from './Interfaces/watchlist.interface';
+import { Movies } from './Interfaces/movie.interface';
 
 
 
@@ -19,7 +20,6 @@ export class ContentService {
     url: ['&with_genres=12', '&with_genres=28', '&with_genres=16', '&with_genres=35', '&with_genres=878', '&with_genres=10752', '&with_genres=53'],
     genre: ['adventure', 'action', 'animation', 'comedy', 'Science Fiction', 'War', 'Thriller']
   }
-  thumbnails = []
   preview_video_url: string = ''
   loading: boolean = false
   video_loaded: boolean = false
@@ -28,7 +28,7 @@ export class ContentService {
   imageBase_url: string = 'https://image.tmdb.org/t/p/w500'
   imageSlider_url: string = 'https://image.tmdb.org/t/p/original'
   trending_movies = []
-  popular_movies: MovieDetail[] = []
+  popular_movies:Movies[] = []
   action_movies = []
   war_movies = []
   thriller_movies = []
@@ -37,7 +37,7 @@ export class ContentService {
   animation_movies = []
   adventure_movies = []
   science_fiction_movies = []
-  popular_movies_details: MovieDetail[] = []
+  popular_movies_details:Movies[] = []
   play: boolean = false
   watchlist: any = []
   movie_detail: any = []
@@ -46,7 +46,7 @@ export class ContentService {
   scroll_top: boolean = true
   tooltip_text: string = ''
   open_search_results: boolean = false
-  all_movies: any = []
+  all_movies = []
   search_text: string = '';
   open_sidebar: boolean = false;
   searching: boolean = false;
@@ -79,57 +79,22 @@ export class ContentService {
 
 
   /**
-   * Retrieves the thumbnails from the server.
-   *
-   * @return {Promise<void>} Returns a promise that resolves when the thumbnails are retrieved.
-   */
-  async getThumbnails(): Promise<void> {
-    let url = environment.baseUrl + '/thumbnail/'
-    try {
-      let response: any = await lastValueFrom(this.http.get(url));
-      this.thumbnails = response
-
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
-
-
-  /**
-   * Retrieves the 480p video for a given ID.
-   *
-   * @param {number} id - The ID of the video.
-   * @return {Promise<void>} - A Promise that resolves when the video is retrieved.
-   */
-  async getVideo480p(id: number): Promise<void> {
-    let url = environment.baseUrl + '/video_preview/' + id + '/'
-    try {
-      let response: any = await lastValueFrom(this.http.get(url))
-      this.preview_video_url = response.video_url
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
-
-
-  /**
    * Retrieves a video by its ID and updates the fullsize_video_url property.
    *
    * @param {number} id - The ID of the video.
    * @return {Promise<void>} - A Promise that resolves when the video is retrieved and the fullsize_video_url property is updated.
    */
-  async getVideo(id: number) {
+  async getVideo(id: number): Promise<void> {
     let url = environment.baseUrl + '/video/' + id + '/'
     try {
-      let response: any = await lastValueFrom(this.http.get(url))
+      let response = await lastValueFrom(this.http.get<VideoResponse>(url))
       this.fullsize_video_url = response.video_url
     }
     catch (error) {
-      console.log(error);
+      console.error;
     }
   }
+
 
   /**
    * Retrieves the trending movies from the API.
@@ -139,12 +104,12 @@ export class ContentService {
   async getTrendingMovies(): Promise<void> {
     let url = "https://api.themoviedb.org/3/trending/movie/week?page=1&api_key=" + this.api_key
     try {
-      let response: any = await lastValueFrom(this.http.get(url))
+      let response = await lastValueFrom(this.http.get<Movies>(url))
       await this.checkIfMovieIsInWatchList(response.results)
       this.trending_movies = response.results
     }
     catch (error) {
-      console.log(error);
+      console.error;
     }
   }
 
@@ -157,11 +122,11 @@ export class ContentService {
   async getPopularMovies(): Promise<void> {
     let url = "https://api.themoviedb.org/3/movie/popular?api_key=" + this.api_key
     try {
-      let response = await lastValueFrom(this.http.get<Results>(url))
+      let response = await lastValueFrom(this.http.get<Movies>(url))
       this.popular_movies = response.results
     }
     catch (error) {
-      console.log(error);
+      console.error;
     }
   }
 
@@ -177,23 +142,24 @@ export class ContentService {
       let genre_url = this.genres.url[i];
       let url = environment.genre_url + this.api_key + genre_url
       try {
-        let response = await lastValueFrom(this.http.get<Results>(url))
+        let response = await lastValueFrom(this.http.get<Movies>(url))
         this.fillArray(this.genres.genre[i], response.results)
       }
       catch (error) {
-        console.log(error);
+        console.error;
       }
     }
   }
 
 
+
   /**
-   * Fills the array for the specified genre with the given response.
+   * Fill the array based on the genre.
    *
-   * @param {string} genre - The genre of the movies.
-   * @param {any} response - The response containing the movies.
+   * @param {string} genre - the genre of the movies
+   * @param {never[]} response - the response array
    */
-  fillArray(genre: string, response: any) {
+  fillArray(genre: string, response: never[]) {
     if (genre == 'action') this.action_movies = response
     if (genre == 'animation') this.animation_movies = response
     if (genre == 'adventure') this.adventure_movies = response
@@ -218,7 +184,7 @@ export class ContentService {
       return response
     }
     catch (error) {
-      console.log(error);
+      console.error;
     }
   }
 
@@ -236,7 +202,7 @@ export class ContentService {
       console.log(response);
     }
     catch (error) {
-      console.log(error);
+      console.error;
     }
   }
 
@@ -248,13 +214,13 @@ export class ContentService {
     for (let i = 0; i < this.popular_movies.length; i++) {
       let movie: { id: string } = this.popular_movies[i];
       let movie_id = movie.id
-      let url = 'https://api.themoviedb.org/3/movie/' + movie_id + '?api_key=' + this.api_key + '&append_to_response=videos,images'
+      let url = `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${this.api_key}&append_to_response=videos,images`
       try {
-        let response = await lastValueFrom(this.http.get<MovieDetail>(url))
+        let response = await lastValueFrom(this.http.get<Movies>(url))
         if (response.backdrop_path && response.images.logos.length > 0) this.popular_movies_details.push(response)
       }
       catch (error) {
-        console.log(error);
+        console.error;
       }
     }
   }
@@ -269,24 +235,25 @@ export class ContentService {
   async getTrailer(movie_id: string): Promise<any> {
     let url = `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${this.api_key}&name=Official%20Trailer`;
     try {
-      let response: any = await lastValueFrom(this.http.get(url))
+      let response = await lastValueFrom(this.http.get<Movies>(url))
       return this.setVideoId(response.results)
     }
     catch (error) {
-      console.log(error);
+      console.error;
     }
   }
 
 
-  /**
-   * Sets the video ID based on the given trailers.
-   *
-   * @param {any[]} trailers - An array of trailers.
-   * @return {string} - The video ID.
-   */
+ 
+/**
+ * Sets the video ID based on the given trailers.
+ *
+ * @param {Array} trailers - The list of trailers.
+ * @return {string} The video ID.
+ */
   setVideoId(trailers: any): string {
     let video_id
-    trailers.forEach((trailer: any) => {
+    trailers.forEach((trailer: { name: string; key: string; }) => {
       if (trailer.name == 'Official Trailer') video_id = trailer.key
     });
     if (!video_id) video_id = trailers[0].key
@@ -304,12 +271,11 @@ export class ContentService {
   async updateWatchList(body: any, user_id: string): Promise<void> {
     let url = environment.baseUrl + '/watchlist/' + user_id + '/'
     try {
-      let response: any = await lastValueFrom(this.http.patch(url, body))
-      this.watchlist = response.watchlist
-      console.log(response);
+      let response = await lastValueFrom(this.http.patch<Watchlist>(url, body))
+      this.watchlist = response.watchlist 
     }
     catch (error) {
-      console.log(error);
+      console.error;
     }
   }
 
@@ -323,11 +289,11 @@ export class ContentService {
   async getWatchList(user_id: string): Promise<void> {
     let url = environment.baseUrl + '/watchlist/' + user_id + '/'
     try {
-      let response: any = await lastValueFrom(this.http.get(url))
+      let response = await lastValueFrom(this.http.get<Watchlist>(url))
       this.watchlist = response.watchlist
     }
     catch (error) {
-      console.log(error);
+      console.error;
     }
   }
 
@@ -337,7 +303,7 @@ export class ContentService {
    *
    * @param {any[]} movies - The array of movies to check.
    */
-  async checkIfMovieIsInWatchList(movies: any) {
+  async checkIfMovieIsInWatchList(movies: any[]) {
     let watchlist_movie_ids = this.watchlist.map((item: { id: number; }) => item.id)
     movies.forEach((movie: any) => {
       if (watchlist_movie_ids.includes(movie.id)) movie.in_watchlist = true
@@ -385,16 +351,14 @@ export class ContentService {
   }
 
 
+ 
   /**
-   * Iterates over an array of movies and retrieves the corresponding genre names
-   * based on the genre IDs. If a genre name is found for a given ID, it is added
-   * to the movie object. If no genre name is found, the string 'Unknown Genre' is
-   * added instead.
+   * Updates the genre names in the given array of movies based on the genre IDs.
    *
-   * @param {any[]} array - The array of movies to process.
+   * @param {Array<{ genre_ids: number[]; genres: string[]; }>} array - The array of movies.
    */
-  getGenreNames(array: any) {
-    array.forEach((movie: any) => {
+  getGenreNames(array: { genre_ids: number[]; genres: string[]; }[]) {
+    array.forEach((movie: { genre_ids: number[]; genres: string[]; }) => {
       let genre_names: string[] = []
       genre_names = movie.genre_ids.map((id: number) => {
         let genre = this.genre_ids.find(genre => genre.id === id);

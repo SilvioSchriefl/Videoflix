@@ -7,6 +7,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { YouTubePlayerService } from '../you-tube-player.service';
 import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
+import { Watchlist } from '../Interfaces/watchlist.interface';
 
 
 
@@ -49,8 +50,6 @@ export class HomeComponent implements OnInit {
   logo_urls: string[] = []
 
 
-
-
   constructor(
     public auth: AuthenticationService,
     public content: ContentService,
@@ -66,7 +65,7 @@ export class HomeComponent implements OnInit {
    */
   async ngOnInit(): Promise<void> {
     this.content.loading = true;
-    await this.content.getWatchList(this.auth.current_user.id)
+    await this.content.getWatchList(this.auth.current_user.id!)
     await this.content.getPopularMovies()
     await this.content.getSlideMovieDetails()
     this.getLogoUrl()
@@ -107,44 +106,19 @@ export class HomeComponent implements OnInit {
   }
 
 
+
   /**
-   * Close the video.
+   * Closes the video by stopping playback, destroying the YouTube player, and potentially playing a background video.
+   *
+   * @return {Promise<void>} A promise that resolves when the video is closed.
    */
-  async closeVideo() {
+  async closeVideo(): Promise<void> {
     this.content.play = false
     this.youtube.destroyPlayer()
     if(this.movieDetail.play_video_from_detail) {
       this.movieDetail.play_video_from_detail = false
       await this.movieDetail.playBackgroundYouTubeVideo()
     }
-    
-  }
-
-
-  /**
-   * Loads the full-size video with the given video ID.
-   *
-   * @param {number} video_id - The ID of the video to load.
-   */
-  async loadFullsizeVideo(video_id: number) {
-    this.content.loading = true;
-    await this.content.getVideo(video_id)
-    this.content.loading = false;
-    this.playVideo()
-  }
-
-
-  /**
-   * Retrieves the preview video URL asynchronously.
-   *
-   * @param {number} video_id - The ID of the video.
-   * @param {number} index - The index of the video.
-   */
-  async getPreviewVideoUrl(video_id: number, index: number) {
-    this.randomQueryString = Math.random().toString(36).substring(7);
-    this.loading_index = index
-    this.content.loading = true;
-    await this.content.getVideo480p(video_id)
   }
 
 
