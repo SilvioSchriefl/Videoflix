@@ -86,6 +86,7 @@ export class LogInComponent implements OnInit {
    * Sign in to the application.
    */
   async signIn() {
+    this.content.guest = false
     if (!this.email_valid || !this.user_email || !this.user_password) return
     this.auth.loading = true
     let body = {
@@ -102,7 +103,12 @@ export class LogInComponent implements OnInit {
   }
 
 
-  async GuestSignIn() {
+  /**
+   * Asynchronously signs in a guest user.
+   *
+   * @return {Promise<void>} Promise that resolves when the sign-in is complete.
+   */
+  async GuestSignIn(): Promise<void> {
     this.auth.loading = true
     let body = {
       'password': 'Amidala6',
