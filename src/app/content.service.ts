@@ -20,6 +20,7 @@ export class ContentService {
     url: ['&with_genres=12', '&with_genres=28', '&with_genres=16', '&with_genres=35', '&with_genres=878', '&with_genres=10752', '&with_genres=53'],
     genre: ['adventure', 'action', 'animation', 'comedy', 'Science Fiction', 'War', 'Thriller']
   }
+  guest: boolean = false
   preview_video_url: string = ''
   loading: boolean = false
   video_loaded: boolean = false
@@ -319,7 +320,8 @@ export class ContentService {
    */
   getToolTipText(watchlist_status: boolean) {
     if (watchlist_status) this.tooltip_text = 'Remove from Watchlist'
-    else this.tooltip_text = 'Add to Watchlist'
+    if (!watchlist_status) this.tooltip_text = 'Add to Watchlist'
+    if (this.guest) this.tooltip_text = 'Not available for the guest'
   }
 
 

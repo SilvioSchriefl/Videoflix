@@ -13,8 +13,8 @@
             <span class="no_results" *ngIf="input_data.length == 0 && content.searching">Your search for "{{content.search_text}}" returned no results</span>
             <div *ngFor="let movie of input_data; let i = index" class="image">  
                 <img *ngIf="movie.poster_path" [src]="content.imageBase_url + movie.poster_path" [class.hover]="hover_info && hover_index == i"
-                    (mouseenter)="handleMouseOver(i, movie.id, input_data)" (mouseleave)="handleMouseOut()"
-                    (click)="openMovieDetail(movie.id, i, input_data, movie.in_watchlist)">
+                    (mouseenter)="handleMouseOver(i, movie.id)" (mouseleave)="handleMouseOut()"
+                    (click)="openMovieDetail(movie.id, i, movie.in_watchlist)">
                 <div [class.show_info]="hover_info && hover_index == i || window_width < 1200" class="info" (mouseover)="hover_info = true"
                     (mouseout)="hover_info = false && video_error = false">
                     <span *ngIf="video_error" class="error">No trailer available</span>
@@ -28,16 +28,16 @@
                             <img src="/assets/img/play_black.png" alt="">
                         </div>
 
-                        <div class="add" (click)="updateWatchList(movie.id, i, input_data)" (mouseover)="content.getToolTipText(movie.in_watchlist)"
+                        <div   class="add" (click)="updateWatchList(movie.id, i, input_data)" (mouseover)="content.getToolTipText(movie.in_watchlist) "
                         [matTooltip]="content.tooltip_text" matTooltipPosition="above">
-                            <div *ngIf="!movie.in_watchlist" class="add_button">
+                            <div [class.pointer_event]="content.guest" *ngIf="!movie.in_watchlist" class="add_button">
                                 <img src="/assets/img/plus.png" alt="">
                             </div>
                             <div *ngIf="movie.in_watchlist" class="add_button">
                                 <img src="/assets/img/done.png" alt="">
                             </div>
                         </div>
-                        <div class="add_button" (click)="openMovieDetail(movie.id, i, input_data, movie.in_watchlist)">
+                        <div class="add_button" (click)="openMovieDetail(movie.id, i, movie.in_watchlist)">
                             <img src="/assets/img/down.png" alt="">
                         </div>
                     </div>

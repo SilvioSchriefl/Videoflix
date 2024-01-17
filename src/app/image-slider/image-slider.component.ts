@@ -1,8 +1,7 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ContentService } from '../content.service';
 import { YouTubePlayerService } from '../you-tube-player.service';
 import { AuthenticationService } from '../authentication.service';
-import { HomeComponent } from '../home/home.component';
 import { Observable, Subscription, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { WindowResizeService } from '../window-resize.service';
 
@@ -117,12 +116,10 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
 
   /**
    * Handles the mouse over event for a movie item.
-   *
    * @param {number} index - The index of the movie in the array.
    * @param {string} movie_id - The ID of the movie.
-   * @param {any} movie_array - The array of movies.
    */
-  async handleMouseOver(index: number, movie_id: string, movie_array: any) {
+  async handleMouseOver(index: number, movie_id: string) {
     this.hover = true;
     this.hover_info = true
     this.hover_index = index
@@ -167,7 +164,8 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
    * @param {number} index - The index of the movie in the movie array.
    * @param {any[]} movie_array - The array of movies.
    */
-  async updateWatchList(movie_id: string, index: number, movie_array: any) {
+  async updateWatchList(movie_id: string, index: number, movie_array: any[]) {
+    if(this.content.guest) return
     if (movie_array[index].in_watchlist) this.removeFromWatchlist(index, movie_array, movie_id)
     else this.addToWatchlist(index, movie_array)
   }
@@ -179,7 +177,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
    * @param {number} index - The index at which to add the movie.
    * @param {any[]} movie_array - The array of movies.
    */
-  async addToWatchlist(index: number, movie_array: any) {
+  async addToWatchlist(index: number, movie_array: any[]) {
     movie_array[index].in_watchlist = true
     this.content.watchlist.push(movie_array[index])
     let body = {
@@ -194,11 +192,11 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
   /**
    * Removes a movie from the watchlist at the specified index.
    *
-   * @param {number} index - The index of the movie to be removed.
-   * @param {any[]} movie_array - The array of movies.
+   * @param {number} index - The index of the movie in the watchlist array.
+   * @param {Array<{ in_watchlist: boolean; }>} movie_array - The array of movies in the watchlist.
    * @param {string} movie_id - The ID of the movie to be removed.
    */
-  async removeFromWatchlist(index: number, movie_array: any, movie_id: string) {
+  async removeFromWatchlist(index: number, movie_array: { in_watchlist: boolean; }[], movie_id: string) {
     movie_array[index].in_watchlist = false
     let watchlist_movie_ids = this.content.watchlist.map((item: { id: number; }) => item.id)
     let i = watchlist_movie_ids.indexOf(movie_id)
@@ -226,21 +224,19 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
   }
 
 
+ 
   /**
-   * Opens the movie detail for the given movie ID.
+   * Opens the movie detail and emits an event.
    *
-   * @param {number} id - The ID of the movie.
-   * @param {number} index - The index of the movie in the array.
-   * @param {any} movie_array - The array of movies.
+   * @param {string} movie_id - The ID of the movie.
+   * @param {number} index - The index of the movie.
    * @param {boolean} in_watchlist - Indicates whether the movie is in the watchlist.
    */
-  openMovieDetail(id: number, index: number, movie_array: any, in_watchlist: boolean) {
+  openMovieDetail(movie_id: string, index: number,  in_watchlist: boolean) {
     let parameter = {
       in_watchlist: in_watchlist,
       index: index,
-      movie_array: movie_array,
-      id: id,
-      data_type: 'movie_id'
+      movie_id: movie_id,
     }
     this.openMovie.emit(parameter);
   }

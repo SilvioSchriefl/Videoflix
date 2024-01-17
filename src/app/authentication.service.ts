@@ -64,7 +64,7 @@ export class AuthenticationService {
     const url = environment.baseUrl + '/log_in/';
     try {
       let response = await lastValueFrom(this.http.post<User>(url, body));
-      this.setLocalStorage(response)
+      if(body.email != 'guest@guest.de') this.setLocalStorage(response)
       this.token = response.token;
       this.current_user.id = response.id
       this.current_user.user_name = response.user_name

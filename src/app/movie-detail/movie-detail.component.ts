@@ -26,7 +26,7 @@ export class MovieDetailComponent {
   show_play_button: boolean = false
   hover_index: number = 0
   play_video_from_detail: boolean = false
- 
+
 
 
   constructor(
@@ -112,6 +112,7 @@ export class MovieDetailComponent {
    * @param {string} movie.id - The ID of the movie.
    */
   updateWatchList(movie: { object: any, in_watchlist: boolean, id: string }) {
+    if(this.content.guest) return
     if (movie.in_watchlist) {
       this.content.movie_detail.in_watchlist = false
       this.removeFromWatchlist(movie.id)
@@ -174,15 +175,19 @@ export class MovieDetailComponent {
   }
 
 
+
   /**
-   * Returns the tooltip text based on the provided boolean value.
+   * Returns the tooltip text based on the value of 'in_watchlist'.
    *
    * @param {boolean} in_watchlist - Indicates whether the item is in the watchlist.
-   * @return {string} The tooltip text. If in_watchlist is true, it returns 'Remove from Watchlist', otherwise it returns 'Add to Watchlist'.
+   * @return {string} The tooltip text.
    */
   getToolTipText(in_watchlist: boolean): string {
-    if (in_watchlist) return 'Remove from Watchlist'
-    else return 'Add to Watchlist'
+    if (this.content.guest) return 'Not available for the guest'
+    else {
+      if (in_watchlist) return 'Remove from Watchlist'
+      else return 'Add to Watchlist'
+    }
   }
 
 

@@ -23,7 +23,7 @@
                         <span>Play</span>
                     </div>
                     <div class="add" (click)="updateWatchList(content.movie_detail)" [matTooltip]="getToolTipText(content.movie_detail.in_watchlist)" matTooltipPosition="above">
-                        <div *ngIf="!content.movie_detail.in_watchlist" class="add_button">
+                        <div [class.pointer_event]="content.guest" *ngIf="!content.movie_detail.in_watchlist" class="add_button">
                             <img src="/assets/img/plus.png" alt="">
                         </div>
                         <div *ngIf="content.movie_detail.in_watchlist" class="add_button">

@@ -47,7 +47,7 @@ export class WatchlistComponent {
    *
    * @return {Promise<void>} Promise that resolves when the video is closed.
    */
-  async closeVideo() {
+  async closeVideo(): Promise<void> {
     this.content.play = false
     this.youtube.destroyPlayer()
     if(this.movieDetail.play_video_from_detail) {

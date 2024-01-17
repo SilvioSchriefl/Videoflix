@@ -92,11 +92,26 @@ export class LogInComponent implements OnInit {
       'password': this.user_password,
       'email': this.user_email
     }
-    console.log(body);
-    
     await this.auth.signIn(body)
     this.auth.loading = false
     if (this.auth.request_successfull) {
+      this.guard.authenticated = true;
+      this.router.navigateByUrl('home')
+      this.auth.request_successfull = false
+    }
+  }
+
+
+  async GuestSignIn() {
+    this.auth.loading = true
+    let body = {
+      'password': 'Amidala6',
+      'email': 'guest@guest.de'
+    }
+    await this.auth.signIn(body)
+    this.auth.loading = false
+    if (this.auth.request_successfull) {
+      this.content.guest = true
       this.guard.authenticated = true;
       this.router.navigateByUrl('home')
       this.auth.request_successfull = false

@@ -12,6 +12,10 @@
             <div *ngIf="auth.loading" class="loader"></div>
         </div>
         <div class="go_to">
+            <span>Sign in as </span>
+            <span (click)="GuestSignIn()" >Guest.</span> 
+        </div>
+        <div class="go_to">
             <span>New to Videoflix?</span>
             <span (click)="goToSignUp()" >Sign up now.</span> 
         </div>

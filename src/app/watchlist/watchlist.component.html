@@ -7,6 +7,7 @@
 </div>
 <div class="watchlist" *ngIf=" !content.open_search_results">
     <section>
+        <span *ngIf="content.guest" class="guest">Not available for the guest</span>
         <app-image-slider [input_data]="content.watchlist" [headline]="'My Watchlist'"
             (openMovie)="openMovieDetails($event)"></app-image-slider>
     </section>

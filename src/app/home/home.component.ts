@@ -91,12 +91,12 @@ export class HomeComponent implements OnInit {
   }
 
 
-/**
- * Plays a YouTube video based on the given slider index.
- *
- * @param {number} slider_index - The index of the slider.
- * @return {Promise<void>} A promise that resolves when the video starts playing.
- */
+  /**
+   * Plays a YouTube video based on the given slider index.
+   *
+   * @param {number} slider_index - The index of the slider.
+   * @return {Promise<void>} A promise that resolves when the video starts playing.
+   */
   async playYouTubeVideo(slider_index: number): Promise<void> {
     let movie_id = this.content.popular_movies_details[slider_index].id
     this.youtube.loadYouTubeAPI().then(async () => {
@@ -115,18 +115,18 @@ export class HomeComponent implements OnInit {
   async closeVideo(): Promise<void> {
     this.content.play = false
     this.youtube.destroyPlayer()
-    if(this.movieDetail.play_video_from_detail) {
+    if (this.movieDetail.play_video_from_detail) {
       this.movieDetail.play_video_from_detail = false
       await this.movieDetail.playBackgroundYouTubeVideo()
     }
   }
 
 
-/**
- * Handles the event when a video is loaded.
- *
- * @param {HTMLVideoElement} video - The loaded video element.
- */
+  /**
+   * Handles the event when a video is loaded.
+   *
+   * @param {HTMLVideoElement} video - The loaded video element.
+   */
   onVideoLoaded(video: HTMLVideoElement) {
     this.content.video_loaded = true;
     console.log(this.loading_index);
@@ -161,20 +161,22 @@ export class HomeComponent implements OnInit {
 
 
   /**
-   * Opens the movie details.
+   * Opens the movie details for a given movie ID or data object.
    *
-   * @param {any} data - The data containing the movie details.
-   * @return {Promise<void>} A Promise that resolves when the movie details are opened.
+   * @param {object|number} data - The movie ID or data object containing the movie ID and in_watchlist flag.
+   * @return {Promise<void>} - A promise that resolves when the movie details are opened.
    */
-  async openMovieDetails(data: any): Promise<void> {
+  async openMovieDetails(data: { movie_id: string, in_watchlist: boolean } | number): Promise<void> {
     if (this.content.open_movie_detail) return
     this.content.open_movie_detail = true
     let movie_id
     if (typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
-    else movie_id = data.id
+    else {
+      movie_id = data.movie_id
+      if (data.in_watchlist) this.content.movie_detail.in_watchlist = true
+    }
     this.content.movie_detail = await this.content.getMovieDetails(movie_id)
-    if (data.in_watchlist) this.content.movie_detail.in_watchlist = true
-     this.movieDetail.getLogoUrl()
+    this.movieDetail.getLogoUrl()
     await this.movieDetail.getRecommendationMoviesDetails()
     await this.movieDetail.playBackgroundYouTubeVideo()
   }
