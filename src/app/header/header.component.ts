@@ -134,4 +134,11 @@ export class HeaderComponent {
     this.show_logout = false
     this.dialog.open(DeleteAccountDialogComponent);
   }
+
+
+  logOut() {
+    this.auth.userLogOut()
+    this.show_logout = false; 
+    this.content.scroll_top = true
+  }
 }

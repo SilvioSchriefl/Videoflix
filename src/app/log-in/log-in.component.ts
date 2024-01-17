@@ -86,7 +86,6 @@ export class LogInComponent implements OnInit {
    * Sign in to the application.
    */
   async signIn() {
-    this.content.guest = false
     if (!this.email_valid || !this.user_email || !this.user_password) return
     this.auth.loading = true
     let body = {
@@ -96,9 +95,11 @@ export class LogInComponent implements OnInit {
     await this.auth.signIn(body)
     this.auth.loading = false
     if (this.auth.request_successfull) {
+      this.content.guest = false
       this.guard.authenticated = true;
       this.router.navigateByUrl('home')
       this.auth.request_successfull = false
+      this.auth.loading = false
     }
   }
 
@@ -108,7 +109,7 @@ export class LogInComponent implements OnInit {
    *
    * @return {Promise<void>} Promise that resolves when the sign-in is complete.
    */
-  async GuestSignIn(): Promise<void> {
+  async GuestSignIn(): Promise<void> {  
     this.auth.loading = true
     let body = {
       'password': 'Amidala6',
@@ -121,6 +122,7 @@ export class LogInComponent implements OnInit {
       this.guard.authenticated = true;
       this.router.navigateByUrl('home')
       this.auth.request_successfull = false
+      this.auth.loading = false
     }
   }
 }

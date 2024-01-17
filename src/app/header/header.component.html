@@ -31,7 +31,7 @@
     <div *ngIf="router.url == '/home' || router.url == '/watchlist'" class="logout" [class.show_logout]="show_logout" (mouseenter)="showLogout()"
         (mouseleave)="hideLogout()" >
         <span class="user">{{auth.current_user.user_name}}</span>
-        <span (click)="auth.userLogOut()" (click)="show_logout = false">Log out from Videoflix</span>
+        <span (click)="logOut()">Log out from Videoflix</span>
         <span *ngIf="!content.guest" (click)="openDialog()">Delete your account</span>
     </div>
 </header>
