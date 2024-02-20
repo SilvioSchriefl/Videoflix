@@ -49,11 +49,10 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
     });
     this.window_width = window.innerWidth
     await this.content.getTrendingMovies()
-    await this.content.getMovieByGenres()
-    this.content.getGenreNames(this.input_data)
+    await this.content.getMovieByGenres()  
     this.content.checkIfMovieIsInWatchList(this.input_data)
     this.checkScrollbar();
-    this.initializeScrollObserver()
+    this.initializeScrollObserver()    
   }
 
 

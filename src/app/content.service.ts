@@ -107,6 +107,7 @@ export class ContentService {
     try {
       let response = await lastValueFrom(this.http.get<Movies>(url))
       await this.checkIfMovieIsInWatchList(response.results)
+      this.getGenreNames(response.results)
       this.trending_movies = response.results
     }
     catch (error) {
@@ -124,6 +125,7 @@ export class ContentService {
     let url = "https://api.themoviedb.org/3/movie/popular?api_key=" + this.api_key
     try {
       let response = await lastValueFrom(this.http.get<Movies>(url))
+      this.getGenreNames(response.results)
       this.popular_movies = response.results
     }
     catch (error) {
@@ -144,6 +146,7 @@ export class ContentService {
       let url = environment.genre_url + this.api_key + genre_url
       try {
         let response = await lastValueFrom(this.http.get<Movies>(url))
+        this.getGenreNames(response.results)
         this.fillArray(this.genres.genre[i], response.results)
       }
       catch (error) {
@@ -359,7 +362,7 @@ export class ContentService {
    *
    * @param {Array<{ genre_ids: number[]; genres: string[]; }>} array - The array of movies.
    */
-  getGenreNames(array: { genre_ids: number[]; genres: string[]; }[]) {
+  async getGenreNames(array: { genre_ids: number[]; genres: string[]; }[]) {
     array.forEach((movie: { genre_ids: number[]; genres: string[]; }) => {
       let genre_names: string[] = []
       genre_names = movie.genre_ids.map((id: number) => {

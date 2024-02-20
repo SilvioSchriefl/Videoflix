@@ -136,6 +136,9 @@ export class HeaderComponent {
   }
 
 
+  /**
+   * Logs out the user.
+   */
   logOut() {
     this.auth.userLogOut()
     this.show_logout = false; 

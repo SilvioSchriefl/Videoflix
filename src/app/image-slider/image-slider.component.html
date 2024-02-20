@@ -22,6 +22,7 @@
                         <div *ngFor="let genre of movie.genres; let g = index">
                             <span *ngIf="g < 3">{{genre}}</span>
                         </div>
+                     
                     </div>
                     <div class="info_buttons">
                         <div class="play" (click)="playYoutubeVideo(i, movie.id)" >
