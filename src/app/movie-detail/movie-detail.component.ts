@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ContentService } from '../content.service';
-import { YouTubePlayerService } from '../you-tube-player.service';
-import { AuthenticationService } from '../authentication.service';
+import { ContentService } from '../Services/content.service';
+import { YouTubePlayerService } from '../Services/you-tube-player.service';
+import { AuthenticationService } from '../Services/authentication.service';
 
 
 declare global {

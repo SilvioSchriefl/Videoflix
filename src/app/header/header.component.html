@@ -1,6 +1,6 @@
 <header [class.scroll_background]="!content.scroll_top">
     <div class="nav_logo">
-        <button *ngIf="router.url == '/home' || router.url == '/watchlist'  || router.url == '/legal_notice' || router.url == '/imprint'" mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()">
+        <button *ngIf="router.url == '/home' || router.url == '/watchlist'  || router.url == '/legal_notice' || router.url == '/imprint' || router.url == '/my_videos'" mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()">
             <mat-icon>menu</mat-icon>
           </button>
         <div class="logo">
@@ -9,9 +9,10 @@
         <div class="mobile_logo">
             <img src="/assets/img/logo_mobile.png" alt="">
         </div>
-        <nav *ngIf="router.url == '/home' || router.url == '/watchlist'">
+        <nav *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'">
             <span (click)="goToHome()">Home</span>
             <span (click)="goToWatchlist()">Watchlist</span>
+            <span (click)="goToMyVideos()">My Videos</span>
         </nav>
     </div>
 
@@ -22,13 +23,13 @@
                 <img *ngIf="content.search_text != ''" class="close_icon" src="/assets/img/close.png" alt="" (click)="closeSearchInput()">
         </div>
     </div>
-    <img *ngIf="router.url == '/home' || router.url == '/watchlist'" class="search_icon" src="/assets/img/search.png" alt="" (click)="openSearchInput()" (click)="$event.stopPropagation()">
+    <img *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="search_icon" src="/assets/img/search.png" alt="" (click)="openSearchInput()" (click)="$event.stopPropagation()">
 
-    <div *ngIf="router.url == '/home' || router.url == '/watchlist'" class="profile" (mouseenter)="showLogout()" (mouseleave)="hideLogout()">
+    <div *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="profile" (mouseenter)="showLogout()" (mouseleave)="hideLogout()">
         <img src="/assets/img/profil.png" alt="">
         <div *ngIf="show_logout" class="space"></div>
     </div>
-    <div *ngIf="router.url == '/home' || router.url == '/watchlist'" class="logout" [class.show_logout]="show_logout" (mouseenter)="showLogout()"
+    <div *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="logout" [class.show_logout]="show_logout" (mouseenter)="showLogout()"
         (mouseleave)="hideLogout()" >
         <span class="user">{{auth.current_user.user_name}}</span>
         <span (click)="logOut()">Log out from Videoflix</span>

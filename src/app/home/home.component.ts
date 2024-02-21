@@ -1,11 +1,11 @@
 
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { environment } from '../enviroments/enviroments';
-import { ContentService } from '../content.service';
-import { AuthenticationService } from '../authentication.service';
+import { ContentService } from '../Services/content.service';
+import { AuthenticationService } from '../Services/authentication.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { YouTubePlayerService } from '../you-tube-player.service';
+import { YouTubePlayerService } from '../Services/you-tube-player.service';
 import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
 import { Watchlist } from '../Interfaces/watchlist.interface';
 

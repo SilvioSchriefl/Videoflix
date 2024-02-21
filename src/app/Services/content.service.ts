@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { environment } from './enviroments/enviroments';
+import { environment } from '../enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Genre_ids } from './Interfaces/genre_ids.interface';
-import { VideoResponse } from './Interfaces/VideoResponse.interface';
-import { Watchlist } from './Interfaces/watchlist.interface';
-import { Movies } from './Interfaces/movie.interface';
+import { Genre_ids } from '../Interfaces/genre_ids.interface';
+import { VideoResponse } from '../Interfaces/VideoResponse.interface';
+import { Watchlist } from '../Interfaces/watchlist.interface';
+import { Movies } from '../Interfaces/movie.interface';
 
 
 

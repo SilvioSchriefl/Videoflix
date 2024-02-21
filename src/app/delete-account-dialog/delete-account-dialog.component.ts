@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AuthenticationService } from '../authentication.service';
-import { ContentService } from '../content.service';
+import { AuthenticationService } from '../Services/authentication.service';
+import { ContentService } from '../Services/content.service';
 import { Router } from '@angular/router';
 
 @Component({

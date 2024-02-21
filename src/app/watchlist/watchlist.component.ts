@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ContentService } from '../content.service';
-import { AuthenticationService } from '../authentication.service';
+import { ContentService } from '../Services/content.service';
+import { AuthenticationService } from '../Services/authentication.service';
 import { MovieDetailComponent } from '../movie-detail/movie-detail.component';
-import { YouTubePlayerService } from '../you-tube-player.service';
+import { YouTubePlayerService } from '../Services/you-tube-player.service';
 
 @Component({
   selector: 'app-watchlist',

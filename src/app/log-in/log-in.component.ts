@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../authentication.service';
-import { ContentService } from '../content.service';
-import { RouteGuardService } from '../route-guard.service';
+import { AuthenticationService } from '../Services/authentication.service';
+import { ContentService } from '../Services/content.service';
+import { RouteGuardService } from '../Services/route-guard.service';
 
 @Component({
   selector: 'app-log-in',

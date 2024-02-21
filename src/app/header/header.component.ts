@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../authentication.service';
-import { ContentService } from '../content.service';
+import { AuthenticationService } from '../Services/authentication.service';
+import { ContentService } from '../Services/content.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
@@ -68,6 +68,13 @@ export class HeaderComponent {
     this.content.searching = false
     this.content.open_search_results = false
     this.router.navigateByUrl('home')
+  }
+
+
+  goToMyVideos() {
+    this.content.searching = false
+    this.content.open_search_results = false
+    this.router.navigateByUrl('my_videos')
   }
 
 

@@ -7,10 +7,11 @@ import { EmailConfirmedComponent } from './email-confirmed/email-confirmed.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
 import { HomeComponent } from './home/home.component';
-import { RouteGuardService } from './route-guard.service';
+import { RouteGuardService } from './Services/route-guard.service';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { ImprintComponent } from './imprint/imprint.component';
+import { UserVideosComponent } from './user-videos/user-videos.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
     {path: 'watchlist', component: WatchlistComponent, canActivate: [RouteGuardService]},
     {path: 'legal_notice', component: LegalNoticeComponent},
     {path: 'imprint', component: ImprintComponent},
+    {path: 'my_videos', component: UserVideosComponent, canActivate: [RouteGuardService]},
 
 
 ];

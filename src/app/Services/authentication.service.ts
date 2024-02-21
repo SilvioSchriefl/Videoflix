@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { environment } from './enviroments/enviroments';
+import { environment } from '../enviroments/enviroments';
 import { lastValueFrom } from 'rxjs';
 import { ContentService } from './content.service';
 import { Router } from '@angular/router';
-import { User } from './Interfaces/user.interface';
+import { User } from '../Interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { WindowResizeService } from '../window-resize.service';
+import { WindowResizeService } from '../Services/window-resize.service';
 
 @Component({
   selector: 'app-footer',

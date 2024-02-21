@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from '../Services/authentication.service';
 
 @Component({
   selector: 'app-set-new-password',

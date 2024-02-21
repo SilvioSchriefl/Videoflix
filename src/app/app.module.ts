@@ -9,8 +9,8 @@ import { LogInComponent } from './log-in/log-in.component';
 import { FormsModule } from '@angular/forms';
 import { EmailConfirmedComponent } from './email-confirmed/email-confirmed.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { InerceptorService } from './inerceptor.service';
-import { AuthenticationService } from './authentication.service';
+import { InerceptorService } from './Services/inerceptor.service';
+import { AuthenticationService } from './Services/authentication.service';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SetNewPasswordComponent } from './set-new-password/set-new-password.component';
 import { HomeComponent } from './home/home.component';
@@ -30,6 +30,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { MatIconModule } from '@angular/material/icon';
 import {MatDialogModule} from '@angular/material/dialog';
 import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
+import { UserVideosComponent } from './user-videos/user-videos.component';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-acc
     LegalNoticeComponent,
     ImprintComponent,
     SidenavComponent,
-    DeleteAccountDialogComponent
+    DeleteAccountDialogComponent,
+    UserVideosComponent
   ],
   imports: [
     BrowserAnimationsModule,
