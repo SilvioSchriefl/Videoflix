@@ -5,6 +5,7 @@ import { ContentService } from '../Services/content.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
+import { VideoUploadDialogComponent } from '../video-upload-dialog/video-upload-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -137,9 +138,10 @@ export class HeaderComponent {
 /**
  * Opens the delete account dialog.
  */
-  openDialog() {
+  openDialog(dialog: string) {
     this.show_logout = false
-    this.dialog.open(DeleteAccountDialogComponent);
+    if(dialog == 'delete') this.dialog.open(DeleteAccountDialogComponent);
+    if(dialog == 'upload') this.dialog.open(VideoUploadDialogComponent);
   }
 
 

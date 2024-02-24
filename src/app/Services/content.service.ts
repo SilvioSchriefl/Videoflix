@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../enviroments/enviroments';
-import { lastValueFrom } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, Subscription, finalize, lastValueFrom } from 'rxjs';
+import { HttpClient, HttpEvent, HttpEventType, HttpRequest } from '@angular/common/http';
 import { Genre_ids } from '../Interfaces/genre_ids.interface';
 import { VideoResponse } from '../Interfaces/VideoResponse.interface';
 import { Watchlist } from '../Interfaces/watchlist.interface';
 import { Movies } from '../Interfaces/movie.interface';
+import { UserVideo } from '../Interfaces/user_video.interface';
 
 
 
@@ -29,7 +30,7 @@ export class ContentService {
   imageBase_url: string = 'https://image.tmdb.org/t/p/w500'
   imageSlider_url: string = 'https://image.tmdb.org/t/p/original'
   trending_movies = []
-  popular_movies:Movies[] = []
+  popular_movies: Movies[] = []
   action_movies = []
   war_movies = []
   thriller_movies = []
@@ -38,7 +39,7 @@ export class ContentService {
   animation_movies = []
   adventure_movies = []
   science_fiction_movies = []
-  popular_movies_details:Movies[] = []
+  popular_movies_details: Movies[] = []
   play: boolean = false
   watchlist: any = []
   movie_detail: any = []
@@ -72,7 +73,11 @@ export class ContentService {
     { name: 'War', id: 10752 },
     { name: 'Western', id: 37 },
   ];
-
+  uploadSub: Subscription | null = null;
+  progress: number = 0;
+  upload_complete: boolean = false;
+  upload_error: boolean = false;
+  user_videos: UserVideo[] = []
 
   constructor(
     private http: HttpClient,
@@ -154,7 +159,6 @@ export class ContentService {
       }
     }
   }
-
 
 
   /**
@@ -248,13 +252,13 @@ export class ContentService {
   }
 
 
- 
-/**
- * Sets the video ID based on the given trailers.
- *
- * @param {Array} trailers - The list of trailers.
- * @return {string} The video ID.
- */
+
+  /**
+   * Sets the video ID based on the given trailers.
+   *
+   * @param {Array} trailers - The list of trailers.
+   * @return {string} The video ID.
+   */
   setVideoId(trailers: any): string {
     let video_id
     trailers.forEach((trailer: { name: string; key: string; }) => {
@@ -276,7 +280,7 @@ export class ContentService {
     let url = environment.baseUrl + '/watchlist/' + user_id + '/'
     try {
       let response = await lastValueFrom(this.http.patch<Watchlist>(url, body))
-      this.watchlist = response.watchlist 
+      this.watchlist = response.watchlist
     }
     catch (error) {
       console.error;
@@ -356,7 +360,7 @@ export class ContentService {
   }
 
 
- 
+
   /**
    * Updates the genre names in the given array of movies based on the genre IDs.
    *
@@ -371,6 +375,63 @@ export class ContentService {
       });
       movie.genres = genre_names
     })
+  }
+
+
+  uploadVideo(formData: FormData) {
+    let url = environment.baseUrl + '/video/';
+    const upload$ = this.http.post<UserVideo>(url, formData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+    this.uploadSub = upload$.subscribe({
+      next: (event: any) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          if (event.total !== undefined) {
+            this.progress = Math.round(100 * (event.loaded / event.total));
+          }
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.upload_error = true
+        setTimeout(() => this.upload_complete = true, 1000);
+      },
+      complete: () => {
+        setTimeout(() => this.upload_complete = true, 1000);
+        this.getUserVideos()
+        console.log(this.user_videos);
+        
+      }
+    });
+  }
+
+
+  cancelUpload() {
+    if (this.uploadSub) {
+      this.uploadSub.unsubscribe();
+    }
+    this.reset();
+  }
+
+
+  reset() {
+    this.progress = 0;
+    this.uploadSub = null;
+  }
+
+
+  async getUserVideos() {
+    let url = environment.baseUrl + '/video/'
+    try {
+      this.user_videos = await lastValueFrom(this.http.get<UserVideo[]>(url))
+      console.log(this.user_videos);
+    }
+    catch (error) {
+      console.error;
+      console.log(error);
+    }
+
   }
 }
 

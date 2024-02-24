@@ -1,9 +1,40 @@
-<app-movie-detail></app-movie-detail>
+<div class="user_video_main" *ngIf=" !content.open_search_results">
+    <div class="headline_button">
+        <span class="headline">My Videos</span>
+        <div (click)="openDialog()" class="upload_button">Add Video</div>
+    </div>
 
-<div class="watchlist" *ngIf=" !content.open_search_results">
-    <section>
-        <span *ngIf="content.guest" class="guest">Not available for the guest</span>
-        <app-image-slider [input_data]="content.watchlist" [headline]="'My Videos'"></app-image-slider>
-    </section>
+    <div *ngIf="scrollable && scrollable_left != 0" class="arrow_div_left" [class.show_content]="hover"
+        (mouseover)="hover = true" (mouseout)="hover = false" (click)="scrollLeft()">
+        <img src="/assets/img/back.png" alt="">
+    </div>
+    <div *ngIf="scrollable && scrollable_right" class="arrow_div_right" [class.show_content]="hover"
+        (mouseover)="hover = true" (click)="scrollRight()" (mouseout)="hover = false">
+        <img src="/assets/img/back-right.png" alt="">
+    </div>
+
+    <div class="image_slider_main" (mouseenter)="checkScrollbar()">
+        <div #scroll_element class="image_slider_scroll" (mouseover)="hover = true" (mouseout)="hover = false">
+            <div *ngFor="let video of content.user_videos; let i = index" class="image">
+                <img [src]="url + video.thumbnail" alt="" (mouseover)="handleMouseOver(i)"
+                    (mouseout)="handleMouseOut()">
+                <div [class.show_info]="hover_info && hover_index == i || window_width < 1200" class="info"
+                    (mouseover)="hover_info = true" (mouseout)="hover_info = false ">
+                    <div class="info_buttons">
+                        <div class="play" (click)="playVideo(i)">
+                            <img src="/assets/img/play_black.png" alt="">
+                        </div>
+                        <div class="add_button">
+                            <img src="/assets/img/down.png" alt="">
+                        </div>
+                        <span>{{video.title}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+<video *ngIf="play" height="100%" width="100%" type="video/mp4" class="video"  controls autoplay [src]="url + video_path"></video>
+<div *ngIf="play" (click)="closeVideo()" class="close_video">
+    <img src="/assets/img/back_video.png" alt="">
+</div>

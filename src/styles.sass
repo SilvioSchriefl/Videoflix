@@ -78,7 +78,7 @@ section
     pointer-events: none
 
 .invalid_button
-    cursor: not-allowed !important
+    pointer-events: none
     background-color: #686868 !important
 
 .button
@@ -192,6 +192,14 @@ section
     &:hover
         background: #383E3E
 
+.close_video
+    position: absolute
+    top: 100px
+    left: 100px
+    color: #fff
+    z-index: 12
+    cursor: pointer
+
 .close
     box-sizing: border-box
     position: absolute
@@ -232,11 +240,36 @@ section
     &:hover
         border: 2px solid #fff
 
+.mat-mdc-dialog-container .mdc-dialog__surface
+
+    background-color: #333 !important
+
+.mat-mdc-dialog-container .mdc-dialog__content
+    color: #fff !important
+
+.mat-mdc-button:not(:disabled)
+    color: #fff !important
+
+.mat-mdc-button.mat-unthemed
+    background-color: #DC1A28 !important
+
+.mat-mdc-button.mat-unthemed:disabled
+    background-color: #464646 !important
+
+.mat-mdc-progress-bar
+    --mdc-linear-progress-active-indicator-color: #DC1A28 !important
+
 @keyframes spin
     0%
         transform: rotate(0deg)
     100%
         transform: rotate(360deg)
+
+@media only screen and (max-width: 1500px)
+
+    .close_video
+        top: 50px
+        left: 50px
 
 @media  ( max-width: 1200px )
 
@@ -267,6 +300,13 @@ section
         gap: 10px
         span
             display: none
+
+    .close_video
+        top: 25px
+        left: 25px
+        img
+            height: 30px
+            width: 30px
 
 @media  ( max-width: 650px )
     .sub_headline

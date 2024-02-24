@@ -1,0 +1,23 @@
+<div mat-dialog-content>Video upload (max. 250mb)</div>
+<div mat-dialog-actions class="input_div">
+    <mat-progress-bar mode="determinate" [value]="content.progress"></mat-progress-bar>
+    <ng-container *ngIf="!content.upload_complete">
+        <input placeholder="Title" type="text" [(ngModel)]="title" maxlength="30">
+        <input placeholder="Description" type="text" [(ngModel)]="description" maxlength="100">
+        <input disabled="disabled" [(ngModel)]="file_name" type="text">
+        <input id="fileInput" style="display: none;" type="file" [multiple]="false" accept="video/*"
+            (change)="selectFile($event)">
+        <div class="buttons">
+
+            <label [class.disabled]="content.progress > 0" class="upload_button" for="fileInput">Select Video</label>
+
+            <button (click)="uploadFile()"  mat-button [disabled]="title.length == 0 || content.progress > 0 || !selcted_file  || file_size > 250" >Upload Video</button>
+            <button mat-button mat-dialog-close>Close</button>
+        </div>
+        </ng-container>
+        <div class="success" *ngIf="content.upload_complete">
+            <span *ngIf="content.upload_error">Somthing went wrong</span>
+            <span *ngIf="!content.upload_error">Video successfully uploaded</span>
+            <button style="width: 100px;" mat-button mat-dialog-close>Ok</button>
+        </div>
+</div>

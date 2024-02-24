@@ -1,3 +1,145 @@
-.watchlist
-    margin-top: 200px
-    background: #141414
+.headline
+    color: #fff
+    font-size: 36px
+    font-weight: 500
+
+.user_video_main
+    padding: 200px 50px 50px 50px
+    width: calc( 100% - 100px )
+
+.image_slider_main
+    width: 100%
+    height: 494px
+
+.image
+    position: relative
+    width: max-content
+    img
+        width: 300px
+        height: 450px
+        border-radius: 5px
+        cursor: pointer
+        transform: scale(1)
+        transition: 150ms
+        object-fit: cover
+        &:hover
+            transform: scale(1.02)
+
+
+.image_slider_scroll
+    display: flex
+    gap: 25px
+    overflow-x: auto
+    padding: 20px 0
+
+
+.arrow_div_right
+    z-index: 5
+    transition: 200ms
+    opacity: 0
+    display: flex
+    align-items: center
+    justify-content: center
+    position: absolute
+    right: 50px
+    top: calc( 50% - 412px )
+    cursor: pointer
+    height: 463px
+    background-color: rgb(0, 0 ,0, 0.6)
+    img
+        transform: scale(1)
+        transition: 200ms
+    &:hover
+        img
+            transform: scale(1.1)
+
+.arrow_div_left
+    z-index: 5
+    transition: 200ms
+    opacity: 0
+    display: flex
+    align-items: center
+    justify-content: center
+    position: absolute
+    left: 50px
+    top: calc( 50% - 412px )
+    cursor: pointer
+    height: 463px
+    background-color: rgb(0, 0 ,0, 0.6)
+    img
+        transform: scale(1)
+        transition: 200ms
+    &:hover
+        img
+            transform: scale(1.1)
+
+.show_content
+    transition: 200ms
+    opacity: 1
+
+.upload_button
+    cursor: pointer
+    height: 36px
+    width: 100px
+    color: #fff
+    font-size: 16px
+    display: flex
+    align-items: center
+    justify-content: center
+    background: #DC1A28
+    border-radius: 5px
+    transition: 150ms
+    &:hover
+        background: #b8000c
+
+.info
+    box-sizing: border-box
+    background: #333333
+    height: 86px
+    width: 100%
+    color: #fff
+    padding: 15px
+    display: none
+    justify-content: space-between
+    transform: scale(1.02)
+
+.show_info
+    display: flex
+
+.info_buttons
+    gap: 10px
+    display: flex
+    align-items: center
+
+    .play
+        box-sizing: border-box
+        display: flex
+        align-items: center
+        justify-content: center
+        background: #c8c8c8
+        border-radius: 100%
+        height: 40px
+        width: 40px
+        cursor: pointer
+        margin-top: 3px
+        transition: 200ms
+        &:hover
+            background: #fff
+        img
+            width: 20px
+            height: 20px
+
+.headline_button
+    display: flex
+    flex-direction: column
+    gap: 10px
+
+.video
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    width: 100%
+    background: #000
+    z-index: 12
+    

@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
    * @return {Promise<void>} A Promise that resolves when the initialization is complete.
    */
   async ngOnInit(): Promise<void> {
+   await this.content.getUserVideos()
     this.content.loading = true;
     await this.content.getWatchList(this.auth.current_user.id!)
     await this.content.getPopularMovies()

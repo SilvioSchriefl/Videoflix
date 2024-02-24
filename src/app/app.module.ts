@@ -20,17 +20,21 @@ import { ImageSliderComponent } from './image-slider/image-slider.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { ImprintComponent } from './imprint/imprint.component';
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MatIconModule } from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
 import { UserVideosComponent } from './user-videos/user-videos.component';
+import { VideoUploadDialogComponent } from './video-upload-dialog/video-upload-dialog.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 
 @NgModule({
@@ -52,9 +56,12 @@ import { UserVideosComponent } from './user-videos/user-videos.component';
     ImprintComponent,
     SidenavComponent,
     DeleteAccountDialogComponent,
-    UserVideosComponent
+    UserVideosComponent,
+    VideoUploadDialogComponent
   ],
   imports: [
+    MatProgressBarModule,
+    MatInputModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
@@ -68,13 +75,13 @@ import { UserVideosComponent } from './user-videos/user-videos.component';
     MatDialogModule,
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     AuthenticationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InerceptorService,
       multi: true
-     }
+    }
   ],
   bootstrap: [AppComponent]
 })
