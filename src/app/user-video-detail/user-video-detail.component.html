@@ -1,0 +1,37 @@
+<div [class.show_shadow]="content.open_user_video" class="shadow" (click)="closeVideoDetail()">
+    <div class="main_div" (click)="$event.stopPropagation()">
+        <div *ngIf="content.open_user_video" #player class="video_player">
+            <video  [muted]="tone_muted" autoplay loop height="100%" width="100%"
+                [src]="url +content.user_video_detail.file"></video>
+        </div>
+        <div class="overlay">
+
+            <div class="close" (click)="closeVideoDetail()">
+                <img src="/assets/img/close.png">
+            </div>
+            <div class=" mute_button" (click)="toggleMuteTone()">
+                <img *ngIf="!tone_muted" src="/assets/img/speaker.png" alt="">
+                <img *ngIf="tone_muted" src="/assets/img/speaker_mute.png" alt="">
+            </div>
+
+            <div class="play">
+                <div class="play_button" (click)="playFullScreenVideo()">
+                    <img src="/assets/img/play_black.png" alt="">
+                    <span>Play</span>
+                </div>
+                <div   class="add_button">
+                    <img src="\assets\img\edit.png" alt="">
+                </div>
+            </div>
+
+            <div *ngIf="content.user_video_detail" class="info">
+                <span class="title">{{content.user_video_detail.title}}</span>
+                <div class="description">
+                    <span>Description:</span>
+                    <span>{{content.user_video_detail.description}}</span>
+                </div>
+                <span class="size">{{content.user_video_detail.file_size}}</span>
+            </div>
+        </div>
+    </div>
+</div>

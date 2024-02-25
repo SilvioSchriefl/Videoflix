@@ -28,10 +28,10 @@ export class WatchlistComponent {
    * @param {any} data - The data for the movie. It can be either a number representing the index of the movie in the popular_movies_details array, or an object with an id property representing the id of the movie.
    * @return {Promise<void>} Returns a Promise that resolves to void.
    */
-  async openMovieDetails(data: any): Promise<void> {
+  async openMovieDetails(data: any): Promise<void> { 
     let movie_id
     if (typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
-    else movie_id = data.id
+    else movie_id = data.movie_id
     this.content.movie_detail = await this.content.getMovieDetails(movie_id)
     if (data.in_watchlist) this.content.movie_detail.in_watchlist = true
     this.content.open_movie_detail = true

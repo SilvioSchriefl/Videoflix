@@ -1,7 +1,12 @@
+<app-user-video-detail (openVideo)="playVideo($event)"></app-user-video-detail>
+
 <div class="user_video_main" *ngIf=" !content.open_search_results">
     <div class="headline_button">
         <span class="headline">My Videos</span>
-        <div (click)="openDialog()" class="upload_button">Add Video</div>
+        <div (click)="openDialog()" class="upload_button">
+            <span>Add Video</span>
+            <img src="\assets\img\plus.png" alt="">
+        </div>
     </div>
 
     <div *ngIf="scrollable && scrollable_left != 0" class="arrow_div_left" [class.show_content]="hover"
@@ -24,7 +29,7 @@
                         <div class="play" (click)="playVideo(i)">
                             <img src="/assets/img/play_black.png" alt="">
                         </div>
-                        <div class="add_button">
+                        <div class="add_button" (click)="openVideoDetail(video)">
                             <img src="/assets/img/down.png" alt="">
                         </div>
                         <span>{{video.title}}</span>

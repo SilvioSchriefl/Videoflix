@@ -34,6 +34,8 @@ import { UserVideosComponent } from './user-videos/user-videos.component';
 import { VideoUploadDialogComponent } from './video-upload-dialog/video-upload-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UserVideoDetailComponent } from './user-video-detail/user-video-detail.component';
+import { EditVideoDialogComponent } from './edit-video-dialog/edit-video-dialog.component';
 
 
 
@@ -57,7 +59,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     SidenavComponent,
     DeleteAccountDialogComponent,
     UserVideosComponent,
-    VideoUploadDialogComponent
+    VideoUploadDialogComponent,
+    UserVideoDetailComponent,
+    EditVideoDialogComponent
   ],
   imports: [
     MatProgressBarModule,

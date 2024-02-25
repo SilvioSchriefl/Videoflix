@@ -5,6 +5,7 @@ import { Observable, Subscription, distinctUntilChanged, fromEvent, map } from '
 import { WindowResizeService } from '../Services/window-resize.service';
 import { MatDialog } from '@angular/material/dialog';
 import { VideoUploadDialogComponent } from '../video-upload-dialog/video-upload-dialog.component';
+import { UserVideo } from '../Interfaces/user_video.interface';
 
 @Component({
   selector: 'app-user-videos',
@@ -135,5 +136,11 @@ export class UserVideosComponent implements OnInit {
 
   closeVideo() {
     this.play = false
+  }
+
+
+  openVideoDetail(video:UserVideo) {
+    this.content.user_video_detail = video
+    this.content.open_user_video = true
   }
 }

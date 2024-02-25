@@ -45,6 +45,7 @@ export class ContentService {
   movie_detail: any = []
   isFunctionComplete = false;
   open_movie_detail: boolean = false
+  open_user_video: boolean = false
   scroll_top: boolean = true
   tooltip_text: string = ''
   open_search_results: boolean = false
@@ -78,6 +79,8 @@ export class ContentService {
   upload_complete: boolean = false;
   upload_error: boolean = false;
   user_videos: UserVideo[] = []
+  user_video_detail!:UserVideo
+
 
   constructor(
     private http: HttpClient,

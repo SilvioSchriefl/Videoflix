@@ -191,14 +191,18 @@ export class MovieDetailComponent {
   }
 
 
+ 
   /**
    * Get the production year of the movie.
    *
-   * @return {number} The production year of the movie.
+   * @return {number} the production year of the movie, or 0 if the movie detail is not available
    */
   getProductionYear(): number {
+    if(this.content.movie_detail) {
     let date = new Date(this.content.movie_detail.release_date)
     return date.getFullYear()
+    }
+    else return 0
   }
 
 
@@ -215,11 +219,12 @@ export class MovieDetailComponent {
 
 
   /**
-   * Calculates the total runtime of the movie.
+   * Calculate the total runtime of a movie in hours and minutes.
    *
-   * @return {string} The total runtime of the movie in hours and minutes.
+   * @return {string} the total runtime formatted as "X hrs Y min"
    */
-  getRuntime(): string {
+  getRuntime(): string | undefined {
+    if(!this.content.movie_detail) return
     let hours = Math.floor(this.content.movie_detail.runtime / 60);
     let minutes = this.content.movie_detail.runtime % 60;
     return `${hours} hrs ${minutes} min`
