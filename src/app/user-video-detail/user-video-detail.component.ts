@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ContentService } from '../Services/content.service';
 import { environment } from '../enviroments/enviroments';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteUservideoDialogComponent } from '../delete-uservideo-dialog/delete-uservideo-dialog.component';
+import { EditUservideoDialogComponent } from '../edit-uservideo-dialog/edit-uservideo-dialog.component';
 
 @Component({
   selector: 'app-user-video-detail',
@@ -15,7 +18,8 @@ export class UserVideoDetailComponent {
 
 
   constructor(
-    public content: ContentService
+    public content: ContentService,
+    public dialog: MatDialog,
   ) { }
 
 
@@ -38,5 +42,11 @@ export class UserVideoDetailComponent {
   playFullScreenVideo() {
     let i = this.content.user_videos.findIndex((video) => video == this.content.user_video_detail)
     this.openVideo.emit(i);
+  }
+
+
+  openDialog(action: string) {
+   if (action == 'delete') this.dialog.open(DeleteUservideoDialogComponent)
+   if (action == 'edit') this.dialog.open(EditUservideoDialogComponent)
   }
 }

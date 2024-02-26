@@ -79,7 +79,9 @@ export class ContentService {
   upload_complete: boolean = false;
   upload_error: boolean = false;
   user_videos: UserVideo[] = []
-  user_video_detail!:UserVideo
+  user_video_detail!: UserVideo
+  uploading: boolean = false
+
 
 
   constructor(
@@ -382,6 +384,7 @@ export class ContentService {
 
 
   uploadVideo(formData: FormData) {
+    this.uploading = true
     let url = environment.baseUrl + '/video/';
     const upload$ = this.http.post<UserVideo>(url, formData, {
       reportProgress: true,
@@ -396,17 +399,27 @@ export class ContentService {
         }
       },
       error: (error: any) => {
-        console.log(error);
-        this.upload_error = true
-        setTimeout(() => this.upload_complete = true, 1000);
+        this.handleUploadError(error)
       },
       complete: () => {
-        setTimeout(() => this.upload_complete = true, 1000);
+        setTimeout(() => {
+          this.upload_complete = true
+          this.uploading = false
+        }, 1000);
         this.getUserVideos()
         console.log(this.user_videos);
-        
       }
     });
+  }
+
+
+  handleUploadError(error: any) {
+    console.log(error);
+    this.upload_error = true
+    setTimeout(() => {
+      this.upload_complete = true
+      this.uploading = false
+    }, 1000);
   }
 
 
@@ -432,9 +445,33 @@ export class ContentService {
     }
     catch (error) {
       console.error;
-      console.log(error);
     }
+  }
 
+
+  async deleteVideo() {
+    let url = environment.baseUrl + '/video/' + this.user_video_detail.id + '/';
+    try {
+      await lastValueFrom(this.http.delete(url ));
+      await this.getUserVideos()
+      return true
+    }
+    catch (error) {
+      console.log(error); 
+      console.error;
+      return false
+    }
+  }
+
+
+  async editVideo(body: { id: number; title: string; description: string; }) {
+    let url = environment.baseUrl + '/video/'
+    try {
+      await lastValueFrom(this.http.patch<UserVideo>(url, body))
+    }
+    catch (error) {
+      console.error;
+    }
   }
 }
 

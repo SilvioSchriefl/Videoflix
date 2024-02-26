@@ -129,6 +129,7 @@ export class UserVideosComponent implements OnInit {
 
 
   playVideo(video_index: number) {
+    this.content.open_user_video = false
     this.play = true
     this.video_path = this.content.user_videos[video_index].file
   }

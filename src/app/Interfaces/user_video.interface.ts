@@ -6,5 +6,6 @@ export interface UserVideo  {
     thumbnail: string,
     file_size: string,
     file_480p: string,
+    id: number,
 
 }

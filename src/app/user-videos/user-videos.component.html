@@ -7,7 +7,10 @@
             <span>Add Video</span>
             <img src="\assets\img\plus.png" alt="">
         </div>
+        <span class="no_video" *ngIf="content.user_videos.length == 0">You haven't uploaded any videos yet</span>
     </div>
+
+    
 
     <div *ngIf="scrollable && scrollable_left != 0" class="arrow_div_left" [class.show_content]="hover"
         (mouseover)="hover = true" (mouseout)="hover = false" (click)="scrollLeft()">

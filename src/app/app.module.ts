@@ -36,6 +36,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserVideoDetailComponent } from './user-video-detail/user-video-detail.component';
 import { EditVideoDialogComponent } from './edit-video-dialog/edit-video-dialog.component';
+import { EditUservideoDialogComponent } from './edit-uservideo-dialog/edit-uservideo-dialog.component';
+import { DeleteUservideoDialogComponent } from './delete-uservideo-dialog/delete-uservideo-dialog.component';
 
 
 
@@ -61,7 +63,9 @@ import { EditVideoDialogComponent } from './edit-video-dialog/edit-video-dialog.
     UserVideosComponent,
     VideoUploadDialogComponent,
     UserVideoDetailComponent,
-    EditVideoDialogComponent
+    EditVideoDialogComponent,
+    EditUservideoDialogComponent,
+    DeleteUservideoDialogComponent
   ],
   imports: [
     MatProgressBarModule,

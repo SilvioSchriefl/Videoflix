@@ -1,0 +1,20 @@
+<div *ngIf="!success && !error" mat-dialog-content>
+    <div mat-dialog-content>Do you really want to delete your Video
+        {{content.user_video_detail.title}}?</div>
+    <div mat-dialog-actions class="delete_button">
+        <button mat-button (click)="deleteVideo()">Delete Video</button>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</div>
+
+<div class="content" *ngIf="success" mat-dialog-content>
+    <div mat-dialog-content>Video successfully deleted</div>
+        <button mat-button mat-dialog-close>Close</button>
+</div>
+
+<div class="content" *ngIf="error" mat-dialog-content>
+    <div mat-dialog-content>Something went wrong</div>
+        <button mat-button mat-dialog-close>Close</button>
+    
+</div>
+<mat-spinner class="spinner spinner_delete" *ngIf="loading"></mat-spinner>
