@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../Services/authentication.service';
-import { ContentService } from '../Services/content.service';
+import { AuthenticationService } from '../../Services/authentication.service';
+import { ContentService } from '../../Services/content.service';
 import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
 
 import { HttpClient, HttpEventType, HttpRequest } from '@angular/common/http';

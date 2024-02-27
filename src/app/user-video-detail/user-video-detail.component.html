@@ -32,6 +32,7 @@
                 <div class="description">
                     <span>Description:</span>
                     <span>{{content.user_video_detail.description}}</span>
+                    <span *ngIf="!content.user_video_detail.description">You haven't added a description yet.</span>
                 </div>
                 <span class="size">{{content.user_video_detail.file_size}}</span>
             </div>

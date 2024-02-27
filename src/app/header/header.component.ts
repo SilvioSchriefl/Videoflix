@@ -4,8 +4,9 @@ import { AuthenticationService } from '../Services/authentication.service';
 import { ContentService } from '../Services/content.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteAccountDialogComponent } from '../delete-account-dialog/delete-account-dialog.component';
-import { VideoUploadDialogComponent } from '../video-upload-dialog/video-upload-dialog.component';
+import { DeleteAccountDialogComponent } from '../Dialogs/delete-account-dialog/delete-account-dialog.component';
+import { VideoUploadDialogComponent } from '../Dialogs/video-upload-dialog/video-upload-dialog.component';
+import { EditUserDialogComponent } from '../Dialogs/edit-user-dialog/edit-user-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -132,6 +133,8 @@ export class HeaderComponent {
    */
   toggleSidebar() {
     this.content.open_sidebar = !this.content.open_sidebar
+    if (this.content.open_sidebar) this.content.menu_active = true
+    else this.content.menu_active = false
   }
 
 
@@ -142,6 +145,9 @@ export class HeaderComponent {
     this.show_logout = false
     if(dialog == 'delete') this.dialog.open(DeleteAccountDialogComponent);
     if(dialog == 'upload') this.dialog.open(VideoUploadDialogComponent);
+    if(dialog == 'edit') this.dialog.open(EditUserDialogComponent);
+    
+
   }
 
 

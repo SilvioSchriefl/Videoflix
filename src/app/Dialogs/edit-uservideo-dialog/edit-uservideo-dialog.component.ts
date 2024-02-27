@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ContentService } from '../Services/content.service';
+import { ContentService } from '../../Services/content.service';
 
 @Component({
   selector: 'app-edit-uservideo-dialog',
@@ -9,9 +9,11 @@ import { ContentService } from '../Services/content.service';
 })
 export class EditUservideoDialogComponent implements OnInit {
 
-
+  success: boolean = false
   title: string = '';
   description: string = '';
+  error: boolean = false
+  loading: boolean = false
 
   constructor(
     public dialogRef: MatDialogRef<EditUservideoDialogComponent>,
@@ -31,12 +33,15 @@ export class EditUservideoDialogComponent implements OnInit {
 
 
   async editVideo() {
+    this.loading = true
     let body = {
       id: this.content.user_video_detail.id,
       title: this.title,
       description: this.description
     }
-    await this.content.editVideo(body)
+    if(await this.content.editVideo(body)) this.success = true
+    else this.error = true
+    this.loading = false
   }
 
 }

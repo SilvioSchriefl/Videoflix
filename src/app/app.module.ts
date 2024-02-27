@@ -29,15 +29,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
+import { DeleteAccountDialogComponent } from './Dialogs/delete-account-dialog/delete-account-dialog.component';
 import { UserVideosComponent } from './user-videos/user-videos.component';
-import { VideoUploadDialogComponent } from './video-upload-dialog/video-upload-dialog.component';
+import { VideoUploadDialogComponent } from './Dialogs/video-upload-dialog/video-upload-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { UserVideoDetailComponent } from './user-video-detail/user-video-detail.component';
-import { EditVideoDialogComponent } from './edit-video-dialog/edit-video-dialog.component';
-import { EditUservideoDialogComponent } from './edit-uservideo-dialog/edit-uservideo-dialog.component';
-import { DeleteUservideoDialogComponent } from './delete-uservideo-dialog/delete-uservideo-dialog.component';
+import { EditUservideoDialogComponent } from './Dialogs/edit-uservideo-dialog/edit-uservideo-dialog.component';
+import { DeleteUservideoDialogComponent } from './Dialogs/delete-uservideo-dialog/delete-uservideo-dialog.component';
+import { HamburgerMenuComponent } from './hamburger-menu/hamburger-menu.component';
+import { EditUserDialogComponent } from './Dialogs/edit-user-dialog/edit-user-dialog.component';
 
 
 
@@ -63,9 +64,10 @@ import { DeleteUservideoDialogComponent } from './delete-uservideo-dialog/delete
     UserVideosComponent,
     VideoUploadDialogComponent,
     UserVideoDetailComponent,
-    EditVideoDialogComponent,
     EditUservideoDialogComponent,
-    DeleteUservideoDialogComponent
+    DeleteUservideoDialogComponent,
+    HamburgerMenuComponent,
+    EditUserDialogComponent
   ],
   imports: [
     MatProgressBarModule,

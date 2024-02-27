@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AuthenticationService } from '../Services/authentication.service';
-import { ContentService } from '../Services/content.service';
+import { AuthenticationService } from '../../Services/authentication.service';
+import { ContentService } from '../../Services/content.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,8 +11,10 @@ import { Router } from '@angular/router';
 })
 export class DeleteAccountDialogComponent {
 
+  loading: boolean = false;
+  success: boolean = false;
+  error: boolean = false;
   
-
 
   constructor(
     public dialogRef: MatDialogRef<DeleteAccountDialogComponent>,
@@ -37,15 +39,16 @@ export class DeleteAccountDialogComponent {
    * @return {Promise<void>} Promise that resolves when the account is deleted.
    */
   async deleteAccount(): Promise<void> {
-    this.auth.loading = true;
-    await this.auth.deleteUserAccount();
-    this.auth.loading = false;
-    if (this.auth.request_successfull) {
+    this.loading = true;
+    if ( await this.auth.deleteUserAccount()) {
+      this.success = true;
       setTimeout(() =>  {
         this.router.navigateByUrl('')
         this.onNoClick();
       }, 2000) 
       this.auth.token = '';
     } 
+    else this.error = true;
+    this.loading = false; 
   }
 }

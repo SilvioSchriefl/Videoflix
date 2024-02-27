@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ContentService } from '../Services/content.service';
+import { ContentService } from '../../Services/content.service';
 
 @Component({
   selector: 'app-delete-uservideo-dialog',

@@ -24,7 +24,7 @@
     <div class="image_slider_main" (mouseenter)="checkScrollbar()">
         <div #scroll_element class="image_slider_scroll" (mouseover)="hover = true" (mouseout)="hover = false">
             <div *ngFor="let video of content.user_videos; let i = index" class="image">
-                <img [src]="url + video.thumbnail" alt="" (mouseover)="handleMouseOver(i)"
+                <img [src]="url + video.thumbnail" alt="" (mouseover)="handleMouseOver(i)" (click)="openVideoDetail(video)"
                     (mouseout)="handleMouseOut()">
                 <div [class.show_info]="hover_info && hover_index == i || window_width < 1200" class="info"
                     (mouseover)="hover_info = true" (mouseout)="hover_info = false ">

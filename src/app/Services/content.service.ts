@@ -81,6 +81,7 @@ export class ContentService {
   user_videos: UserVideo[] = []
   user_video_detail!: UserVideo
   uploading: boolean = false
+  menu_active = false;
 
 
 
@@ -467,11 +468,23 @@ export class ContentService {
   async editVideo(body: { id: number; title: string; description: string; }) {
     let url = environment.baseUrl + '/video/'
     try {
-      await lastValueFrom(this.http.patch<UserVideo>(url, body))
+      let response = await lastValueFrom(this.http.patch<UserVideo>(url, body))
+      this.updateUserVideo(response)  
+      return true
     }
     catch (error) {
       console.error;
+      return false
     }
+  }
+
+
+  updateUserVideo(edited_video: UserVideo) {
+    let video = this.user_videos.find(video => video.id === edited_video.id )
+    if(!video) return
+    video.title = edited_video.title
+    video.description = edited_video.description
+    this.user_video_detail = video
   }
 }
 

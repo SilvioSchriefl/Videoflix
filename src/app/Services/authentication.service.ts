@@ -154,21 +154,47 @@ export class AuthenticationService {
   }
 
 
+  
   /**
-   * Deletes the user account.
+   * Asynchronously deletes the user account.
    *
-   * @return {Promise<void>} - Resolves when the user account is successfully deleted.
+   * @return {boolean} true if the account is deleted successfully, false otherwise
    */
-  async deleteUserAccount(): Promise<void> {
+  async deleteUserAccount(): Promise<boolean> {
     let url = environment.baseUrl + '/delete_account/';
     try {
       await lastValueFrom(this.http.delete(url));
       localStorage.clear();
-      this.request_successfull = true
+      return true
     } catch (error) {
       console.error;
+      return false
     }
   }
+
+
+  async updateUser(body: { user_name?: string; email?: string; }) {
+    let url = environment.baseUrl + '/edit_user/' 
+    try {
+      let response = await lastValueFrom(this.http.patch<User>(url, body))
+      this.editUser(response)
+      return true
+    }
+    catch (error: any) {
+      console.error;
+      console.log(error.error.detail); 
+      if (error.error.detail) this.error_text = 'emailInUse'
+      return false
+    }
+  }
+
+
+  editUser(updated_user: User) {
+    this.current_user.user_name = updated_user.user_name
+    this.current_user.email = updated_user.email
+  }
+
+
 }
 
 

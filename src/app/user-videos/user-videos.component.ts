@@ -4,7 +4,7 @@ import { environment } from '../enviroments/enviroments';
 import { Observable, Subscription, distinctUntilChanged, fromEvent, map } from 'rxjs';
 import { WindowResizeService } from '../Services/window-resize.service';
 import { MatDialog } from '@angular/material/dialog';
-import { VideoUploadDialogComponent } from '../video-upload-dialog/video-upload-dialog.component';
+import { VideoUploadDialogComponent } from '../Dialogs/video-upload-dialog/video-upload-dialog.component';
 import { UserVideo } from '../Interfaces/user_video.interface';
 
 @Component({

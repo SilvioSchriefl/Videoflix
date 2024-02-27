@@ -1,0 +1,29 @@
+<div *ngIf="!success && !error">
+    <div mat-dialog-content>Edit your Video</div>
+    <div mat-dialog-content class="edit_video">
+        <span>Title:</span>
+        <input [(ngModel)]="title" maxlength="30" type="text">
+        <span>Description:</span>
+        <input [(ngModel)]="description" maxlength="100" type="text">
+    </div>
+    <div mat-dialog-actions class="edit_button">
+        <button mat-button (click)="editVideo()">Edit</button>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</div>
+
+<div class="response" *ngIf="success">
+    <div mat-dialog-content>Video was successfully edited</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</div>
+
+<div class="response" *ngIf="error">
+    <div mat-dialog-content>Something went wrong</div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</div>
+
+<mat-spinner  class="spinner spinner_edit" *ngIf="loading"></mat-spinner>

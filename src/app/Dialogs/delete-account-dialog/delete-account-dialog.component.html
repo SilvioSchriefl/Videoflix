@@ -1,0 +1,20 @@
+<div mat-dialog-content  *ngIf="!success && !error">
+  <div mat-dialog-content [class.opacity]="auth.request_successfull">Do you really want to delete your account?</div>
+  <div mat-dialog-actions class="delete_button">
+    <button mat-button (click)="deleteAccount()">Delete Account</button>
+    <button mat-button mat-dialog-close>Close</button> 
+  </div>
+</div>
+
+<div class="response" *ngIf="success">
+  <div mat-dialog-content>Your account was successfully deleted</div>
+</div>
+
+<div class="response" *ngIf="error">
+  <div mat-dialog-content>Something went wrong</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+  </div>
+</div>
+
+<mat-spinner *ngIf="loading" class="spinner spinner_delete"> </mat-spinner>

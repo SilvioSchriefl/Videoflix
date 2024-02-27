@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ContentService } from '../Services/content.service';
 import { environment } from '../enviroments/enviroments';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteUservideoDialogComponent } from '../delete-uservideo-dialog/delete-uservideo-dialog.component';
-import { EditUservideoDialogComponent } from '../edit-uservideo-dialog/edit-uservideo-dialog.component';
+import { DeleteUservideoDialogComponent } from '../Dialogs/delete-uservideo-dialog/delete-uservideo-dialog.component';
+import { EditUservideoDialogComponent } from '../Dialogs/edit-uservideo-dialog/edit-uservideo-dialog.component';
 
 @Component({
   selector: 'app-user-video-detail',

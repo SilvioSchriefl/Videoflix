@@ -1,12 +1,10 @@
 <header [class.scroll_background]="!content.scroll_top">
-    <div class="nav_logo">
-        <button *ngIf="router.url == '/home' || router.url == '/watchlist'  || router.url == '/legal_notice' || router.url == '/imprint' || router.url == '/my_videos'" mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()">
-            <mat-icon>menu</mat-icon>
-          </button>
+    <div class="nav_logo">      
+            <app-hamburger-menu *ngIf="router.url == '/home' || router.url == '/watchlist'  || router.url == '/legal_notice' || router.url == '/imprint' || router.url == '/my_videos'" mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()"></app-hamburger-menu>    
         <div class="logo">
             <img src="/assets/img/logo.png" alt="">
         </div>
-        <div class="mobile_logo">
+        <div class="mobile_logo" (click)="goToHome()">
             <img src="/assets/img/logo_mobile.png" alt="">
         </div>
         <nav *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'">
@@ -32,7 +30,7 @@
     <div *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="logout" [class.show_logout]="show_logout" (mouseenter)="showLogout()"
         (mouseleave)="hideLogout()" >
         <span class="user">{{auth.current_user.user_name}}</span>
-        <span>Edit profile</span>
+        <span (click)="openDialog('edit')">Edit profile</span>
         <span (click)="openDialog('upload')">Video Upload</span>
         <span (click)="logOut()">Log out from Videoflix</span>
         <span *ngIf="!content.guest" (click)="openDialog('delete')">Delete your account</span>
