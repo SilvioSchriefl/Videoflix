@@ -4,6 +4,7 @@ import { AuthenticationService } from '../Services/authentication.service';
 import { ContentService } from '../Services/content.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteAccountDialogComponent } from '../Dialogs/delete-account-dialog/delete-account-dialog.component';
+import { EditUserDialogComponent } from '../Dialogs/edit-user-dialog/edit-user-dialog.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -93,9 +94,10 @@ export class SidenavComponent {
   /**
    * Opens the delete account dialog.
    */
-  openDialog() {
+  openDialog(action: string) {
     this.content.open_sidebar = false
-    this.dialog.open(DeleteAccountDialogComponent);
+    if (action === 'delete') this.dialog.open(DeleteAccountDialogComponent);
+    if (action === 'edit') this.dialog.open(EditUserDialogComponent);
     this.content.menu_active = false
   }
 }

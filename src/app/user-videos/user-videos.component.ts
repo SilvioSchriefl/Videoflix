@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ContentService } from '../Services/content.service';
 import { environment } from '../enviroments/enviroments';
 import { Observable, Subscription, distinctUntilChanged, fromEvent, map } from 'rxjs';
@@ -46,6 +46,20 @@ export class UserVideosComponent implements OnInit {
       this.initializeScrollObserver()
     }, 200);
    
+  }
+
+
+  @HostListener('document:click', ['$event'])
+  /**
+   * Handle global click event.
+   *
+   * @param {Event} event - The event object.
+   */
+  handleGlobalClick(event: Event) {
+    if (this.content.search_text == '') {
+      this.content.searching = false
+      this.content.search_text = ''
+    }
   }
 
 

@@ -40,11 +40,11 @@ export class HeaderComponent {
 
 
   @HostListener('document:click', ['$event'])
-/**
- * Handle global click event.
- *
- * @param {Event} event - The event object.
- */
+  /**
+   * Handle global click event.
+   *
+   * @param {Event} event - The event object.
+   */
   handleGlobalClick(event: Event) {
     if (this.content.search_text == '') {
       this.content.searching = false
@@ -99,13 +99,17 @@ export class HeaderComponent {
   /**
    * Check if the data has changed and update the search results accordingly.
    */
-  dataChanged() {
-    if (this.content.search_text == '') this.content.open_search_results = false
-    else {
-      this.content.open_search_results = true
-      this.content.search_results = []
-      this.content.getSearchResults()
-    }
+  dataChanged() {  
+      if (this.content.search_text == '') {
+        this.content.open_search_results = false
+        this.content.user_videos = this.content.user_videos_copy
+      } 
+      else {
+        this.content.open_search_results = true
+        this.content.search_results = []
+        if (this.router.url == '/my_videos') this.content.getUserVideosSearchResults()
+        else this.content.getSearchResults()
+      }
   }
 
 
@@ -125,6 +129,9 @@ export class HeaderComponent {
   closeSearchInput() {
     this.content.searching = false
     this.content.open_search_results = false
+    this.content.search_text = ''
+    this.content.search_results = []
+    this.content.user_videos = this.content.user_videos_copy
   }
 
 
@@ -138,15 +145,15 @@ export class HeaderComponent {
   }
 
 
-/**
- * Opens the delete account dialog.
- */
+  /**
+   * Opens the delete account dialog.
+   */
   openDialog(dialog: string) {
     this.show_logout = false
-    if(dialog == 'delete') this.dialog.open(DeleteAccountDialogComponent);
-    if(dialog == 'upload') this.dialog.open(VideoUploadDialogComponent);
-    if(dialog == 'edit') this.dialog.open(EditUserDialogComponent);
-    
+    if (dialog == 'delete') this.dialog.open(DeleteAccountDialogComponent);
+    if (dialog == 'upload') this.dialog.open(VideoUploadDialogComponent);
+    if (dialog == 'edit') this.dialog.open(EditUserDialogComponent);
+
 
   }
 
@@ -156,7 +163,7 @@ export class HeaderComponent {
    */
   logOut() {
     this.auth.userLogOut()
-    this.show_logout = false; 
+    this.show_logout = false;
     this.content.scroll_top = true
   }
 }

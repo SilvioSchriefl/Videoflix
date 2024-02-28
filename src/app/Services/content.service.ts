@@ -82,6 +82,8 @@ export class ContentService {
   user_video_detail!: UserVideo
   uploading: boolean = false
   menu_active = false;
+  user_videos_copy: UserVideo[] = []
+
 
 
 
@@ -355,6 +357,15 @@ export class ContentService {
 
 
   /**
+   * Retrieves search results for user videos.
+   */
+  getUserVideosSearchResults() {
+    this.user_videos = structuredClone(this.user_videos_copy)
+    this.user_videos = this.user_videos.filter((movie: { title: string; }) => movie.title.toLowerCase().includes(this.search_text.toLowerCase())) && this.user_videos.filter((movie: { description: string; }) => movie.description.toLowerCase().includes(this.search_text.toLowerCase()))
+  }
+
+
+  /**
    * Removes duplicates from an array of objects.
    *
    * @param {any[]} objects - The array of objects.
@@ -408,7 +419,6 @@ export class ContentService {
           this.uploading = false
         }, 1000);
         this.getUserVideos()
-        console.log(this.user_videos);
       }
     });
   }
@@ -442,7 +452,7 @@ export class ContentService {
     let url = environment.baseUrl + '/video/'
     try {
       this.user_videos = await lastValueFrom(this.http.get<UserVideo[]>(url))
-      console.log(this.user_videos);
+      this.user_videos_copy = this.user_videos
     }
     catch (error) {
       console.error;
@@ -453,12 +463,12 @@ export class ContentService {
   async deleteVideo() {
     let url = environment.baseUrl + '/video/' + this.user_video_detail.id + '/';
     try {
-      await lastValueFrom(this.http.delete(url ));
+      await lastValueFrom(this.http.delete(url));
       await this.getUserVideos()
       return true
     }
     catch (error) {
-      console.log(error); 
+      console.log(error);
       console.error;
       return false
     }
@@ -469,7 +479,7 @@ export class ContentService {
     let url = environment.baseUrl + '/video/'
     try {
       let response = await lastValueFrom(this.http.patch<UserVideo>(url, body))
-      this.updateUserVideo(response)  
+      this.updateUserVideo(response)
       return true
     }
     catch (error) {
@@ -480,8 +490,8 @@ export class ContentService {
 
 
   updateUserVideo(edited_video: UserVideo) {
-    let video = this.user_videos.find(video => video.id === edited_video.id )
-    if(!video) return
+    let video = this.user_videos.find(video => video.id === edited_video.id)
+    if (!video) return
     video.title = edited_video.title
     video.description = edited_video.description
     this.user_video_detail = video

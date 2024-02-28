@@ -25,13 +25,11 @@
         &:hover
             transform: scale(1.02)
 
-
 .image_slider_scroll
     display: flex
     gap: 25px
     overflow-x: auto
     padding: 20px 0
-
 
 .arrow_div_right
     z-index: 5
@@ -101,7 +99,6 @@
     box-sizing: border-box
     background: #333333
     height: 86px
-    width: 100%
     color: #fff
     padding: 15px
     display: none
@@ -115,6 +112,11 @@
     gap: 10px
     display: flex
     align-items: center
+    span
+        width: 130px
+        overflow: hidden
+        white-space: nowrap
+        text-overflow: ellipsis
 
     .play
         box-sizing: border-box
@@ -150,5 +152,104 @@
 
 .no_video
     color: #fff
-    
-    
+
+.add_video_mobile
+    position: absolute
+    right: 50px
+    top: 100px
+    display: none
+    align-items: center
+    justify-content: center
+    border-radius: 100%
+    height: 40px
+    width: 40px
+    cursor: pointer
+    background: #DC1A28
+    transition: 150ms
+    &:hover
+        background: #b8000c
+
+@media only screen and (max-width: 1200px)
+
+    .info_buttons
+        span
+            width: 100px
+
+    .add_video_mobile
+        display: flex
+
+    .upload_button
+        display: none
+
+    .add_button
+        width: 30px
+        height: 30px
+        img
+            width: 15px !important
+            height: 15px !important
+    .info
+        .play
+            height: 30px
+            width: 30px
+            img
+                width: 15px
+                height: 15px
+    .info_buttons
+        width: 100%
+        justify-content: center
+
+    .image
+        width: max-content
+        height: max-content
+        img
+            width: 200px
+            height: 300px
+
+    .info
+        margin-top: -3px
+        font-size: 12px
+        height: 60px
+        padding: 10px
+        align-items: center
+
+    .genres
+        display: none
+
+    .image_slider_main
+        height: 300px
+
+    .arrow_div_left
+        top: calc( 50% - 111px )
+        height: 307px
+
+    .arrow_div_right
+        top: calc( 50% - 111px )
+        height: 307px
+
+    .hover
+        transform: scale(1) !important
+
+    .user_video_main
+        padding: 100px 50px 50px 20px
+
+@media only screen and (max-width: 1000px)
+
+    .add_video_mobile
+        right: 20px
+
+    .user_video_main
+        width: calc(100% - 40px)
+
+@media only screen and (max-width: 500px)
+
+    .section_heaadline
+        font-size: 24px
+
+    .arrow_div_left
+        display: none
+
+    .arrow_div_right
+        display: none
+
+    .headline
+        font-size: 24px

@@ -1,13 +1,14 @@
 <app-user-video-detail (openVideo)="playVideo($event)"></app-user-video-detail>
 
-<div class="user_video_main" *ngIf=" !content.open_search_results">
+<div class="user_video_main">
     <div class="headline_button">
         <span class="headline">My Videos</span>
         <div (click)="openDialog()" class="upload_button">
             <span>Add Video</span>
             <img src="\assets\img\plus.png" alt="">
         </div>
-        <span class="no_video" *ngIf="content.user_videos.length == 0">You haven't uploaded any videos yet</span>
+        <span class="no_video" *ngIf="content.user_videos.length == 0  && !content.searching">You haven't uploaded any videos yet</span>
+        <span class="no_video" *ngIf="content.user_videos.length == 0 && content.searching">Your search for "{{content.search_text}}" returned no results</span>
     </div>
 
     
@@ -45,4 +46,7 @@
 <video *ngIf="play" height="100%" width="100%" type="video/mp4" class="video"  controls autoplay [src]="url + video_path"></video>
 <div *ngIf="play" (click)="closeVideo()" class="close_video">
     <img src="/assets/img/back_video.png" alt="">
+</div>
+<div class="add_video_mobile" (click)="openDialog()">
+    <img src="\assets\img\plus.png" alt="">
 </div>
