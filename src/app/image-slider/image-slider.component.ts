@@ -164,7 +164,6 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
    * @param {any[]} movie_array - The array of movies.
    */
   async updateWatchList(movie_id: string, index: number, movie_array: any[]) {
-    if(this.content.guest) return
     if (movie_array[index].in_watchlist) this.removeFromWatchlist(index, movie_array, movie_id)
     else this.addToWatchlist(index, movie_array)
   }

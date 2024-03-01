@@ -78,6 +78,8 @@ export class HomeComponent implements OnInit {
       this.slider_logo_url = this.logo_urls[this.current_slide_index]
       this.overview = this.content.popular_movies_details[this.current_slide_index].overview
     }, 3000);
+    console.log(this.content.watchlist);
+    
   }
 
 

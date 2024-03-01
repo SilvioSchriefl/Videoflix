@@ -4,7 +4,7 @@
         {{auth.current_user.user_name}}
     </div>
     <span (click)="userLogOut()">Log out</span>
-    <span (click)="openDialog('edit')">Edit Profile</span>
+    <span *ngIf="!content.guest" (click)="openDialog('edit')">Edit Profile</span>
     <span *ngIf="!content.guest" (click)="openDialog('delete')">Delete account</span>
     <div class="line"></div>
     <span (click)="goToHome()">Home</span>

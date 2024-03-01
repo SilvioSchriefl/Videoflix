@@ -289,6 +289,8 @@ export class ContentService {
     try {
       let response = await lastValueFrom(this.http.patch<Watchlist>(url, body))
       this.watchlist = response.watchlist
+      console.log(this.watchlist);
+      
     }
     catch (error) {
       console.error;
@@ -336,7 +338,6 @@ export class ContentService {
   getToolTipText(watchlist_status: boolean) {
     if (watchlist_status) this.tooltip_text = 'Remove from Watchlist'
     if (!watchlist_status) this.tooltip_text = 'Add to Watchlist'
-    if (this.guest) this.tooltip_text = 'Not available for the guest'
   }
 
 

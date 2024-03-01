@@ -112,7 +112,6 @@ export class MovieDetailComponent {
    * @param {string} movie.id - The ID of the movie.
    */
   updateWatchList(movie: { object: any, in_watchlist: boolean, id: string }) {
-    if(this.content.guest) return
     if (movie.in_watchlist) {
       this.content.movie_detail.in_watchlist = false
       this.removeFromWatchlist(movie.id)
@@ -183,11 +182,8 @@ export class MovieDetailComponent {
    * @return {string} The tooltip text.
    */
   getToolTipText(in_watchlist: boolean): string {
-    if (this.content.guest) return 'Not available for the guest'
-    else {
       if (in_watchlist) return 'Remove from Watchlist'
       else return 'Add to Watchlist'
-    }
   }
 
 
@@ -272,15 +268,28 @@ export class MovieDetailComponent {
    * @param {boolean} movie.in_watchlist - The current watchlist status of the movie.
    * @param {string} movie.id - The ID of the movie.
    */
-  setMovieWatchlistStatus(movie: { in_watchlist: boolean, id: string }) {
+  setMovieWatchlistStatus(movie: { in_watchlist: boolean; id: string; genres: { name: string; }[]; }) {
     if (movie.in_watchlist) {
       movie.in_watchlist = false
       this.removeFromWatchlist(movie.id)
     }
     else {
       movie.in_watchlist = true
+      this.addGenreNames(movie)
       this.addToWatchlist(movie)
     }
+  }
+
+
+  /**
+   * Adds genre names to the movie object.
+   *
+   * @param {{ in_watchlist: boolean; id: string; genres: { name: string; }[]; }} movie - the movie object
+   */
+  addGenreNames(movie: { in_watchlist: boolean; id: string; genres: { name: string; }[]; }) {
+    let genres: any = movie.genres.map(genre => genre.name)
+    console.log(genres);
+    movie.genres = genres
   }
 
 

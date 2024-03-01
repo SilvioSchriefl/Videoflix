@@ -30,7 +30,7 @@
     <div *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="logout" [class.show_logout]="show_logout" (mouseenter)="showLogout()"
         (mouseleave)="hideLogout()" >
         <span class="user">{{auth.current_user.user_name}}</span>
-        <span (click)="openDialog('edit')">Edit profile</span>
+        <span *ngIf="!content.guest" (click)="openDialog('edit')">Edit profile</span>
         <span (click)="openDialog('upload')">Video Upload</span>
         <span (click)="logOut()">Log out from Videoflix</span>
         <span *ngIf="!content.guest" (click)="openDialog('delete')">Delete your account</span>
