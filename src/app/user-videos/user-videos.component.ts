@@ -90,8 +90,6 @@ export class UserVideosComponent implements OnInit {
         else this.scrollable_right = true
         this.scrollable_left = scrollLeftValue     
       });
-      console.log(this.scrollable_right, this.scrollable_left);
-    
   }
 
 
@@ -155,7 +153,11 @@ export class UserVideosComponent implements OnInit {
    * Opens the dialog for uploading a video.
    */
   openDialog() {
-     this.dialog.open(VideoUploadDialogComponent);
+     this.dialog.open(VideoUploadDialogComponent).afterClosed().subscribe(() => {
+       this.content.upload_closed = true     
+     })
+
+
   }
 
 
@@ -187,5 +189,6 @@ export class UserVideosComponent implements OnInit {
   openVideoDetail(video:UserVideo) {
     this.content.user_video_detail = video
     this.content.open_user_video = true
+    this.content.video_loading = true
   }
 }

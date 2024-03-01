@@ -1,6 +1,8 @@
 <header [class.scroll_background]="!content.scroll_top">
-    <div class="nav_logo">      
-            <app-hamburger-menu *ngIf="router.url == '/home' || router.url == '/watchlist'  || router.url == '/legal_notice' || router.url == '/imprint' || router.url == '/my_videos'" mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()"></app-hamburger-menu>    
+    <div class="nav_logo">
+        <app-hamburger-menu
+            *ngIf="router.url == '/home' || router.url == '/watchlist'  || router.url == '/legal_notice' || router.url == '/imprint' || router.url == '/my_videos'"
+            mat-icon-button style="color: #fff;" class="hamburger_icon" (click)="toggleSidebar()"></app-hamburger-menu>
         <div class="logo">
             <img src="/assets/img/logo.png" alt="">
         </div>
@@ -14,21 +16,32 @@
         </nav>
     </div>
 
+    <div *ngIf="content.upload_closed && content.progress > 0" class="upload">
+        <mat-spinner  class="spinner spinner_upload"></mat-spinner>
+        <mat-progress-bar  class="progress_bar" mode="determinate"
+            [value]="content.progress"></mat-progress-bar>
+        <span>{{content.progress}}%</span>
+    </div>
+
     <div class="search_main" (click)="$event.stopPropagation()">
-        <div  [class.show_search]="content.searching" class="search_input">
-            <input type="text" placeholder="Title" [(ngModel)]="content.search_text" (ngModelChange)="dataChanged()" maxlength="30">
-                <img class="search_icon_input" src="/assets/img/search.png" alt="">
-                <img *ngIf="content.search_text != ''" class="close_icon" src="/assets/img/close.png" alt="" (click)="closeSearchInput()">
+        <div [class.show_search]="content.searching" class="search_input">
+            <input type="text" placeholder="Title" [(ngModel)]="content.search_text" (ngModelChange)="dataChanged()"
+                maxlength="30">
+            <img class="search_icon_input" src="/assets/img/search.png" alt="">
+            <img *ngIf="content.search_text != ''" class="close_icon" src="/assets/img/close.png" alt=""
+                (click)="closeSearchInput()">
         </div>
     </div>
-    <img *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="search_icon" src="/assets/img/search.png" alt="" (click)="openSearchInput()" (click)="$event.stopPropagation()">
+    <img *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="search_icon"
+        src="/assets/img/search.png" alt="" (click)="openSearchInput()" (click)="$event.stopPropagation()">
 
-    <div *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="profile" (mouseenter)="showLogout()" (mouseleave)="hideLogout()">
+    <div *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="profile"
+        (mouseenter)="showLogout()" (mouseleave)="hideLogout()">
         <img src="/assets/img/profil.png" alt="">
         <div *ngIf="show_logout" class="space"></div>
     </div>
-    <div *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="logout" [class.show_logout]="show_logout" (mouseenter)="showLogout()"
-        (mouseleave)="hideLogout()" >
+    <div *ngIf="router.url == '/home' || router.url == '/watchlist' || router.url == '/my_videos'" class="logout"
+        [class.show_logout]="show_logout" (mouseenter)="showLogout()" (mouseleave)="hideLogout()">
         <span class="user">{{auth.current_user.user_name}}</span>
         <span *ngIf="!content.guest" (click)="openDialog('edit')">Edit profile</span>
         <span (click)="openDialog('upload')">Video Upload</span>
@@ -37,4 +50,4 @@
     </div>
 </header>
 <app-sidenav [class.show_sidebar]="content.open_sidebar" class="sidebar"></app-sidenav>
-<div [class.show_shadow]="content.open_sidebar" class="shadow" (click)="toggleSidebar()" ></div>
+<div [class.show_shadow]="content.open_sidebar" class="shadow" (click)="toggleSidebar()"></div>

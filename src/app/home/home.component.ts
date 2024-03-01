@@ -77,9 +77,7 @@ export class HomeComponent implements OnInit {
       this.current_slide_index = (this.current_slide_index + 1) % this.content.popular_movies_details.length;
       this.slider_logo_url = this.logo_urls[this.current_slide_index]
       this.overview = this.content.popular_movies_details[this.current_slide_index].overview
-    }, 3000);
-    console.log(this.content.watchlist);
-    
+    }, 3000); 
   }
 
 
@@ -132,7 +130,6 @@ export class HomeComponent implements OnInit {
    */
   onVideoLoaded(video: HTMLVideoElement) {
     this.content.video_loaded = true;
-    console.log(this.loading_index);
     video.play();
     this.content.loading = false;
 

@@ -27,6 +27,23 @@ nav
         cursor: pointer
         &:hover
             color: #a3a3a3
+
+.upload
+    width: 50%
+    position: absolute
+    left: 450px
+    display: flex
+    align-items: center
+    gap: 10px
+    span
+        color: #fff
+        font-size: 14px
+
+.spinner_upload
+    width: 20px !important
+    height: 20px !important
+
+
 .space
     height: 21px
     width: 34px
@@ -163,9 +180,30 @@ nav
 .show_shadow
     z-index: 11
     opacity: 1
-    
+
+@media  ( max-width: 1200px )
+
+    .upload
+        width: 40%
 
 @media  ( max-width: 1000px )
+
+    .upload
+        width: 30%
+        left: 400px
+
+@media  ( max-width: 750px )
+
+    .upload
+        width: 25%
+        left: 400px
+
+@media  ( max-width: 700px )
+
+    .upload
+        width: 20%
+
+
 
     .profile
         right: 25px
@@ -176,7 +214,11 @@ nav
     .search_icon
         right: 75px
 
-@media  ( max-width: 500px )
+@media  ( max-width: 650px )
+
+    .upload
+        width: 45%
+        left: 120px
 
     .show_search
         width: 200px

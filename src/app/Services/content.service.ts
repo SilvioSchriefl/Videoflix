@@ -83,6 +83,8 @@ export class ContentService {
   uploading: boolean = false
   menu_active = false;
   user_videos_copy: UserVideo[] = []
+  video_loading: boolean = false
+  upload_closed: boolean = false
 
 
 
@@ -288,9 +290,7 @@ export class ContentService {
     let url = environment.baseUrl + '/watchlist/' + user_id + '/'
     try {
       let response = await lastValueFrom(this.http.patch<Watchlist>(url, body))
-      this.watchlist = response.watchlist
-      console.log(this.watchlist);
-      
+      this.watchlist = response.watchlist  
     }
     catch (error) {
       console.error;
@@ -420,11 +420,10 @@ export class ContentService {
       error: (error: any) => {
         this.handleUploadError(error)
       },
-      complete: () => {
-        setTimeout(() => {
+      complete: () => { 
           this.upload_complete = true
           this.uploading = false
-        }, 1000);
+          this.upload_closed = false
         this.getUserVideos()
       }
     });
@@ -476,7 +475,7 @@ export class ContentService {
     let url = environment.baseUrl + '/video/'
     try {
       this.user_videos = await lastValueFrom(this.http.get<UserVideo[]>(url))
-      this.user_videos_copy = this.user_videos
+      this.user_videos_copy = this.user_videos    
     }
     catch (error) {
       console.error;
@@ -497,7 +496,6 @@ export class ContentService {
       return true
     }
     catch (error) {
-      console.log(error);
       console.error;
       return false
     }

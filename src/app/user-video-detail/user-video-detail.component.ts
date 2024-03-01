@@ -13,7 +13,7 @@ import { EditUservideoDialogComponent } from '../Dialogs/edit-uservideo-dialog/e
 export class UserVideoDetailComponent {
 
   @Output('openVideo') openVideo: EventEmitter<any> = new EventEmitter();
-  url = environment.baseUrl 
+  url = environment.baseUrl
   tone_muted = false
 
 
@@ -56,7 +56,13 @@ export class UserVideoDetailComponent {
    * @param {string} action - the action to determine which dialog to open
    */
   openDialog(action: string) {
-   if (action == 'delete') this.dialog.open(DeleteUservideoDialogComponent)
-   if (action == 'edit') this.dialog.open(EditUservideoDialogComponent)
+    if (action == 'delete') this.dialog.open(DeleteUservideoDialogComponent)
+    if (action == 'edit') this.dialog.open(EditUservideoDialogComponent)
+  }
+
+
+  videoLoaded(event: Event) {
+    const videoElement = event.target as HTMLVideoElement;
+    this.content.video_loading = false
   }
 }

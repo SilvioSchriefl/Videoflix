@@ -26,17 +26,28 @@ export class EditUserDialogComponent implements OnInit {
 
 
 
+  /**
+   * Initialize the component with the current user's name and email.
+   *
+   */
   ngOnInit(): void {
     this.name = this.auth.current_user.user_name
     this.email = this.auth.current_user.email
   }
 
 
+  /**
+   * A description of the entire function.
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
 
+  /**
+   * Edit user asynchronously.
+   *
+   */
   async editUser() {
     this.loading = true
     if (await this.auth.updateUser(this.checkIfDataChanged())) {
@@ -44,27 +55,27 @@ export class EditUserDialogComponent implements OnInit {
     }
     else this.error = true
     if (this.auth.error_text == 'emailInUse') this.email_in_use = true
-    console.log(this.email_in_use);
-    
     this.loading = false
   }
 
 
+  /**
+   * A function to check if the data has changed and update the email_valid property accordingly.
+   */
   dataChanged() {
     this.email_valid = this.regexEmail.test(this.email)
   }
 
 
-
-  checkIfDataChanged() {
+  /**
+   * Check if the data has changed and return an object with the updated user_name and email.
+   *
+   * @return {Object} An object with the updated user_name and email
+   */
+  checkIfDataChanged(): object {
     if (this.name != this.auth.current_user.user_name && this.email != this.auth.current_user.email) return { user_name: this.name, email: this.email, }
     else if (this.name == this.auth.current_user.user_name && this.email != this.auth.current_user.email) return { email: this.email, }
     else if (this.name != this.auth.current_user.user_name && this.email == this.auth.current_user.email) return { user_name: this.name, }
     else return { user_name: this.name, email: this.email, }
-
-
-
-
   }
-
 }

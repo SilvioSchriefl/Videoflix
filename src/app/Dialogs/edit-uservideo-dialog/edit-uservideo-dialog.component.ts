@@ -21,17 +21,28 @@ export class EditUservideoDialogComponent implements OnInit {
   ) { }
 
 
+  /**
+   * Initializes the component with the title and description from the user video detail.
+   *
+   */
   ngOnInit(): void {
     this.title = this.content.user_video_detail.title;
     this.description = this.content.user_video_detail.description;
   }
 
 
+  /**
+   * A method to handle the action when the user clicks on the 'no' option.
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }
 
 
+  /**
+   * Edit a video asynchronously.
+   * @return {type} description of return value
+   */
   async editVideo() {
     this.loading = true
     let body = {

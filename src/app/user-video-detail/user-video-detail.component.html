@@ -1,8 +1,13 @@
 <div [class.show_shadow]="content.open_user_video" class="shadow" (click)="closeVideoDetail()">
     <div class="main_div" (click)="$event.stopPropagation()">
         <div *ngIf="content.open_user_video" #player class="video_player">
-            <video  [muted]="tone_muted" autoplay loop height="100%" width="100%"
-                [src]="url +content.user_video_detail.file"></video>
+            <video *ngIf="!content.user_video_detail.file_480p" #videoElement [muted]="tone_muted" autoplay loop height="100%" width="100%"
+                [src]="url +content.user_video_detail.file"  (loadedmetadata)="videoLoaded($event)">
+            </video>
+            <video *ngIf="content.user_video_detail.file_480p" #videoElement [muted]="tone_muted" autoplay loop height="100%" width="100%"
+                [src]="url +content.user_video_detail.file_480p"  (loadedmetadata)="videoLoaded($event)">
+            </video>
+            <mat-spinner *ngIf="content.video_loading" class="spinner video_spinner"></mat-spinner>
         </div>
         <div class="overlay">
 

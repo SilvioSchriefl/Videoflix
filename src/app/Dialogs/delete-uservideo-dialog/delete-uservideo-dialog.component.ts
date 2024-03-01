@@ -18,7 +18,13 @@ export class DeleteUservideoDialogComponent {
     public content: ContentService
   ) { }
 
-  async deleteVideo() {
+
+  /**
+   * This function deletes a video asynchronously.
+   *
+   * @return {Promise<void>} 
+   */
+  async deleteVideo(): Promise<void> {
     this.loading = true
     this.content.open_user_video = false
     if(await this.content.deleteVideo()) this.success = true
@@ -27,6 +33,10 @@ export class DeleteUservideoDialogComponent {
   }
 
 
+  /**
+   * A method that handles the click event when the user clicks on the "no" option.
+   *
+   */
   onNoClick() {
     this.dialogRef.close();
   }

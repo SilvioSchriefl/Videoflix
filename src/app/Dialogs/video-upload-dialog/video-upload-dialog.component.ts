@@ -30,20 +30,32 @@ export class VideoUploadDialogComponent implements OnInit {
     public router: Router,
   ) { }
 
+  /**
+   * Initializes the component with default values for content reset, upload completion, and upload error.
+   *
+   * @return {void} 
+   */
   ngOnInit(): void {
     this.content.reset()
     this.content.upload_complete = false
     this.content.upload_error = false
+    this.content.uploading = false
   }
 
 
+  /**
+   * A method to handle the action when the user clicks on the "no" option.
+   */
   onNoClick() {
-    this.content.cancelUpload()
-    this.dialogRef.close();
-
+    this.dialogRef.close()
   }
 
 
+  /**
+   * Selects a file from the event input and updates the file size and name accordingly.
+   *
+   * @param {any} event - the event input containing the selected file
+   */
   selectFile(event: any) {
     if (event.target.files[0]) {
       this.file_size = 0
@@ -51,14 +63,17 @@ export class VideoUploadDialogComponent implements OnInit {
       this.selcted_file = null
       this.file_size = event.target.files[0].size / (1024 * 1024)
       this.selcted_file = event.target.files[0] 
-      this.file_name = this.selcted_file.name + '  ' + this.file_size.toFixed(0) + 'mb'
-      console.log(this.file_name);
-      
+      this.file_name = this.selcted_file.name + '  ' + this.file_size.toFixed(0) + 'mb'    
     }
   }
 
 
-  async uploadFile() {
+  /**
+   * Uploads a file using the provided form data, including the file, title, description, user ID, and file size.
+   *
+   * @return {Promise<void>} 
+   */
+  async uploadFile(): Promise<void> {
     let formData = new FormData();
     formData.append("file", this.selcted_file);
     formData.append("title", this.title);

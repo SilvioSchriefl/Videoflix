@@ -33,15 +33,20 @@
     width: 100%
     height: 100%
     background: rgb(24,24,24)
-    background: linear-gradient(0deg, rgba(24,24,24,1) 50%, rgba(255,255,255,0) 80%)
+    background: linear-gradient(0deg, rgba(24,24,24,1) 55%, rgba(255,255,255,0) 80%)
 
 .video_player
-    position: absolute
+    position: relative
     left: calc( 50% - 900px )
     top: -178px
     z-index: 0
     width: 1800px
     height: 1000px
+
+.video_spinner
+    position: absolute
+    top: calc( 50% - 50px )
+    left: calc( 50% - 50px )
 
 .mute_button
     position: absolute
@@ -117,7 +122,7 @@
     .video_player
         left: unset
         width: 100%
-        height: 800px
+        height: 885px
         top: -142px
 
     .main_div
@@ -164,12 +169,12 @@
 @media (max-width: 900px)
 
     .video_player
-        top: -147px
+        top: -190px
 
 @media (max-width: 800px)
 
     .overlay
-        background: linear-gradient(0deg, rgb(24, 24, 24) 72%, rgba(255, 255, 255, 0) 80%)
+        background: linear-gradient(0deg, rgb(24, 24, 24) 74%, rgba(255, 255, 255, 0) 81%)
 
 
     .play
@@ -180,7 +185,7 @@
         top: 380px
 
     .video_player
-        top: -174px
+        top: -271px
 
     .info
         top: 530px
@@ -210,10 +215,10 @@
 @media (max-width: 600px)
 
     .overlay
-        background: linear-gradient(0deg, rgb(24, 24, 24) 78%, rgba(255, 255, 255, 0) 80%)
+        background: linear-gradient(0deg, rgb(24, 24, 24) 79%, rgba(255, 255, 255, 0) 84%)
 
     .video_player
-        top: -234px
+        top: -325px
 
     .mute_button
         top: 290px
