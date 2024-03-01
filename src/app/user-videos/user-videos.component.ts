@@ -37,6 +37,11 @@ export class UserVideosComponent implements OnInit {
   ) { }
 
 
+  /**
+   * Initialize component on page load.
+   *
+   * @return {void} 
+   */
   ngOnInit(): void {
     this.resizeSubscription = this.window.resize$.subscribe((width: number) => {
       this.window_width = width;
@@ -63,6 +68,9 @@ export class UserVideosComponent implements OnInit {
   }
 
 
+  /**
+   * Description of the entire function.
+   */
   ngOnDestroy() {
     this.resizeSubscription.unsubscribe();
   }
@@ -121,7 +129,13 @@ export class UserVideosComponent implements OnInit {
   }
 
 
-  async handleMouseOver(index: number) {
+  /**
+   * Handle mouse over event.
+   *
+   * @param {number} index - The index of the item being hovered over
+   * @return {Promise<void>} A promise that resolves with no value
+   */
+  async handleMouseOver(index: number): Promise<void> {
     this.hover = true;
     this.hover_info = true
     this.hover_index = index
@@ -137,11 +151,19 @@ export class UserVideosComponent implements OnInit {
   }
 
 
+  /**
+   * Opens the dialog for uploading a video.
+   */
   openDialog() {
      this.dialog.open(VideoUploadDialogComponent);
   }
 
 
+  /**
+   * play a video based on the provided index.
+   *
+   * @param {number} video_index - the index of the video to be played
+   */
   playVideo(video_index: number) {
     this.content.open_user_video = false
     this.play = true
@@ -149,11 +171,19 @@ export class UserVideosComponent implements OnInit {
   }
 
 
+  /**
+   * Close the video.
+   */
   closeVideo() {
     this.play = false
   }
 
 
+  /**
+   * Opens the video detail for the given user video.
+   *
+   * @param {UserVideo} video - the user video for which the detail will be opened
+   */
   openVideoDetail(video:UserVideo) {
     this.content.user_video_detail = video
     this.content.open_user_video = true

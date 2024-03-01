@@ -211,7 +211,7 @@ export class ContentService {
    * @param {string} id - The ID of the movie.
    * @return {Promise<void>} - A Promise that resolves to nothing.
    */
-  async getMovieVideo(id: string) {
+  async getMovieVideo(id: string): Promise<void> {
     let url = 'https://api.themoviedb.org/3/movie/' + id + '/videos?api_key=' + this.api_key
     try {
       let response = await lastValueFrom(this.http.get(url))
@@ -396,6 +396,12 @@ export class ContentService {
   }
 
 
+  /**
+   * Uploads a video using the provided form data.
+   *
+   * @param {FormData} formData - the form data containing the video to be uploaded
+
+   */
   uploadVideo(formData: FormData) {
     this.uploading = true
     let url = environment.baseUrl + '/video/';
@@ -425,6 +431,11 @@ export class ContentService {
   }
 
 
+  /**
+   * A function to handle upload errors.
+   *
+   * @param {any} error - the error object
+   */
   handleUploadError(error: any) {
     console.log(error);
     this.upload_error = true
@@ -435,6 +446,9 @@ export class ContentService {
   }
 
 
+  /**
+   * Cancels the upload process.
+   */
   cancelUpload() {
     if (this.uploadSub) {
       this.uploadSub.unsubscribe();
@@ -443,12 +457,21 @@ export class ContentService {
   }
 
 
+  /**
+   * Reset the progress and upload subscription.
+   */
   reset() {
     this.progress = 0;
     this.uploadSub = null;
   }
 
 
+  /**
+   * Asynchronously retrieves user videos from the server.
+   *
+   * @param None
+   * @return Promise<UserVideo[]> The retrieved user videos
+   */
   async getUserVideos() {
     let url = environment.baseUrl + '/video/'
     try {
@@ -461,7 +484,12 @@ export class ContentService {
   }
 
 
-  async deleteVideo() {
+  /**
+   * Asynchronously deletes a video.
+   *
+   * @return {boolean} true if the video is deleted successfully, false otherwise
+   */
+  async deleteVideo(): Promise<boolean> {
     let url = environment.baseUrl + '/video/' + this.user_video_detail.id + '/';
     try {
       await lastValueFrom(this.http.delete(url));
@@ -476,7 +504,13 @@ export class ContentService {
   }
 
 
-  async editVideo(body: { id: number; title: string; description: string; }) {
+  /**
+   * A function to edit a video with the given body.
+   *
+   * @param {Object} body - An object containing id, title, and description of the video.
+   * @return {boolean} True if the video is successfully edited, false otherwise.
+   */
+  async editVideo(body: { id: number; title: string; description: string; }): Promise<boolean> {
     let url = environment.baseUrl + '/video/'
     try {
       let response = await lastValueFrom(this.http.patch<UserVideo>(url, body))
@@ -490,6 +524,11 @@ export class ContentService {
   }
 
 
+  /**
+   * Updates the user video with the edited video information.
+   *
+   * @param {UserVideo} edited_video - the edited video information
+   */
   updateUserVideo(edited_video: UserVideo) {
     let video = this.user_videos.find(video => video.id === edited_video.id)
     if (!video) return

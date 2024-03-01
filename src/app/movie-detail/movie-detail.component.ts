@@ -288,7 +288,6 @@ export class MovieDetailComponent {
    */
   addGenreNames(movie: { in_watchlist: boolean; id: string; genres: { name: string; }[]; }) {
     let genres: any = movie.genres.map(genre => genre.name)
-    console.log(genres);
     movie.genres = genres
   }
 

@@ -24,27 +24,37 @@ export class UserVideoDetailComponent {
 
 
 
+  /**
+   * Closes the video detail.
+   */
   closeVideoDetail() {
     this.content.open_user_video = false
   }
 
 
+  /**
+   * toggleMuteTone - Toggles the mute state of the tone.
+   */
   toggleMuteTone() {
     this.tone_muted = !this.tone_muted
   }
 
 
-  playVideo() {
-
-  }
-
-
+  /**
+   * playFullScreenVideo - A description of the entire function.
+   *
+   */
   playFullScreenVideo() {
     let i = this.content.user_videos.findIndex((video) => video == this.content.user_video_detail)
     this.openVideo.emit(i);
   }
 
 
+  /**
+   * Opens a dialog based on the provided action.
+   *
+   * @param {string} action - the action to determine which dialog to open
+   */
   openDialog(action: string) {
    if (action == 'delete') this.dialog.open(DeleteUservideoDialogComponent)
    if (action == 'edit') this.dialog.open(EditUservideoDialogComponent)

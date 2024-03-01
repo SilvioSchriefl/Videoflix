@@ -128,7 +128,7 @@ export class AuthenticationService {
       this.router.navigateByUrl('');
       localStorage.clear()
     } catch (error) {
-      console.log(error);
+      console.error
     }
   }
 
@@ -173,7 +173,13 @@ export class AuthenticationService {
   }
 
 
-  async updateUser(body: { user_name?: string; email?: string; }) {
+  /**
+   * Updates a user with the provided information.
+   *
+   * @param {Object} body - An object containing optional properties: user_name (string) and email (string).
+   * @return {boolean} True if the user was successfully updated, false otherwise.
+   */
+  async updateUser(body: { user_name?: string; email?: string; }): Promise<boolean> {
     let url = environment.baseUrl + '/edit_user/' 
     try {
       let response = await lastValueFrom(this.http.patch<User>(url, body))
@@ -182,14 +188,18 @@ export class AuthenticationService {
     }
     catch (error: any) {
       console.error;
-      console.log(error.error.detail); 
       if (error.error.detail) this.error_text = 'emailInUse'
       return false
     }
   }
 
 
-  editUser(updated_user: User) {
+  /**
+   * Updates the user information with the provided updated user object.
+   *
+   * @param {User} updated_user - the updated user object
+   */
+  editUser(updated_user: User){
     this.current_user.user_name = updated_user.user_name
     this.current_user.email = updated_user.email
   }
