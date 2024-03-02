@@ -9,7 +9,7 @@ import { YouTubePlayerService } from '../Services/you-tube-player.service';
   templateUrl: './watchlist.component.html',
   styleUrls: ['./watchlist.component.sass']
 })
-export class WatchlistComponent {
+export class WatchlistComponent implements OnInit {
 
   @ViewChild(MovieDetailComponent) movieDetail!: MovieDetailComponent
 
@@ -20,6 +20,11 @@ export class WatchlistComponent {
     public auth: AuthenticationService,
     public youtube: YouTubePlayerService
   ) { }
+
+
+  ngOnInit(): void {
+    this.content.scroll_top = true
+  }
 
 
   /**

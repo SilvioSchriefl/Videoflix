@@ -16,7 +16,7 @@
         </nav>
     </div>
 
-    <div *ngIf="content.upload_closed && content.progress > 0" class="upload">
+    <div  class="upload">
         <mat-spinner  class="spinner spinner_upload"></mat-spinner>
         <mat-progress-bar  class="progress_bar" mode="determinate"
             [value]="content.progress"></mat-progress-bar>

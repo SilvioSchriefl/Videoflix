@@ -29,15 +29,16 @@ nav
             color: #a3a3a3
 
 .upload
-    width: 50%
-    position: absolute
-    left: 450px
+    width: 100%
     display: flex
     align-items: center
     gap: 10px
+    padding: 0 120px 0 50px
     span
         color: #fff
         font-size: 14px
+
+    
 
 .spinner_upload
     width: 20px !important
@@ -181,30 +182,9 @@ nav
     z-index: 11
     opacity: 1
 
-@media  ( max-width: 1200px )
-
-    .upload
-        width: 40%
-
-@media  ( max-width: 1000px )
-
-    .upload
-        width: 30%
-        left: 400px
-
-@media  ( max-width: 750px )
-
-    .upload
-        width: 25%
-        left: 400px
 
 @media  ( max-width: 700px )
-
-    .upload
-        width: 20%
-
-
-
+   
     .profile
         right: 25px
 
@@ -217,8 +197,7 @@ nav
 @media  ( max-width: 650px )
 
     .upload
-        width: 45%
-        left: 120px
+        padding: 0 50px 0 25px
 
     .show_search
         width: 200px

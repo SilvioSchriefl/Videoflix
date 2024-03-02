@@ -43,6 +43,7 @@ export class UserVideosComponent implements OnInit {
    * @return {void} 
    */
   ngOnInit(): void {
+    this.content.scroll_top = true
     this.resizeSubscription = this.window.resize$.subscribe((width: number) => {
       this.window_width = width;
     });
