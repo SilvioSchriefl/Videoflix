@@ -57,13 +57,17 @@ export class VideoUploadDialogComponent implements OnInit {
    * @param {any} event - the event input containing the selected file
    */
   selectFile(event: any) {
-    if (event.target.files[0]) {
+    if (event.target.files[0].type == 'video/mp4') {   
       this.file_size = 0
       this.file_name = ''
       this.selcted_file = null
       this.file_size = event.target.files[0].size / (1024 * 1024)
       this.selcted_file = event.target.files[0] 
       this.file_name = this.selcted_file.name + '  ' + this.file_size.toFixed(0) + 'mb'    
+    }
+    else {
+      this.selcted_file = null
+      this.file_name = 'Please select a valid video file'
     }
   }
 
