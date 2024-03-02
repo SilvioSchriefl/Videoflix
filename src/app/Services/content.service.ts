@@ -290,7 +290,7 @@ export class ContentService {
     let url = environment.baseUrl + '/watchlist/' + user_id + '/'
     try {
       let response = await lastValueFrom(this.http.patch<Watchlist>(url, body))
-      this.watchlist = response.watchlist  
+      this.watchlist = response.watchlist
     }
     catch (error) {
       console.error;
@@ -346,12 +346,7 @@ export class ContentService {
    * The search is case-insensitive.
    */
   getSearchResults() {
-    let movie_search_results: any[] = []
-    let titels = this.all_movies.map((movie: { title: string; }) => movie.title)
-    let search_results = titels.filter((title: string) => title.toLowerCase().includes(this.search_text.toLowerCase()))
-    this.all_movies.forEach((movie: any) => {
-      if (search_results.includes(movie.title)) movie_search_results.push(movie)
-    })
+    let movie_search_results: any[] = this.all_movies.filter((movie: { title: string; }) => movie.title.toLowerCase().includes(this.search_text.toLowerCase()))
     this.search_results = this.removeDuplicates(movie_search_results)
     this.getGenreNames(this.search_results)
   }
@@ -367,14 +362,22 @@ export class ContentService {
 
 
   /**
-   * Removes duplicates from an array of objects.
+   * Remove duplicate items from the input array based on the 'title' property.
    *
-   * @param {any[]} objects - The array of objects.
-   * @return {any[]} The array with duplicates removed.
+   * @param {Array<{ title: string }>} data - The input array of objects with a 'title' property
+   * @return {Array<{ title: string }>} The array with duplicate items removed
    */
-  removeDuplicates(objects: any[]): any[] {
-    const uniqueObjects = Array.from(new Set(objects.map(obj => JSON.stringify(obj))));
-    return uniqueObjects.map(objString => JSON.parse(objString));
+  removeDuplicates(data: { title: string }[]): { title: string }[] {
+    let uniqueTitles = new Set<string>();
+    let result: { title: string }[] = [];
+
+    data.forEach(item => {
+      if (!uniqueTitles.has(item.title)) {
+        uniqueTitles.add(item.title);
+        result.push(item);
+      }
+    });
+    return result;
   }
 
 
@@ -420,10 +423,10 @@ export class ContentService {
       error: (error: any) => {
         this.handleUploadError(error)
       },
-      complete: () => { 
-          this.upload_complete = true
-          this.uploading = false
-          this.upload_closed = false
+      complete: () => {
+        this.upload_complete = true
+        this.uploading = false
+        this.upload_closed = false
         this.getUserVideos()
       }
     });
@@ -475,7 +478,7 @@ export class ContentService {
     let url = environment.baseUrl + '/video/'
     try {
       this.user_videos = await lastValueFrom(this.http.get<UserVideo[]>(url))
-      this.user_videos_copy = this.user_videos    
+      this.user_videos_copy = this.user_videos
     }
     catch (error) {
       console.error;
