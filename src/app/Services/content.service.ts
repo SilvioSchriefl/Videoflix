@@ -186,6 +186,7 @@ export class ContentService {
     if (genre == 'War') this.war_movies = response
     if (genre == 'Thriller') this.thriller_movies = response
     this.all_movies = [...this.action_movies, ...this.animation_movies, ...this.adventure_movies, ...this.comedy_movies, ...this.science_fiction_movies, ...this.war_movies, ...this.thriller_movies]
+    this.checkIfMovieIsInWatchList(this.all_movies)
   }
 
 
@@ -347,8 +348,8 @@ export class ContentService {
    */
   getSearchResults() {
     let movie_search_results: any[] = this.all_movies.filter((movie: { title: string; }) => movie.title.toLowerCase().includes(this.search_text.toLowerCase()))
-    this.search_results = this.removeDuplicates(movie_search_results)
     this.getGenreNames(this.search_results)
+    this.search_results = this.removeDuplicates(movie_search_results)
   }
 
 
@@ -370,13 +371,12 @@ export class ContentService {
   removeDuplicates(data: { title: string }[]): { title: string }[] {
     let uniqueTitles = new Set<string>();
     let result: { title: string }[] = [];
-
     data.forEach(item => {
       if (!uniqueTitles.has(item.title)) {
         uniqueTitles.add(item.title);
         result.push(item);
       }
-    });
+    }); 
     return result;
   }
 
