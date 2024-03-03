@@ -170,12 +170,15 @@ export class HomeComponent implements OnInit {
     if (this.content.open_movie_detail) return
     this.content.open_movie_detail = true
     let movie_id
-    if (typeof data === 'number') movie_id = this.content.popular_movies_details[data].id
+    if (typeof data === 'number') {
+      movie_id = this.content.popular_movies_details[data].id
+      this.content.movie_detail = await this.content.getMovieDetails(movie_id)
+    } 
     else {
       movie_id = data.movie_id
+      this.content.movie_detail = await this.content.getMovieDetails(movie_id)
       if (data.in_watchlist) this.content.movie_detail.in_watchlist = true
     }
-    this.content.movie_detail = await this.content.getMovieDetails(movie_id)
     this.movieDetail.getLogoUrl()
     await this.movieDetail.getRecommendationMoviesDetails()
     await this.movieDetail.playBackgroundYouTubeVideo()

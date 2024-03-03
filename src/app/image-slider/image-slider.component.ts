@@ -237,6 +237,8 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
       movie_id: movie_id,
     }
     this.openMovie.emit(parameter);
+    console.log(parameter);
+    
   }
 }
 

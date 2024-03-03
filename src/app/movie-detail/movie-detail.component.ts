@@ -105,25 +105,6 @@ export class MovieDetailComponent {
 
 
   /**
-   * Updates the watchlist status of a movie.
-   *
-   * @param {object} movie - The movie object.
-   * @param {boolean} movie.in_watchlist - The current watchlist status of the movie.
-   * @param {string} movie.id - The ID of the movie.
-   */
-  updateWatchList(movie: { object: any, in_watchlist: boolean, id: string }) {
-    if (movie.in_watchlist) {
-      this.content.movie_detail.in_watchlist = false
-      this.removeFromWatchlist(movie.id)
-    }
-    else {
-      this.content.movie_detail.in_watchlist = true
-      this.addToWatchlist(movie)
-    }
-  }
-
-
-  /**
    * Adds a movie to the watchlist.
    *
    * @param {any} movie - The movie to add to the watchlist.
@@ -269,6 +250,7 @@ export class MovieDetailComponent {
    * @param {string} movie.id - The ID of the movie.
    */
   setMovieWatchlistStatus(movie: { in_watchlist: boolean; id: string; genres: { name: string; }[]; }) {
+
     if (movie.in_watchlist) {
       movie.in_watchlist = false
       this.removeFromWatchlist(movie.id)

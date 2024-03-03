@@ -22,11 +22,11 @@
                         <img src="/assets/img/play_black.png" alt="">
                         <span>Play</span>
                     </div>
-                    <div class="add" (click)="updateWatchList(content.movie_detail)" [matTooltip]="getToolTipText(content.movie_detail?.in_watchlist)" matTooltipPosition="above">
-                        <div  *ngIf="!content.movie_detail?.in_watchlist" class="add_button">
+                    <div class="add" (click)="setMovieWatchlistStatus(content.movie_detail)" [matTooltip]="getToolTipText(content.movie_detail.in_watchlist)" matTooltipPosition="above">
+                        <div  *ngIf="!content.movie_detail.in_watchlist" class="add_button">
                             <img src="/assets/img/plus.png" alt="">
                         </div>
-                        <div *ngIf="content.movie_detail?.in_watchlist" class="add_button">
+                        <div *ngIf="content.movie_detail.in_watchlist" class="add_button">
                             <img src="/assets/img/done.png" alt="">
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                             <span>{{getRuntime()}}</span>
                         </div>
                         <div class="credits_genres">
-                            <div *ngIf="content.movie_detail?.credits" class="credits_main">
+                            <div *ngIf="content.movie_detail.credits" class="credits_main">
                                 <span>Cast:</span>
                                 <div *ngFor="let actor of content.movie_detail.credits.cast; let i = index"
                                     class="credits" [class.d_none]="i > 5">
@@ -49,13 +49,13 @@
                             </div>
                             <div class="genres">
                                 <span>Genres: </span>
-                                <div *ngFor="let genre of content.movie_detail?.genres; let i = index">
+                                <div *ngFor="let genre of content.movie_detail.genres; let i = index">
                                     {{genre.name}}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <span class="overview">{{content.movie_detail?.overview}}</span>
+                    <span class="overview">{{content.movie_detail.overview}}</span>
                     <span class="recommendations_title_headline">Recommendations</span>
                 </div>
                 <div class="recommendations_titles">

@@ -120,6 +120,7 @@ export class HeaderComponent {
     if (this.content.open_sidebar) this.content.open_sidebar = false
     this.content.search_text = ''
     this.content.searching = true
+    this.content.menu_active = false
   }
 
 
