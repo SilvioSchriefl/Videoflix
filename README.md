@@ -1,27 +1,42 @@
-# Videoflix
+# Videoflix – Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+Angular-Frontend für **Videoflix**, eine Video-Streaming-Plattform nach dem Vorbild von Netflix.
+Entstanden 2023 während meiner Ausbildung zum Entwickler bei der Developer Akademie.
 
-## Development server
+Das zugehörige Backend (Django REST API) liegt hier:
+[SilvioSchriefl/backend_videoflix](https://github.com/SilvioSchriefl/backend_videoflix)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Stand
 
-## Code scaffolding
+Das Frontend ist ein früher Stand und deckt den Einstieg in die App ab:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Startseite
+- Registrierung, angebunden an die Backend-API
+- Login-Ansicht
+- Seite „E-Mail bestätigt“ nach Klick auf den Bestätigungslink
+- HTTP-Interceptor: hängt das Login-Token an jede Anfrage und leitet bei abgelaufener
+  Anmeldung (401) zum Login weiter
 
-## Build
+Die übrigen Funktionen – Videos, Watchlist, Passwort-Reset, Kontoverwaltung – sind im
+[Backend](https://github.com/SilvioSchriefl/backend_videoflix) umgesetzt, aber hier noch nicht angebunden.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Technik
 
-## Running unit tests
+- Angular 16, TypeScript
+- RxJS, Angular Router, HttpClient mit Interceptor
+- SASS
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Lokal starten
 
-## Running end-to-end tests
+Voraussetzungen: Node.js und die Angular CLI (`npm install -g @angular/cli`).
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+git clone https://github.com/SilvioSchriefl/Videoflix.git
+cd Videoflix
+npm install
+ng serve
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Danach im Browser `http://localhost:4200/` öffnen.
+Das Backend muss lokal unter `http://127.0.0.1:8000/` laufen
+(einstellbar in `src/app/enviroments/enviroments.ts`).
